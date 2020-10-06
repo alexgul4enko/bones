@@ -1,5 +1,5 @@
 {
-  "name": "@bones/i18n",
+  "name": "@cranium/i18n",
   "version": "1.0.3",
   "description": "> TODO: description",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
@@ -26,5 +26,5 @@
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
-  "gitHead": "147e8c54b1fafed23d847569bb06ccd2558f0130"
+  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9"
 }
