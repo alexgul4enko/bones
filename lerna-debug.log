@@ -1,0 +1,22 @@
+0 silly argv {
+0 silly argv   _: [ 'create' ],
+0 silly argv   lernaVersion: '3.22.1',
+0 silly argv   '$0': 'lerna',
+0 silly argv   name: '@bones/api'
+0 silly argv }
+1 notice cli v3.22.1
+2 verbose rootPath /Users/bang/Desktop/bones
+3 warn ENOREMOTE No git remote found, skipping repository property
+4 error Error: canceled
+4 error     at Interface.<anonymous> (/usr/local/lib/node_modules/lerna/node_modules/read/lib/read.js:66:13)
+4 error     at Interface.emit (events.js:310:20)
+4 error     at Interface._ttyWrite (readline.js:893:16)
+4 error     at ReadStream.onkeypress (readline.js:198:10)
+4 error     at ReadStream.emit (events.js:310:20)
+4 error     at emitKeys (internal/readline/utils.js:438:14)
+4 error     at emitKeys.next (<anonymous>)
+4 error     at ReadStream.onData (readline.js:1160:36)
+4 error     at ReadStream.emit (events.js:310:20)
+4 error     at addChunk (_stream_readable.js:286:12)
+4 error     at readableAddChunk (_stream_readable.js:268:9)
+4 error     at ReadStream.Readable.push (_stream_readable.js:209:10)
