@@ -11,11 +11,10 @@
   "license": "ISC",
   "main": "dist/index.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "lib": "lib"
   },
   "files": [
-    "dist",
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
