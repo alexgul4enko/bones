@@ -86,7 +86,7 @@ function mapStateToProps(resources) {
   }
 }
 
-function getMetaFromResource(resource) {
+export function getMetaFromResource(resource) {
   if(typeof resource === 'string') {
     return {
       endpoint: resource,
@@ -112,7 +112,7 @@ function defaultHTTPRequest(API, payload, meta) {
   })
 }
 
-function makeRequest(httpRequest) {
+export function makeRequest(httpRequest) {
   return function request(payload, meta) {
     return (dispatch, getState, { API }) => {
       let {
@@ -159,17 +159,17 @@ function makeRequest(httpRequest) {
 
 const defaultFetch = makeRequest(defaultHTTPRequest)
 
-function makeRequestAction(type, meta, dispatch) {
+export function makeRequestAction(type, meta, dispatch) {
   return function(payload, actionmeta) {
     return dispatch(defaultFetch(payload, { ...meta, ...actionmeta, type }))
   }
 }
 
-function makeSimpleAction(meta, action, dispatch) {
+export function makeSimpleAction(meta, action, dispatch) {
   return (payload, actionmeta = {}) => dispatch(action(payload, { ...meta, ...actionmeta }))
 }
 
-function makeClearAction(meta = {}, dispatch) {
+export function makeClearAction(meta = {}, dispatch) {
   return (actionmeta = {}) => dispatch(clear({ ...meta, ...actionmeta }))
 }
 
