@@ -1,6 +1,6 @@
 {
   "name": "@cranium/cache",
-  "version": "1.0.10",
+  "version": "1.0.14",
   "description": "redux cache middleware",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -35,7 +35,6 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "dependencies": {},
   "peerDependencies": {
     "prop-types": "^15.7.2",
     "react": "^16.13.1",
