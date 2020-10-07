@@ -33,15 +33,21 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-react": "^7.21.3",
     "eslint-plugin-standard": "^4.0.1",
+    "husky": "^4.3.0",
     "jest": "^26.5.2",
     "lerna": "^3.22.1",
+    "lint-staged": "^10.4.0",
     "redux-mock-store": "^1.5.4"
   },
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
-    "commit": "git-cz"
+    "commit": "git-cz",
+    "lint": "yarn run eslint",
+    "lint:fix": "yarn run eslint:fix",
+    "eslint": "node linter --verbose | snazzy",
+    "eslint:fix": "node linter --fix --verbose | snazzy"
   },
   "config": {
     "commitizen": {
