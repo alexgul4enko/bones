@@ -34,8 +34,8 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "dependencies": {
-    "@cranium/queryparams": "^1.0.10",
+  "dependencies": {},
+  "devDependencies": {
     "lodash": "^4.17.20",
     "path-to-regexp": "^6.2.0"
   }
