@@ -1,0 +1,100 @@
+/* stylelint-disable no-descending-specificity */
+.banner {
+  padding: 4rem 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: transparent !important;
+  h1,
+  p {
+    transition: color 0.3s;
+  }
+  .getStarted {
+    transition: border-color 0.3s, color 0.3s;
+  }
+  .headerOverlay {
+    transition: background 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -2;
+  }
+}
+
+.heroBanner {
+  .headerOverlay {
+    background-color: #5dc7a5;
+  }
+  .getStarted {
+    color: #010202 !important;
+    border-color: #010202;
+    &:hover,
+    &:active {
+      background: transparent !important;
+      border-color: #ffffff;
+      color: #ffffff !important;
+    }
+  }
+}
+
+.heroBannerLight {
+  .headerOverlay {
+    background: #13523d;
+  }
+  .getStarted {
+    color: #ffffff !important;
+    border-color: #ffffff;
+    &:hover,
+    &:active {
+      background: transparent !important;
+      border-color: #010202;
+      color: #010202 !important;
+    }
+  }
+}
+
+.overlay {
+  background-image: url("/frontend-docs/img/bg_1.svg") !important;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: -1;
+}
+
+@media screen and (max-width: 966px) {
+  .overlay {
+    display: none;
+  }
+}
+
+/* stylelint-enable no-descending-specificity */
+
+@media screen and (max-width: 966px) {
+  .heroBanner {
+    padding: 2rem;
+  }
+}
+
+.buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.features {
+  display: flex;
+  align-items: center;
+  padding: 2rem 0;
+  width: 100%;
+}
+
+.featureImage {
+  height: 200px;
+  width: 200px;
+}

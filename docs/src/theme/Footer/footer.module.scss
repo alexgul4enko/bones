@@ -1,0 +1,38 @@
+.footer {
+  background: #010202;
+  color: #ffffff;
+}
+
+.copyright {
+  font-weight: 300;
+  font-size: 14px;
+  line-height: 28px;
+}
+
+.logo {
+  margin-bottom: 12px;
+  margin-top: 32px;
+  display: inline-flex;
+  img {
+    height: 80px;
+  }
+}
+
+.logoContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.footerLinks {
+  position: relative;
+  & > div {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: absolute;
+    bottom: 24px;
+    left: 0;
+    right: 0;
+  }
+}
