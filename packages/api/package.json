@@ -1,6 +1,6 @@
 {
   "name": "@cranium/api",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Promise based HTTP client for browsers and React-Native based on fetch API",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -39,6 +39,6 @@
     "path-to-regexp": "^6.2.0"
   },
   "dependencies": {
-    "@cranium/queryparams": "^1.0.13"
+    "@cranium/queryparams": "^1.0.15"
   }
 }

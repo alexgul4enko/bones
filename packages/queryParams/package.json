@@ -1,6 +1,6 @@
 {
   "name": "@cranium/queryparams",
-  "version": "1.0.13",
+  "version": "1.0.15",
   "description": "Module to build and parse url query string",
   "keywords": [
     "http",
