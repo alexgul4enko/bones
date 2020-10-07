@@ -1,0 +1,15 @@
+*.rdb
+*.pyc
+*.pyo
+*.swo
+*.sublime-*
+*.swp
+settings_local.py
+logs/*
+.idea/*
+.DS_Store
+
+node_modules
+.tmp
+npm-debug.log
+yarn-error.log
