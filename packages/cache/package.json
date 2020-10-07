@@ -1,6 +1,6 @@
 {
   "name": "@cranium/cache",
-  "version": "1.0.6",
+  "version": "1.0.10",
   "description": "redux cache middleware",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
