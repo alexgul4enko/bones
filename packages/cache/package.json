@@ -26,7 +26,8 @@
     "url": "git+https://github.com/alexgul4enko/bones.git"
   },
   "scripts": {
-    "test": "echo \"Error: run tests from root\" && exit 1"
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "lerna exec --parallel 'BABEL_ENV=build babel --root-mode upward src --out-dir dist --source-maps --extensions .ts, --delete-dir-on-start --no-comments'"
   },
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"

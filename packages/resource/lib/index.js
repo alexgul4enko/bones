@@ -4,9 +4,9 @@ import useResource from './useResource'
 import connectResources, {
   resourcesReducer,
   customResource,
-} from './src/resources'
+} from './resources'
 
-export * from './src/hocs'
+export * from './hocs'
 
 
 export {
