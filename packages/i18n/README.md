@@ -1,11 +1,13 @@
-# `@bones/i18n`
 
-> TODO: description
+# `@cranium/i18n`
 
-## Usage
+
+
+Lightweight simple translation module for React apps based on [gettext](https://www.gnu.org/software/gettext/)
+## Instalation
 
 ```
-const i18N = require('@bones/i18n');
-
-// TODO: DEMONSTRATE API
+yarn add @cranium/i18n
 ```
+
+### [Documentation](https://alexgul4enko.github.io/bones/docs/i18n/i18n_about)

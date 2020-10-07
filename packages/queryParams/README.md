@@ -1,11 +1,12 @@
-# `@bones/queryParams`
 
-> TODO: description
+# `@cranium/queryparams`
 
-## Usage
+Module to parse and stringify URL [query strings](https://en.wikipedia.org/wiki/Query_string)
+
+## Instalation
 
 ```
-const queryParams = require('@bones/queryParams');
-
-// TODO: DEMONSTRATE API
+yarn add @cranium/queryparams
 ```
+
+### [Documentation](https://alexgul4enko.github.io/bones/docs/queryParams/queryParams_about)

@@ -1,11 +1,18 @@
-# `@bones/cache`
 
-> TODO: description
+# `@cranium/cache`
 
-## Usage
+
+Redux middleware to cache redux store in:
+
+- [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage)
+- [AsyncStorage](https://github.com/react-native-community/async-storage)
+
+Or whatever storage you may need)
+
+## Instalation
 
 ```
-const cache = require('@bones/cache');
-
-// TODO: DEMONSTRATE API
+yarn add @cranium/cache
 ```
+
+### [Documentation](https://alexgul4enko.github.io/bones/docs/cache/cache_about)

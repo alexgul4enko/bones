@@ -6,7 +6,7 @@
  *
  * @format
  */
-
+/// https://alexgul4enko.github.io/bones/
 module.exports = {
   title: 'Anatomy JS',
   tagline: 'Toolkit for web mobile development',
@@ -14,7 +14,7 @@ module.exports = {
   baseUrl: '/bones/',
   favicon: 'img/favicon.ico',
   organizationName: 'alexgul4enko', // Usually your GitHub org/user name.
-  projectName: 'alexgul4enko.github.io', // Usually your repo name.
+  projectName: 'bones', // Usually your repo name.
   themeConfig: {
     prism: {
       theme: require('prism-react-renderer/themes/dracula'),
@@ -86,7 +86,7 @@ module.exports = {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl:
-            'https://github.com/alexgul4enko/bones/tree/master/',
+            'https://github.com/alexgul4enko/bones/tree/master/docs/',
         },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),

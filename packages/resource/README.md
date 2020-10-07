@@ -1,11 +1,13 @@
-# `@bones/resource`
 
-> TODO: description
+# `@cranium/resource`
 
-## Usage
+
+
+React redux modules to work with REST API
+## Instalation
 
 ```
-const resource = require('@bones/resource');
-
-// TODO: DEMONSTRATE API
+yarn add @cranium/resource
 ```
+
+### [Documentation](https://alexgul4enko.github.io/bones/docs/resources/resource_problem)
