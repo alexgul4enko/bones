@@ -15,8 +15,7 @@
     "lib": "lib"
   },
   "files": [
-    "dist",
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
