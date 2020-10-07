@@ -14,7 +14,7 @@ module.exports = {
   baseUrl: '/bones/',
   favicon: 'img/favicon.ico',
   organizationName: 'alexgul4enko', // Usually your GitHub org/user name.
-  projectName: 'bones', // Usually your repo name.
+  projectName: 'alexgul4enko.github.io', // Usually your repo name.
   themeConfig: {
     prism: {
       theme: require('prism-react-renderer/themes/dracula'),

@@ -2,6 +2,7 @@
   "name": "docs",
   "version": "1.0.0",
   "private": true,
+  "repository": "https://github.com/alexgul4enko/bones",
   "scripts": {
     "start": "docusaurus start",
     "build": "docusaurus build",
