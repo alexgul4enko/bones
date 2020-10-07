@@ -234,11 +234,16 @@ function makeData(reducer, state, payload) {
 
 
 export function resourcesDataReducer(state = {}, { type, payload = {}, meta = {} }) {
+  const {
+    data, errors, isLoading, filters, options,
+  } = payload
+  const dataKeys = {
+    [SET_ERRORS]: 'errors',
+    [SET_FILTERS]: 'filters',
+    [SET_LOADING]: 'isLoading',
+  }
   switch (type) {
     case SET_RESOURCE_DATA:
-      const {
-        data, errors, isLoading, filters, options,
-      } = payload
       return {
         ...state,
         errors: errors || state.errors,
@@ -250,12 +255,7 @@ export function resourcesDataReducer(state = {}, { type, payload = {}, meta = {}
     case SET_ERRORS:
     case SET_FILTERS:
     case SET_LOADING:
-      const dataKey = {
-        [SET_ERRORS]: 'errors',
-        [SET_FILTERS]: 'filters',
-        [SET_LOADING]: 'isLoading',
-      }[type]
-      return { ...state, [dataKey]: payload }
+      return { ...state, [dataKeys[type]]: payload }
     case SET_DATA:
       if(meta.type === 'OPTIONS') {
         return ({

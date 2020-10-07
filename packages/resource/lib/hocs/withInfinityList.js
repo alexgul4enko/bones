@@ -6,7 +6,7 @@ import get from 'lodash/get'
 import has from 'lodash/has'
 import pick from 'lodash/pick'
 import noop from 'lodash/noop'
-import { Loader, mergeConfigs, makePromiseSubscription, getNameSpace , promiseDebounce} from '../utils'
+import { Loader, mergeConfigs, makePromiseSubscription, getNameSpace, promiseDebounce } from '../utils'
 
 
 const defaultConfigs = {

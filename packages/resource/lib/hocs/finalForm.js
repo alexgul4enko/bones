@@ -1,7 +1,6 @@
 import { Component } from 'react'
 import { Form } from 'react-final-form'
 import { FORM_ERROR } from 'final-form'
-import { parse } from 'path-to-regexp'
 import omit from 'lodash/omit'
 import get from 'lodash/get'
 import isEmpty from 'lodash/isEmpty'
@@ -125,7 +124,7 @@ function getIdKey(props, { key, resource, configs } = {}) {
   if(!key) {
     return false
   }
-  let idKey = parseIdKey(resource.endpoint)
+  const idKey = parseIdKey(resource.endpoint)
   if(!idKey) {
     return false
   }

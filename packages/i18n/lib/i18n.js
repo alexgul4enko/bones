@@ -1,9 +1,9 @@
-import { createContext, useContext } from 'react'
+import { createContext, useContext, Component } from 'react'
 import PropTypes from 'prop-types'
 import get from 'lodash/get'
 import noop from 'lodash/noop'
 
-export const TarnslationsContext = React.createContext('translations')
+export const TarnslationsContext = createContext('translations')
 
 export function isRtlLanguage(lang) {
   const rtlLanguages = ['ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi']
@@ -38,7 +38,7 @@ export const TranslationPropTypes = {
   language: PropTypes.string.isRequired,
 }
 
-export class TranslateProvider extends React.Component {
+export class TranslateProvider extends Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -84,7 +84,7 @@ export class TranslateProvider extends React.Component {
         if(!language) { throw new Error('Language not defined') }
         this.setState({ language })
       })
-      .catch(err => storage.setItem(langKey, defaultLanguage.split('-')[0]))
+      .catch(_ => storage.setItem(langKey, defaultLanguage.split('-')[0]))
   }
 
   setLanguage(lang) {
@@ -167,7 +167,7 @@ export function withTranslations(ChildComponent) {
 }
 
 export function useTranslations() {
-  const { translations, ...translationData } = useContext(TarnslationsContext)
+  const { translations: _, ...translationData } = useContext(TarnslationsContext)
   return translationData
 }
 

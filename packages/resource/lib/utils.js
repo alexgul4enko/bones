@@ -15,7 +15,7 @@ export function makePromiseSubscription(subscriptions) {
   const wrappedPromise = Promise.all(subscriptions)
     .then(() => {
       if(isCanceled) {
-        throw new Error('Promise cancelled')
+        throw new Error('Promise canceled')
       }
       return isCanceled
     })
