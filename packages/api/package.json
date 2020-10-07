@@ -1,6 +1,6 @@
 {
   "name": "@cranium/api",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "Promise based HTTP client for browsers and React-Native based on fetch API",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -34,7 +34,6 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "dependencies": {},
   "devDependencies": {
     "lodash": "^4.17.20",
     "path-to-regexp": "^6.2.0"
