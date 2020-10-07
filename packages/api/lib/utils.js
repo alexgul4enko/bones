@@ -4,7 +4,7 @@ import has from 'lodash/has'
 import omit from 'lodash/omit'
 import isPlainObject from 'lodash/isPlainObject'
 import uniq from 'lodash/uniq'
-import { QueryParams } from '../queryparams/lib'
+import { QueryParams } from '@cranium/queryparams'
 import flatMapDeep from 'lodash/flatMapDeep'
 const QS = new QueryParams()
 

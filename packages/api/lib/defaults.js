@@ -1,4 +1,4 @@
-import { QueryParams } from '../queryparams/lib'
+import { QueryParams } from '@cranium/queryparams'
 import { hasFile, finalResponseIterceptor } from './utils'
 import prepareBody from './prepareBody'
 import Interceptor from './Interceptor'
