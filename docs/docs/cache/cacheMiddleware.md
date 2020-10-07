@@ -72,7 +72,7 @@ class OwnStorage {
 React Component that will not render your app while store initializating from cache.  You should wrap your application with this component in root Component
 
 ```jsx
-import { CheckCache } from '@ds-frontend/cache'
+import { CheckCache } from '@cranium/cache'
 
 function App({ store, history }) {
   return (

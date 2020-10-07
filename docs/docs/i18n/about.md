@@ -12,7 +12,7 @@ Lightweight simple translation module for React apps based on [gettext](https://
 ## ~~TranslateProvider~~
 
 ```jsx
-import { TranslateProvider } from '@ds-frontend/i18n'
+import { TranslateProvider } from '@cranium/i18n'
 fucntion APP () {
   return (
     <TranslateProvider
@@ -96,7 +96,7 @@ It is not required function and if you don't need to reload page on switching rt
 Returns the localized translation of message, based on the current language.
 
 ```javascript
-import { gettext } from '@ds-frontend/i18n'
+import { gettext } from '@cranium/i18n'
 function Title(props){
     return <h1>{ gettext("Hello") }</h1>
 }
@@ -107,7 +107,7 @@ function Title(props){
 Like gettext(), but looks the message up in the specified domain
 
 ```javascript
-import { pgettext } from '@ds-frontend/i18n'
+import { pgettext } from '@cranium/i18n'
 function Title(props){
     return <h1>{ pgettext("pageid", "Hello") }</h1>
 }
@@ -118,7 +118,7 @@ function Title(props){
 Like gettext(), but consider plural forms. If a translation is found, apply the plural formula to n, and return the resulting message. If no translation is found, return singular if n is 1; return plural otherwise.
 
 ```javascript
-import { ngettext } from '@ds-frontend/i18n'
+import { ngettext } from '@cranium/i18n'
 function Title(props){
     return <h1>{ ngettext("Car", "Cars", 2) }</h1>
 }
@@ -129,7 +129,7 @@ function Title(props){
 Like ngettext(), but look the message up in the specified domain.
 
 ```javascript
-import { npgettext } from '@ds-frontend/i18n'
+import { npgettext } from '@cranium/i18n'
 function Title(props){
     return <h1>{ npgettext("loginPage", "Car", "Cars", 2) }</h1>
 }
@@ -143,7 +143,7 @@ The interpolate function supports dynamically populating a format string.
  
 
 ```javascript
-import { gettext, interpolate } from '@ds-frontend/i18n'
+import { gettext, interpolate } from '@cranium/i18n'
 var fmts = gettext('There are %s objects. Remaining: %s')
  interpolate(fmts, [11, 20]) => 'There are 11 objects. Remaining: 20'
 ```
@@ -152,7 +152,7 @@ var fmts = gettext('There are %s objects. Remaining: %s')
 
 
 ```javascript
-import { gettext, interpolate } from '@ds-frontend/i18n'
+import { gettext, interpolate } from '@cranium/i18n'
 const d = {
     count: 10,
     total: 50
@@ -166,7 +166,7 @@ interpolate(fmts, d, true) => There are 10 of a total of 50 objects
 Hight Order Component to pass transtation props to React component
 
 ```javascript
-import { withTranslations } from '@ds-frontend/i18n'
+import { withTranslations } from '@cranium/i18n'
 function MyComponent({
     gettext,
     pgettext,
@@ -187,7 +187,7 @@ export default withTranslations(MyComponent)
 Hook to use transtation in React component
 
 ```javascript
-import { useTranslations } from '@ds-frontend/i18n'
+import { useTranslations } from '@cranium/i18n'
 function MyComponent(){
     const { gettext, pgettext, ngettext, npgettext, setLanguage, language } = useTranslations()
     retrun ...
@@ -199,7 +199,7 @@ function MyComponent(){
 React component to use tarnslations as Render prop
 
 ```javascript
-import { Translator } from '@ds-frontend/i18n'
+import { Translator } from '@cranium/i18n'
 function MyComponent(){
     retrun (
         <Translator>

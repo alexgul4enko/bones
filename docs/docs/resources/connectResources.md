@@ -9,7 +9,7 @@ sidebar_label: ConnectResources
 ## ~~Basic usage~~
 
 ```javascript
-import { connectResources } from '@ds-frontend/resource'
+import { connectResources } from '@cranium/resource'
 
 function MyReactComponent({ users }){
   //using 1 line of code you will have aditions prop users inside your React Component

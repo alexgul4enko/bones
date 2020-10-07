@@ -9,7 +9,7 @@ sidebar_label: Hooks
 Hook that will create resource. The difference from connectResources is that useResource will only accept single [Resource](/frontend-docs/docs/resources/connect_resources#resource) and return same properties as [connectResources](/frontend-docs/docs/resources/connect_resources#basic-usage)
 
 ```javascript
-import { useResource } from '@ds-frontend/resource'
+import { useResource } from '@cranium/resource'
 
 function MyReactComponent () {
   const { data, isLoading,  errors, fetch } = useResource('users/me')
@@ -34,12 +34,12 @@ useCustomRequest(asyncFunction, namespace)
 ```
 
 ```javascript
-import { useCustomRequest } from '@ds-frontend/resource'
+import { useCustomRequest } from '@cranium/resource'
 
 function tryAsync(API, payload, meta) {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      resolve({ love: 'Djangostars' })
+      resolve({ love: 'React' })
     }, 1000)
   })
 }
@@ -73,7 +73,7 @@ HTTP request type.  Default GET
 ...
 
 ```javascript
-import { useRequest } from '@ds-frontend/resource'
+import { useRequest } from '@cranium/resource'
 
 function MyReactComponent () {
   const fetchUser = useRequest({ endpoint: 'users/me', namespace: 'session'}) 
@@ -87,7 +87,7 @@ function MyReactComponent () {
 Hook that will return resource setData action `useSetData(namespace)`
 
 ```javascript
-import { useSetData } from '@ds-frontend/resource'
+import { useSetData } from '@cranium/resource'
 
 function MyReactComponent () {
   const setData = useSetData('session') 
@@ -101,7 +101,7 @@ function MyReactComponent () {
 Hook that will return resource setErrors action `useSetErrors(namespace)`
 
 ```javascript
-import { useSetErrors } from '@ds-frontend/resource'
+import { useSetErrors } from '@cranium/resource'
 
 function MyReactComponent () {
   const setErrors = useSetErrors('session') 
@@ -114,7 +114,7 @@ function MyReactComponent () {
 Hook that will return resource setFilters action `useSetFilters(namespace)`
 
 ```javascript
-import { useSetFilters } from '@ds-frontend/resource'
+import { useSetFilters } from '@cranium/resource'
 
 function MyReactComponent () {
   const setFilters = useSetFilters('session') 
@@ -127,7 +127,7 @@ function MyReactComponent () {
 Hook that will return resource setLoading action `useSetLoading(namespace)`
 
 ```javascript
-import { useSetLoading } from '@ds-frontend/resource'
+import { useSetLoading } from '@cranium/resource'
 
 function MyReactComponent () {
   const setLoading = useSetLoading('session') 
@@ -141,7 +141,7 @@ function MyReactComponent () {
 Hook that will return resource clear action `useClear(namespace)`
 
 ```javascript
-import { useClear } from '@ds-frontend/resource'
+import { useClear } from '@cranium/resource'
 
 function MyReactComponent () {
   const clear = useClear('session') 

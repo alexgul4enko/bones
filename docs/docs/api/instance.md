@@ -9,7 +9,7 @@ You can pass custom configs to new API instance.
 ## ~~API~~
 
 ```javascript
-import { API } from '@ds-frontend/api'
+import { API } from '@cranium/api'
 const api = new API(configs)
 ```
 
@@ -44,7 +44,7 @@ Here you can use `process.env.API_URL`
 This option helps you to define global [HTTP headers](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers) as a JSON Object. For Example:
 
 ```javascript
-import { API } from '@ds-frontend/api'
+import { API } from '@cranium/api'
 const api = new API({
   headers: {
     'Accept-Language': 'en' 

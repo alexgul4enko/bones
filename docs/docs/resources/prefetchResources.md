@@ -60,7 +60,7 @@ Lest have an example
   }
 }
 
-import { prefetchResources } from '@ds-frontend/resource'
+import { prefetchResources } from '@cranium/resource'
 
 prefetchResources('users', { refresh: true })(MyReactElement)
 
@@ -82,7 +82,7 @@ For example:
 ```
 2. React renders your component with prefetchResources HOC
 ```javascript
-import { prefetchResources } from '@ds-frontend/resource'
+import { prefetchResources } from '@cranium/resource'
 
 prefetchResources('users')(MyReactElement)
 
@@ -110,7 +110,7 @@ Default params is optional param that will help you to pass some hardcoded value
 Lets have same example with users list Componet, but now we have lot of users and in UI we have table with pagination. So that on your ComponentDidMount function you should not just `GET /api/users`, but define some custom range of users to show `GET /api/users/?offset=0&limit=25`. To solve this task you may need to use `defaultParams`
 
 ```javascript
-import { prefetchResources } from '@ds-frontend/resource'
+import { prefetchResources } from '@cranium/resource'
 
 prefetchResources({
   namespace: 'users',
@@ -152,7 +152,7 @@ function MyAwesomeLoader({ isLoading, children }){
 ```
 
 ```javascript
-import { prefetchResources } from '@ds-frontend/resource'
+import { prefetchResources } from '@cranium/resource'
 
 prefetchResources({
   namespace: 'users',
@@ -172,7 +172,7 @@ You can use [customresource](/frontend-docs/docs/resources/resource_customresour
 To do that you just need to pass ~~customresource~~ as a [resources](/frontend-docs/docs/resources/resource_prefetchResources#resources)
 
 ```javascript
-import { customResource, prefetchResources } from '@ds-frontend/resource'
+import { customResource, prefetchResources } from '@cranium/resource'
 
 function myCustomFetch(API, payload, meta) {
   return new Promise(function(resolve,reject){

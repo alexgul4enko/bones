@@ -44,7 +44,7 @@ export default function Navbar() {
     e => (e.target.checked ? setDarkTheme() : setLightTheme()),
     [setLightTheme, setDarkTheme],
   )
-  const logoImageUrl = isDarkTheme ? '/frontend-docs/img/logo_white.svg' : '/frontend-docs/img/logo.svg'
+  const logoImageUrl = isDarkTheme ? '/bones/img/logo_white.svg' : '/bones/img/logo.svg'
   return (
     <nav
       ref={navbarRef}

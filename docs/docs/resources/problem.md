@@ -76,7 +76,7 @@ Normally working with HTTP requests we may need to have next flow:
 
 ## ~~REST GRUD~~
 
-Resources id [Djangostars](https://djangostars.com/) redux [middleware](https://redux.js.org/advanced/middleware) that helps you to keep working with [redux](https://redux.js.org/) with standard flow for async actions.
+Resources is redux [middleware](https://redux.js.org/advanced/middleware) that helps you to keep working with [redux](https://redux.js.org/) with standard flow for async actions.
 This module was build using [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer) principles.
 
 Common REST GRUD:

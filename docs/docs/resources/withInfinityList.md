@@ -9,7 +9,7 @@ This is function that will return HOC to work with infinity lists.
 
 ## ~~API~~
 ```javascript
-import { withInfinityList } from '@ds-frontend/resource'
+import { withInfinityList } from '@cranium/resource'
 
 withInfinityList(resource, options)
 ```
@@ -60,7 +60,7 @@ This function has debounce 300 to have ability to use it for on air search.
 Also pending search requests will be terminated on componet unmount and each next search request will terminate previous search request.
 
 ```javascript
-import { withInfinityList } from '@ds-frontend/resource'
+import { withInfinityList } from '@cranium/resource'
 
 function InfinityListView ({
   cars,

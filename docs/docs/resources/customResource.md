@@ -15,7 +15,7 @@ In this case you may need to use ~~customresource~~
 ## Basic ussage
 
 ```javascript
-import { customResource } from '@ds-frontend/resource'
+import { customResource } from '@cranium/resource'
 
 function myCustomFetch(API, payload, meta) {
   return new Promise(function(resolve,reject){

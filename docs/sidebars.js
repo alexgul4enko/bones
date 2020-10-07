@@ -10,12 +10,12 @@
 module.exports = {
   skeltonSitebar: [
     'skeleton/skeleton_about',
-    'skeleton/skeleton_instalation',
-    'skeleton/webpack',
+    // 'skeleton/skeleton_instalation',
+    // 'skeleton/webpack',
     'skeleton/skeleton_architecture',
     'skeleton/skeleton_forms',
-    'skeleton/skeleton_access',
-    'skeleton/skeleton_routing',
+    // 'skeleton/skeleton_access',
+    // 'skeleton/skeleton_routing',
   ],
   resourcesSitebar: [
     'resources/resource_problem',

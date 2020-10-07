@@ -14,7 +14,7 @@ If your are using [customresource](/frontend-docs/docs/resources/resource_custom
 
 ## ~~API~~
 ```javascript
-import { withFinalForm } from '@ds-frontend/resource'
+import { withFinalForm } from '@cranium/resource'
 
 withFinalForm(formConfigs, resources, options)
 ```
@@ -132,7 +132,7 @@ By default ~~resources~~ were build to work REST API. This means that in general
 
 To handle this scenario will use dynamic rote config
 ```javascript
-import { withFinalForm } from '@ds-frontend/resource'
+import { withFinalForm } from '@cranium/resource'
 
 withFinalForm({
     validate,
@@ -175,7 +175,7 @@ In this case it will have different scenario:
 You can use customResource in pair with withFinalForm.
 
 ```javascript
-import { customResource, withFinalForm } from '@ds-frontend/resource'
+import { customResource, withFinalForm } from '@cranium/resource'
 
 function myCustomFetch(API, payload, meta) {
   return new Promise(function(resolve,reject){

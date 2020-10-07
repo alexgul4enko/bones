@@ -9,8 +9,8 @@ Hight order [redux reducer](https://redux.js.org/basics/reducers) that has only 
 ## ~~Usage~~
 
 ```javascript
-import { persistReducer } from '@ds-frontend/cache'
-import { composeReducers } from '@ds-frontend/redux-helpers'
+import { persistReducer } from '@cranium/cache'
+import { composeReducers } from '@cranium/redux-helpers'
 import { combineReducers } from 'redux'
     
 composeReducers(
@@ -55,7 +55,7 @@ This is [redux action](https://redux.js.org/basics/actions) that will clear all 
 This is most common action on logout
 
 ```javascript
-import { reset } from '@ds-frontend/cache'
+import { reset } from '@cranium/cache'
 import { connect } from 'react-redux'
 
 function LogoutButton({ reset }){

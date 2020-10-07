@@ -25,7 +25,7 @@ for example u have a url `users/list/?offset=20&limit=20&search=ma`
 
 
 ```javascript
-import { navigationToProps, prefetchResources } from '@ds-frontend/resource'
+import { navigationToProps, prefetchResources } from '@cranium/resource'
 import compose from 'redux'
 
 export default compose(

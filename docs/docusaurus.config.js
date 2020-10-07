@@ -19,14 +19,14 @@ module.exports = {
     prism: {
       theme: require('prism-react-renderer/themes/dracula'),
     },
-    algolia: {
-      apiKey: '5f7869145112d2d4555469aa8aa7655b',
-      indexName: 'django-stars_frontend-skeleton',
-    },
+    // algolia: {
+    //   apiKey: '5f7869145112d2d4555469aa8aa7655b',
+    //   indexName: 'django-stars_frontend-skeleton',
+    // },
     navbar: {
-      title: 'DS Frontend',
+      title: 'Anatomy JS',
       logo: {
-        alt: 'DS Frontend',
+        alt: 'Anatomy JS',
         src: 'img/logo.svg',
       },
       links: [
