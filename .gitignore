@@ -18,7 +18,7 @@ yarn-error.log
 lerna-debug.log
 
 # Production
-/build
+build
 
 # Generated files
 .docusaurus
