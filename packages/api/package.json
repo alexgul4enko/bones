@@ -10,13 +10,12 @@
     "query params"
   ],
   "license": "ISC",
-  "main": "lib/index.js",
+  "main": "dist/index.js",
   "directories": {
     "lib": "lib",
-    "test": "__tests__"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
@@ -27,7 +26,7 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "lerna exec --parallel 'BABEL_ENV=build babel --root-mode upward lib --out-dir dist --source-maps --extensions .ts, --delete-dir-on-start --no-comments'",
+    "build": "BABEL_ENV=build babel lib --out-dir dist --source-maps --extensions .js --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
     "prerelease": "yarn build",
     "release": "lerna publish"
   },

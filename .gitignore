@@ -8,6 +8,7 @@ settings_local.py
 logs/*
 .idea/*
 .DS_Store
+dist
 
 node_modules
 .tmp
