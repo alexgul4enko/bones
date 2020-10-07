@@ -1,9 +1,13 @@
 {
   "name": "@cranium/i18n",
   "version": "1.0.4",
-  "description": "> TODO: description",
+  "description": "React lightweight simple translation module",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
+  "keywords": [
+    "i18n",
+    "translates"
+  ],
   "license": "ISC",
   "main": "lib/i18n.js",
   "directories": {
@@ -26,5 +30,12 @@
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
-  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9"
+  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1"
+  }
 }

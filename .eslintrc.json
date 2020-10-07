@@ -1,0 +1,53 @@
+{
+  "extends": [
+    "standard",
+    "plugin:react/recommended"
+  ],
+  "parser": "babel-eslint",
+  "env": {
+    "browser": true,
+    "node": true,
+    "es6": true,
+    "jest": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "modules": true,
+      "globalReturn": true
+    }
+  },
+  "plugins": [
+    "react"
+  ],
+  "settings": {
+    "react": {
+      "version": "16.2",
+      "createClass": "createClass"
+    }
+  },
+  "rules": {
+    "curly": ["error", "all"],
+    "comma-dangle": ["error", "always-multiline"],
+    "keyword-spacing": ["error", { "overrides": {
+      "if": { "after": false },
+      "for": { "after": false },
+      "while": { "after": false }
+    }}],
+    "spaced-comment": ["error", "always", {
+      "line": { "exceptions": ["/"], "markers": ["/"] },
+      "block": { "exceptions": ["*"], "markers": ["/"], "balanced": true }
+    }],
+    "space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
+    "prefer-promise-reject-errors": ["off"],
+    "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0, "maxBOF": 0 }],
+    "no-unused-vars": ["error", {"args": "none"}],
+    "object-curly-spacing": ["error", "always"],
+    "react/react-in-jsx-scope": "off",
+    "react/prop-types": ["off"],
+    "react/jsx-uses-vars": ["error"],
+    "react/display-name": ["off", { "ignoreTranspilerName": true }]
+  }
+}

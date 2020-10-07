@@ -1,10 +1,15 @@
 {
   "name": "@cranium/cache",
   "version": "1.0.4",
-  "description": "> TODO: description",
+  "description": "redux cache middleware",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
   "license": "ISC",
+  "keywords": [
+    "redux",
+    "cache",
+    "persist"
+  ],
   "main": "lib/cache.js",
   "directories": {
     "lib": "lib",
@@ -26,5 +31,13 @@
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
-  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9"
+  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  },
+  "peerDependencies": {
+    "prop-types": "^15.7.2",
+    "react": "^16.13.1",
+    "react-redux": "^7.2.1"
+  }
 }

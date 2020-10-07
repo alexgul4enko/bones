@@ -1,11 +1,16 @@
 {
   "name": "@fast-bone/api",
   "version": "1.0.4",
-  "description": "> TODO: description",
+  "description": "Promise based HTTP client for browsers and React-Native based on fetch API",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
+  "keywords": [
+    "http",
+    "fetch",
+    "query params"
+  ],
   "license": "ISC",
-  "main": "lib/api.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -26,5 +31,10 @@
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
-  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9"
+  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
+  "dependencies": {
+    "@cranium/queryparams": "^1.0.4",
+    "lodash": "^4.17.20",
+    "path-to-regexp": "^6.2.0"
+  }
 }

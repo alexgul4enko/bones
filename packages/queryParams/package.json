@@ -1,11 +1,15 @@
 {
   "name": "@cranium/queryparams",
   "version": "1.0.4",
-  "description": "> TODO: description",
+  "description": "Module to build and parse url query string",
+  "keywords": [
+    "http",
+    "query params"
+  ],
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
   "license": "ISC",
-  "main": "lib/queryParams.js",
+  "main": "lib/index.js",
   "directories": {
     "lib": "lib",
     "test": "__tests__"
@@ -26,5 +30,8 @@
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
-  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9"
+  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
+  "dependencies": {
+    "lodash": "^4.17.20"
+  }
 }
