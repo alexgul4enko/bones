@@ -1,6 +1,6 @@
 {
   "name": "@cranium/api",
-  "version": "1.0.6",
+  "version": "1.0.7",
   "description": "Promise based HTTP client for browsers and React-Native based on fetch API",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -27,14 +27,16 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "lerna exec --parallel 'BABEL_ENV=build babel --root-mode upward src --out-dir dist --source-maps --extensions .ts, --delete-dir-on-start --no-comments'"
+    "build": "lerna exec --parallel 'BABEL_ENV=build babel --root-mode upward lib --out-dir dist --source-maps --extensions .ts, --delete-dir-on-start --no-comments'",
+    "prerelease": "yarn build",
+    "release": "lerna publish"
   },
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
   "dependencies": {
-    "@cranium/queryparams": "^1.0.6",
+    "@cranium/queryparams": "^1.0.5",
     "lodash": "^4.17.20",
     "path-to-regexp": "^6.2.0"
   }
