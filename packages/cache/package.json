@@ -10,13 +10,12 @@
     "cache",
     "persist"
   ],
-  "main": "lib/cache.js",
+  "main": "dist/cache.js",
   "directories": {
-    "lib": "lib",
-    "test": "__tests__"
+    "lib": "lib"
   },
   "files": [
-    "lib"
+    "dist"
   ],
   "publishConfig": {
     "access": "public"
