@@ -1,7 +1,7 @@
-import QS, { camelCaseParam, snakeCaseParam } from './query-parser'
+import QueryParams, { camelCaseParam, snakeCaseParam } from './query-parser'
 
 export {
-  QS,
+  QueryParams,
   camelCaseParam,
   snakeCaseParam,
 }
