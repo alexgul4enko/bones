@@ -10,7 +10,7 @@
     "cache",
     "persist"
   ],
-  "main": "dist/cache.js",
+  "main": "dist/index.js",
   "directories": {
     "lib": "lib"
   },
