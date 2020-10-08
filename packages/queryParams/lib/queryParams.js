@@ -1,5 +1,4 @@
-import camelCase from 'lodash/camelCase'
-import snakeCase from 'lodash/snakeCase'
+import { camelCaseParam, snakeCaseParam } from './utils'
 import isEmpty from 'lodash/isEmpty'
 import has from 'lodash/has'
 
@@ -27,7 +26,7 @@ export default class QS {
       .join('?')
       .split('&')
       .reduce((params, param) => {
-        let [name, value] = decodeURIComponent(param.replace('+', '%20')).split('=') // TODO: why do we need replace('+', '%20')?
+        let [name, value] = decodeURIComponent(param).split('=')
         name = camelCaseParam(name)
         if(this.isCamelCaseTrasformNeeded(name)) {
           value = camelCaseParam(value)
@@ -69,42 +68,3 @@ export default class QS {
     }, []).join('&')
   }
 }
-
-
-export function camelCaseParam(name) {
-  const parts = name.split('__')
-  name = camelCase(parts.shift())
-  if(parts.length === 0) {
-    return name
-  }
-  return `${name}[${parts.join('][')}]`
-}
-
-export function snakeCaseParam(name) {
-  const parts = name.split('[')
-  name = snakeCase(parts.shift())
-
-  if(parts.length === 0) {
-    return name
-  }
-
-  return `${name}__${parts.join('__').replace(/\]/g, '')}`
-}
-
-function orderingEnhancer(func) {
-  return function(name) {
-    return name.split(',').map(function(name) {
-      let prefix = ''
-
-      if(/^-\w/.test(name)) {
-        prefix = '-'
-        name = name.substr(1)
-      }
-
-      return prefix + func(name)
-    }).join(',')
-  }
-}
-
-camelCaseParam = orderingEnhancer(camelCaseParam) // eslint-disable-line no-func-assign
-snakeCaseParam = orderingEnhancer(snakeCaseParam) // eslint-disable-line no-func-assign

@@ -1,7 +1,3 @@
-import QueryParams, { camelCaseParam, snakeCaseParam } from './queryParams'
+import QueryParams from './queryParams'
 
-export {
-  QueryParams,
-  camelCaseParam,
-  snakeCaseParam,
-}
+export { QueryParams }
