@@ -1,6 +1,6 @@
 {
   "name": "@cranium/resource",
-  "version": "1.0.21",
+  "version": "1.0.22",
   "description": "redux client for sending HTTP requests",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
