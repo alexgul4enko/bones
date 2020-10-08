@@ -1,5 +1,5 @@
-import promisableActionMiddleware from './src/actionsMiddleware'
-import { composeReducers, combineReducers } from './src/redux-helpers'
+import promisableActionMiddleware from './actionsMiddleware'
+import { composeReducers, combineReducers } from './redux-helpers'
 
 export {
   promisableActionMiddleware,
