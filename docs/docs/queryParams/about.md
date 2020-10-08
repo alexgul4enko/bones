@@ -9,11 +9,11 @@ This is module that will create query string from Object and Object from query s
 ## ~~Create new instance~~
 
 ```javascript
-import { QueryParams } from '@cranium/queryParams'
-const QS = new QueryParams()
+import { QueryPaser } from '@cranium/queryParams'
+const QS = new QueryPaser()
 ```
 
-Inctance of QueryParams will return Object with 2 methods:
+Inctance of QueryPaser will return Object with 2 methods:
 - parseQueryParams
 - buildQueryParams
 
@@ -22,8 +22,8 @@ Inctance of QueryParams will return Object with 2 methods:
 Function that takes Object as an argument and returns query string. Support nesting objects and arrays.
 
 ```javascript
-import { QueryParams } from '@cranium/queryParams'
-const QS = new QueryParams()
+import { QueryPaser } from '@cranium/queryParams'
+const QS = new QueryPaser()
 QS.buildQueryParams({
   age: 12,
   user: 'benjamin_button'
@@ -34,8 +34,8 @@ QS.buildQueryParams({
 Function that takes query string as an argument and returns Object. Support nesting objects and arrays.
 
 ```javascript
-import { QueryParams } from '@cranium/queryParams'
-const QS = new QueryParams()
+import { QueryPaser } from '@cranium/queryParams'
+const QS = new QueryPaser()
 QS.parseQueryParams('?age=12&user=benjamin_button`')
 /*
 returns
