@@ -19,6 +19,7 @@ module.exports = {
   ],
   resourcesSitebar: [
     'resources/resource_problem',
+    'resources/resource_instalation',
     'resources/connect_resources',
     'resources/resource_customresources',
     {
