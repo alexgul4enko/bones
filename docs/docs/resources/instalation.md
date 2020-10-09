@@ -1,7 +1,7 @@
 ---
 id: resource_instalation
-title: Instalation
-sidebar_label: Instalation
+title: installation
+sidebar_label: installation
 ---
 
 To use `resource` you need firstly add [Redux](https://redux.js.org/).
