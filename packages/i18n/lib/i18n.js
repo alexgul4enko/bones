@@ -55,9 +55,6 @@ export class TranslateProvider extends Component {
     this.refreshTranslations()
   }
 
-  shouldComponentUpdate(nextProps, nextState) {
-    return this.state.translations !== nextState.translations || this.state.language !== nextState.language
-  }
 
   refreshTranslations() {
     const { api, url, translationsKey, storage } = this.props
