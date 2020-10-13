@@ -71,8 +71,7 @@ export function prefetch(resources, configs) {
         })
         this.subscription = makePromiseSubscription(this.fetchList)
         this.subscription
-          .then(() => this.setState({ initialLoading: false }))
-          .catch(noop)
+          .finally(() => this.setState({ initialLoading: false }))
       }
 
       componentWillUnmount() {
