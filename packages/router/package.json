@@ -1,0 +1,50 @@
+{
+  "name": "@cranium/router",
+  "version": "1.0.31",
+  "description": "react router wrapper",
+  "author": "Sasha <aleksandr.gulchenko@gmail.com>",
+  "homepage": "https://github.com/alexgul4enko/bones#readme",
+  "keywords": [
+    "react",
+    "router",
+    "navigation"
+  ],
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib",
+    "dist": "dist"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexgul4enko/bones.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "BABEL_ENV=build babel lib --out-dir dist --source-maps --extensions .js --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "prerelease": "yarn build",
+    "release": "lerna publish"
+  },
+  "bugs": {
+    "url": "https://github.com/alexgul4enko/bones/issues"
+  },
+  "devDependencies": {
+    "lodash": "^4.17.20",
+    "path-to-regexp": "^6.2.0",
+    "prop-types": "^15.7.2"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0"
+  },
+  "dependencies": {
+    "@cranium/queryparams": "^1.0.29",
+    "react-router": "^5.2.0",
+    "react-router-dom": "^5.2.0"
+  }
+}
