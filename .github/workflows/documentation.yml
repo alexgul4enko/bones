@@ -62,4 +62,5 @@ jobs:
           else
           npm i
           fi
+          GIT_USER=alexgul4enko 
           npx docusaurus deploy
