@@ -50,4 +50,7 @@ module.exports = {
   i18nSitebar: [
     'i18n/i18n_about',
   ],
+  accessSitebar: [
+    'access/access_about',
+  ],
 }

@@ -66,6 +66,12 @@ module.exports = {
           label: 'cache',
           position: 'left',
         },
+        {
+          to: 'docs/access/access_about',
+          activeBasePath: 'docs/access',
+          label: 'access',
+          position: 'left',
+        },
       ],
     },
     footer: {

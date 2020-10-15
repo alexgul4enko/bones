@@ -1,0 +1,41 @@
+{
+  "name": "@cranium/access",
+  "version": "1.0.1",
+  "description": "React access manager",
+  "author": "Sasha <aleksandr.gulchenko@gmail.com>",
+  "homepage": "https://github.com/alexgul4enko/bones#readme",
+  "keywords": [
+    "react",
+    "access"
+  ],
+  "license": "ISC",
+  "main": "dist/index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "files": [
+    "dist"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alexgul4enko/bones.git"
+  },
+  "scripts": {
+    "test": "echo \"Error: run tests from root\" && exit 1",
+    "build": "BABEL_ENV=build babel lib --out-dir dist --source-maps --extensions .js --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "prerelease": "yarn build",
+    "release": "lerna publish"
+  },
+  "bugs": {
+    "url": "https://github.com/alexgul4enko/bones/issues"
+  },
+  "peerDependencies": {
+    "react": "^16.14.0"
+  },
+  "devDependencies": {
+    "prop-types": "^15.7.2"
+  }
+}
