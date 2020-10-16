@@ -10,4 +10,4 @@ Collection of navigational components that compose declaratively with your appli
 yarn add @cranium/router
 ```
 
-### [Documentation](https://alexgul4enko.github.io/bones/docs/access/access_about)
+### [Documentation](https://alexgul4enko.github.io/bones/docs/router/router_about)
