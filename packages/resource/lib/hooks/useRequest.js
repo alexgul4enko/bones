@@ -1,7 +1,7 @@
 import { useMemo, useCallback } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { makeRequestAction, getMetaFromResource, makeRequest } from '../resources'
-
+import makeResourceSelector from './utils/makeResourceSelector'
 
 export function useRequest(config, type = 'GET') {
   if(Array.isArray(config)) {
@@ -20,8 +20,13 @@ export function useCustomRequest(asyncFunc, config) {
     throw new Error('please define async function')
   }
   const meta = useMemo(() => ({ ...getMetaFromResource(config), queries: config.queries }), [])
+  const resource = useSelector(makeResourceSelector(config))
   const dispatch = useDispatch()
-  return useCallback(function(payload, actionmeta) {
+  const request = useCallback(function(payload, actionmeta) {
     return dispatch(makeRequest(asyncFunc)(payload, { ...meta, ...actionmeta }))
   }, [dispatch, meta])
+  return useMemo(() => ({
+    ...resource,
+    request,
+  }), [resource, request])
 }

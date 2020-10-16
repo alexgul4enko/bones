@@ -1,17 +1,8 @@
 import { useMemo, useCallback } from 'react'
-import { createSelector } from 'reselect'
 import { useSelector, useDispatch } from 'react-redux'
 import get from 'lodash/get'
 import { makeResourceActions } from '../resources'
-import { getNameSpace } from '../utils'
-
-
-function makeResourceSelector(config) {
-  const namespace = getNameSpace(get(config, 'namespace', config))
-  return function(state) {
-    return get(state, namespace, {})
-  }
-}
+import makeResourceSelector from './utils/makeResourceSelector'
 
 
 export default function useResource(config) {

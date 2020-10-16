@@ -91,11 +91,11 @@ export function getMetaFromResource(resource) {
     return {
       endpoint: resource,
       namespace: getNameSpace(resource),
-      reducer: 'object',
+      reducer: 'replace',
     }
   }
   return {
-    reducer: 'object',
+    reducer: 'replace',
     ...omit(resource, 'queries'),
     endpoint: resource.endpoint || resource.namespace,
     namespace: getNameSpace(resource.namespace),
@@ -250,7 +250,7 @@ export function resourcesDataReducer(state = {}, { type, payload = {}, meta = {}
         isLoading: isLoading === undefined ? state.isLoading : isLoading,
         filters: filters || state.filters,
         options: options || state.options,
-        data: data ? makeData(get(meta, 'reducer', 'object'), state, data) : state.data,
+        data: data ? makeData(get(meta, 'reducer', 'replace'), state, data) : state.data,
       }
     case SET_ERRORS:
     case SET_FILTERS:
@@ -265,7 +265,7 @@ export function resourcesDataReducer(state = {}, { type, payload = {}, meta = {}
       }
       return ({
         ...state,
-        data: makeData(get(meta, 'reducer', 'object'), state, payload),
+        data: makeData(get(meta, 'reducer', 'replace'), state, payload),
       })
     default:
       return state
@@ -318,7 +318,7 @@ export function customResource(customFetch) {
       resource = {
         endpoint: resource,
         namespace: getNameSpace(resource),
-        reducer: 'object',
+        reducer: 'replace',
       }
     }
     if(!resource.endpoint) {

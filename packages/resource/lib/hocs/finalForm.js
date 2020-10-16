@@ -44,7 +44,7 @@ export default function withFinalForm({
         const submitAction = get(this.props[key], 'customRequest')
           ? get(this.props[key], 'customRequest')
           : isEmpty(idKey) ? get(this.props[key], 'create') : get(this.props[key], 'update')
-        return Promise.resolve(configs.onSubmit ? configs.onSubmit(apiData, form, this.props) : submitAction(apiData, { forceUpdates: true }))
+        return Promise.resolve(configs.onSubmit ? configs.onSubmit(apiData, form, this.props) : submitAction(apiData, { forceUpdates: true, method: isEmpty(idKey) ? 'POST' : 'PUT' }))
           .then(data => {
             if(typeof onSubmitSuccess === 'function') {
               onSubmitSuccess(data, this.props)
