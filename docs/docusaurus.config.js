@@ -69,7 +69,13 @@ module.exports = {
         {
           to: 'docs/access/access_about',
           activeBasePath: 'docs/access',
-          label: 'access',
+          label: 'Access',
+          position: 'left',
+        },
+        {
+          to: 'docs/router/router_about',
+          activeBasePath: 'router/access',
+          label: 'Router',
           position: 'left',
         },
       ],

@@ -53,4 +53,11 @@ module.exports = {
   accessSitebar: [
     'access/access_about',
   ],
+  router: [
+    'router/router_about',
+    'router/router_configs',
+    'router/router_components',
+    'router/router_with_router',
+    'router/router_config',
+  ],
 }
