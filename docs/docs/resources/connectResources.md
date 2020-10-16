@@ -90,7 +90,7 @@ this.props.users.errors => undefined
 }
 ```
 
-1.3 ~~Save filters~~. If you need to pass query string with your HHTP request, resources will store filters in redux, that could be usefull for example to increment page in infility lists. JSON representation of query string will be next transformed to string with [queryParams module](/frontend-docs/docs/queryParams/queryParams_about)
+1.3 ~~Save filters~~. If you need to pass query string with your HHTP request, resources will store filters in redux, that could be usefull for example to increment page in infility lists. JSON representation of query string will be next transformed to string with [queryParams module](/bones/docs/queryParams/queryParams_about)
 
 ```json
 //how to pass filters
@@ -109,7 +109,7 @@ this.props.users.filters => { page: 1 }
 }
 ```
 
-2. ~~Send HHTP request~~. Http request will be handled by [API module](/frontend-docs/docs/api/api_about)
+2. ~~Send HHTP request~~. Http request will be handled by [API module](/bones/docs/api/api_about)
 
 3.1. ~~Toogle loading~~. Toogle loading indicator to `false` 
 ```json
@@ -227,7 +227,7 @@ function ReactComponent({ cats })
 
 #### ~~endpoint~~
 
-endpoint is url String to describe your HTTPS request. This field is not required and by default equals to [namespace](/frontend-docs/docs/resources/connect_resources#namespace).
+endpoint is url String to describe your HTTPS request. This field is not required and by default equals to [namespace](/bones/docs/resources/connect_resources#namespace).
 
 To have dynamic url config you can use [path-to-regex](https://www.npmjs.com/package/path-to-regex) syntax.
 
@@ -508,7 +508,7 @@ export default function CarsAndPetsPage(){
 
 ### ~~Simple syntax~~
 
-As you may remember that [Resource](/frontend-docs/docs/resources/connect_resources#resource) object has only 1 required option (namespace), you can use more light syntax to define Resource as a String
+As you may remember that [Resource](/bones/docs/resources/connect_resources#resource) object has only 1 required option (namespace), you can use more light syntax to define Resource as a String
 
 ```javascript
 // several

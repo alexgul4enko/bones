@@ -6,7 +6,7 @@ sidebar_label: Hooks
 
 ## ~~useResource~~
 
-Hook that will create resource. The difference from connectResources is that useResource will only accept single [Resource](/frontend-docs/docs/resources/connect_resources#resource) and return same properties as [connectResources](/frontend-docs/docs/resources/connect_resources#basic-usage)
+Hook that will create resource. The difference from connectResources is that useResource will only accept single [Resource](/bones/docs/resources/connect_resources#resource) and return same properties as [connectResources](/bones/docs/resources/connect_resources#basic-usage)
 
 ```javascript
 import { useResource } from '@cranium/resource'
@@ -28,7 +28,7 @@ function MyReactComponent () {
 ```
 
 ## ~~useCustomRequest~~
-Hook for custom async action
+Hook to use custom async fucntion. 
 ```
 useCustomRequest(asyncFunction, namespace)
 ```
@@ -46,10 +46,70 @@ function tryAsync(API, payload, meta) {
 
 
 function MyReactComponent () {
-  const findLove = useCustomRequest(tryAsync, 'myLove') 
-  return <button onClick={()=>findLove()}>Find your love</button>
+  const { data, isLoading,  errors, request } = useCustomRequest(tryAsync, 'myLove') 
+  return <button onClick={()=>request()}>Find your love</button>
 }
 ```
+
+## ~~usePrefetchResource~~
+Same as useResource but it will automatically send request on mount and terminate pending requests on unmount. Also by default it will clear redux store for particular resource on component unmount.
+
+```
+usePrefetchResource(resource, configs)
+```
+
+### ~~resource~~
+[Resource](/bones/docs/resources/connect_resources#resource) config. Required
+
+### ~~configs [Object]~~
+- configs.filters [Object]. Filters to pass as an argument to prefetch request
+- configs.method ("GET" | "POST")
+- configs.destroyOnUnmount [Boolean]. Default true. Flag to clear resource on unmount
+
+
+```jsx
+import { usePrefetchResource } from '@cranium/resource'
+
+function MyReactComponent () {
+  const { data, isLoading,  errors, fetch } = usePrefetchResource('users/me')
+  return <UserElement user={data}/>
+}
+```
+
+## ~~usePrefetchRequest~~
+Same as usePrefetchResource in case u need to provide some custom async function on load Component
+
+```
+usePrefetchRequest(asyncFunction, resource, configs)
+```
+
+### ~~asyncFunction~~
+[Function] Required. Function that will be invoced on component mount. This function should return Promise. See ~~useCustomRequest~~ for more details
+
+
+### ~~resource~~
+[Resource](/bones/docs/resources/connect_resources#resource) config. Required
+
+### ~~configs [Object]~~
+- configs.filters [Object]. Filters to pass as an argument to prefetch request
+- configs.method ("GET" | "POST")
+- configs.destroyOnUnmount [Boolean]. Default true. Flag to clear resource on unmount
+
+
+```jsx
+import { usePrefetchRequest } from '@cranium/resource'
+
+function request(API, data, { endpoint, signal }) {
+  return API.get('profile/me', { signal })
+}
+
+function MyReactComponent () {
+  const { data, isLoading,  errors, request } = usePrefetchRequest('users/me')
+  return <UserElement user={data}/>
+}
+```
+
+
 
 ## ~~useRequest~~
 Hook for async resource action.
@@ -59,7 +119,7 @@ useRequest(resource, type)
 ```
 
 ### ~~resource~~
-[Resource](/frontend-docs/docs/resources/connect_resources#resource) config. Required
+[Resource](/bones/docs/resources/connect_resources#resource) config. Required
 
 ### ~~type~~
 
@@ -148,3 +208,25 @@ function MyReactComponent () {
   return <button onClick={clear}>Log out</button>
 }
 ```
+## ~~useSearch~~
+
+Hook that will create search fucntion.
+1. debounce
+2. terminate previous request before sending new request
+3. terminate request on unmount
+```javascript
+import { useSearch } from '@cranium/resource'
+
+useSearch(searchFunction, timeout)
+```
+
+```jsx
+import { useResource, useSearch } from '@cranium/resource'
+
+function MyReactComponent () {
+  const { data, isLoading,  errors, fetch } = useResource('users/me')
+  const search = useSearch(fetch)
+  return <SearchInput search={search}/>
+}
+```
+

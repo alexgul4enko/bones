@@ -51,7 +51,7 @@ function ConditionalElement(){
 
 ## ~~Page level access~~
 
-[RouteRecursive](/frontend-docs/docs/skeleton/skeleton_routing) also uses CheckAccess to set up page level access level you can use a pair of configs `access` and `accessRedirectTo`
+[RouteRecursive](/bones/docs/skeleton/skeleton_routing) also uses CheckAccess to set up page level access level you can use a pair of configs `access` and `accessRedirectTo`
 
 Usage:
 

@@ -4,12 +4,12 @@ title: withFinalForm
 sidebar_label: withFinalForm
 ---
 
-This is function returns HOC to connect your React Component with [connectResources](/frontend-docs/docs/resources/connect_resources) and [react-final-form](https://final-form.org/react).
+This is function returns HOC to connect your React Component with [connectResources](/bones/docs/resources/connect_resources) and [react-final-form](https://final-form.org/react).
 
 This HOC will pass to your React Component [form props](https://final-form.org/docs/react-final-form/types/FormRenderProps) from  react-final-form and props from ~~connectResources~~.
 Also this HOC will predefine `onSubmit` function by next criteria:
 
-If your are using [customresource](/frontend-docs/docs/resources/resource_customresources), then it will use ~~this.props[namespace].customRequest~~. Otherwise it will send `POST` or `PATCH` HTTP request based on endpoint and props.
+If your are using [customresource](/bones/docs/resources/resource_customresources), then it will use ~~this.props[namespace].customRequest~~. Otherwise it will send `POST` or `PATCH` HTTP request based on endpoint and props.
 
 
 ## ~~API~~
@@ -30,7 +30,7 @@ withFinalForm(formConfigs, resources, options)
 |   initialValues       | ```Object\|function(props):Object```           |
 
 #### ~~validate~~
-function to handle form level validation. For more information you may read [here](/frontend-docs/docs/skeleton/skeleton_forms#form-level-validation)
+function to handle form level validation. For more information you may read [here](/bones/docs/skeleton/skeleton_forms#form-level-validation)
 
 #### ~~onSubmit~~
 ```javascript
@@ -101,8 +101,8 @@ Please pay attantion that you can not call any function that will change store o
 
 ### ~~resources~~
 
-`resources` is param that will be passed to [connectResources](/frontend-docs/docs/resources/connect_resources) function.
-Same as with connectResources, `resources` could be [Resource](/frontend-docs/docs/resources/connect_resources#resource) object or **Array<Resource\>** or simple [String](/frontend-docs/docs/resources/connect_resources#simple-syntax).
+`resources` is param that will be passed to [connectResources](/bones/docs/resources/connect_resources) function.
+Same as with connectResources, `resources` could be [Resource](/bones/docs/resources/connect_resources#resource) object or **Array<Resource\>** or simple [String](/bones/docs/resources/connect_resources#simple-syntax).
 
 ### ~~options~~
 
@@ -110,17 +110,17 @@ Object with additional configurations
 
 |  Property          |      type             |      Default  |
 | -------------------| --------------------- | --------------|
-|   [refresh](/frontend-docs/docs/resources/resource_prefetchResources#refresh)          | Boolean               | true          |
-|   [destroyOnUnmount](/frontend-docs/docs/resources/resource_prefetchResources#destroyonunmount) | Boolean               | true          | 
-|   [defaultParams](/frontend-docs/docs/resources/resource_prefetchResources#defaultparams)    | Object                | null          | 
-|   [Loader](/frontend-docs/docs/resources/resource_prefetchResources#loader)           | React Element         |               | 
+|   [refresh](/bones/docs/resources/resource_prefetchResources#refresh)          | Boolean               | true          |
+|   [destroyOnUnmount](/bones/docs/resources/resource_prefetchResources#destroyonunmount) | Boolean               | true          | 
+|   [defaultParams](/bones/docs/resources/resource_prefetchResources#defaultparams)    | Object                | null          | 
+|   [Loader](/bones/docs/resources/resource_prefetchResources#loader)           | React Element         |               | 
 |   prefetch          | Boolean        |        true       | 
 
 Most configurations are same with ~~prefetchResources~~. But here is one new param `prefetch`
 
 #### ~~prefetch~~
 Boolean flag that means if you need to have initial request for remote data or not.
-In general this will use ~~prefetchResources~~ or ~~connectResources~~ based on [digram](/frontend-docs/docs/resources/resource_prefetchResources#prefetchresources-us-connectresources)
+In general this will use ~~prefetchResources~~ or ~~connectResources~~ based on [digram](/bones/docs/resources/resource_prefetchResources#prefetchresources-us-connectresources)
 
 
 ## ~~REST API FLOW~~

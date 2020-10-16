@@ -122,7 +122,7 @@ import React from 'react'
 
 ## ~~spa~~
 
-block that will be mostly use in pair with [react](/frontend-docs/docs/skeleton/webpack#react) preset.
+block that will be mostly use in pair with [react](/bones/docs/skeleton/webpack#react) preset.
 
 This block uses [HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/) to inject links to compiled javascript and css files into htlm. 
 

@@ -4,7 +4,7 @@ title: Terminate requests
 sidebar_label: Terminate requests
 ---
 
-You can terminate pending requests using [AbortController](https://developer.mozilla.org/en-US/(/frontend-docs/docs//Web/API/AbortController).
+You can terminate pending requests using [AbortController](https://developer.mozilla.org/en-US/docs/Web/API/AbortController).
 
 ```javascript
 const controller = new AbortController()

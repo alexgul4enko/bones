@@ -60,7 +60,7 @@ In most cases you should not be worry about `Content-Type`. This will be automat
 
 ### ~~paramsSerializer~~
 Is function that will convert JSON to query string.
-By default uses [queryParams.buildQueryParams](/frontend-docs/docs/queryParams/queryParams_about)
+By default uses [queryParams.buildQueryParams](/bones/docs/queryParams/queryParams_about)
 
 ### ~~isMultipartFormData~~
 

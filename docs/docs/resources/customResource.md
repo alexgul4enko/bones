@@ -4,7 +4,7 @@ title: Custom Resource
 sidebar_label: Custom Resource
 ---
 
-[connectResource](/frontend-docs/docs/resources/connect_resources) will add all possible methods to work with standard REST API.
+[connectResource](/bones/docs/resources/connect_resources) will add all possible methods to work with standard REST API.
 But what if you need something more then sending 1 HTTP request, what if you have more complex logic?
 In this case you may need to use ~~customresource~~
 
@@ -29,10 +29,10 @@ customConnectResource({ namespace: 'delay' })(MyReactElement)
 
 ```
 
-In this example customConnectResource function that takes [Resouce](/frontend-docs/docs/resources/connect_resources#resource) as an argument and return HOC. The difference between ~~connectResource~~ is that customConnectResource can take only 1 [Resouce](/frontend-docs/docs/resources/connect_resources#resource) config, it can not be an array. And it will add 1 more property `this.props.delay.customFetch`.
+In this example customConnectResource function that takes [Resouce](/bones/docs/resources/connect_resources#resource) as an argument and return HOC. The difference between ~~connectResource~~ is that customConnectResource can take only 1 [Resouce](/bones/docs/resources/connect_resources#resource) config, it can not be an array. And it will add 1 more property `this.props.delay.customFetch`.
 
 `myCustomFetch` is function that will be triggered instead of stantard HTTP request. This function acceps 3 arguments:
- - [API](/frontend-docs/docs/api/api_about) module for sending HTTP request
+ - [API](/bones/docs/api/api_about) module for sending HTTP request
  - payload. Is redux action payload
  - meta. Is redux action meta data
  

@@ -13,7 +13,6 @@ import NavItem from './widgets/NavItem'
 import MobileNavItem from './widgets/MobileNavItem'
 import styles from './navbar.module.scss'
 
-
 export default function Navbar() {
   const {
     siteConfig: {
@@ -84,7 +83,7 @@ export default function Navbar() {
             {logoImageUrl != null && (
               <img
                 key={isClient}
-                className="navbar__logo"
+                className={`navbar__logo ${styles.logo}`}
                 src={logoImageUrl}
                 alt={logoAlt}
               />

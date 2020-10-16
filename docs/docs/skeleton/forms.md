@@ -4,7 +4,7 @@ title: Forms
 sidebar_label: Forms
 ---
 
-We use [react-final-form](https://final-form.org/react) to handle form state. To connect your React component with final form we recommend to use [withFinalForm](/frontend-docs/docs/resources/resource_withFinalForm) HOC that includes some common code to work with REST API and form elements.
+We use [react-final-form](https://final-form.org/react) to handle form state. To connect your React component with final form we recommend to use [withFinalForm](/bones/docs/resources/resource_withFinalForm) HOC that includes some common code to work with REST API and form elements.
 
 To make form's javascript code more reusable you can use `common/forms` folder and put all standend inputs there.
 

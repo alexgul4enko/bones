@@ -105,7 +105,7 @@ const routes = [
 
 ## ~~access~~
 
-Access level for route. For more information read [this](/frontend-docs/docs/skeleton/skeleton_access#page-level-access)
+Access level for route. For more information read [this](/bones/docs/skeleton/skeleton_access#page-level-access)
 
 ## ~~accessRedirectTo~~
 
@@ -115,7 +115,7 @@ Redirect url if user does not has permissions to view this page
 
 Overrides [Link](https://reacttraining.com/react-router/web/api/Link) component from react-router
 
-- **to: String**. Instead of url  as in original Link Component, here you should use [name](/frontend-docs/docs/skeleton/skeleton_routing#name)
+- **to: String**. Instead of url  as in original Link Component, here you should use [name](/bones/docs/skeleton/skeleton_routing#name)
 - **state: object**. State to persist to the location.
 - **other props**
 
@@ -123,7 +123,7 @@ Overrides [Link](https://reacttraining.com/react-router/web/api/Link) component 
 
 Overrides [NavLink](https://reacttraining.com/react-router/web/api/NavLink) component from react-router
 
-- **to: String**. Instead of url  as in original Link Component, here you should use [name](/frontend-docs/docs/skeleton/skeleton_routing#name)
+- **to: String**. Instead of url  as in original Link Component, here you should use [name](/bones/docs/skeleton/skeleton_routing#name)
 - **state: object**. State to persist to the location.
 - **other props**
 

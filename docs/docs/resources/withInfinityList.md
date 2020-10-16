@@ -17,8 +17,8 @@ withInfinityList(resource, options)
 
 ### ~~resource~~
 
-This is [Resource](/frontend-docs/docs/resources/connect_resources#resource) object or String configuration.
-The difference between all previous HOC's i that withInfinityList does not acceps several [Resource](/frontend-docs/docs/resources/connect_resources#resource) configs so that it can not be a array.
+This is [Resource](/bones/docs/resources/connect_resources#resource) object or String configuration.
+The difference between all previous HOC's i that withInfinityList does not acceps several [Resource](/bones/docs/resources/connect_resources#resource) configs so that it can not be a array.
 It could be also custoresource function.
 
 
@@ -28,11 +28,11 @@ Object with additional configurations
 
 |  Property          |      type             |      Default  |
 | -------------------| --------------------- | --------------|
-|   [refresh](/frontend-docs/docs/resources/resource_prefetchResources#refresh)          | Boolean               | true          |
-|   [destroyOnUnmount](/frontend-docs/docs/resources/resource_prefetchResources#destroyonunmount) | Boolean               | true          | 
-|   [defaultParams](/frontend-docs/docs/resources/resource_prefetchResources#defaultparams)    | Object                | null          | 
-|   [Loader](/frontend-docs/docs/resources/resource_prefetchResources#loader)           | React Element         |               | 
-|   [prefetch](/frontend-docs/docs/resources/resource_withFinalForm#prefetch)          | Boolean        |        true       | 
+|   [refresh](/bones/docs/resources/resource_prefetchResources#refresh)          | Boolean               | true          |
+|   [destroyOnUnmount](/bones/docs/resources/resource_prefetchResources#destroyonunmount) | Boolean               | true          | 
+|   [defaultParams](/bones/docs/resources/resource_prefetchResources#defaultparams)    | Object                | null          | 
+|   [Loader](/bones/docs/resources/resource_prefetchResources#loader)           | React Element         |               | 
+|   [prefetch](/bones/docs/resources/resource_withFinalForm#prefetch)          | Boolean        |        true       | 
 
 ## ~~Usage~~
 ~~withInfinityList~~ will pass 3 more additional props to your component:

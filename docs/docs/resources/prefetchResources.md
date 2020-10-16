@@ -24,8 +24,8 @@ prefetchResources(resources, options)
 
 ### ~~resources~~
 
-Where `resources` is param that will be passed to [connectResources](/frontend-docs/docs/resources/connect_resources) function.
-Same as with connectResources, `resources` could be [Resource](/frontend-docs/docs/resources/connect_resources#resource) object or **Array<Resource\>** or simple [String](/frontend-docs/docs/resources/connect_resources#simple-syntax)
+Where `resources` is param that will be passed to [connectResources](/bones/docs/resources/connect_resources) function.
+Same as with connectResources, `resources` could be [Resource](/bones/docs/resources/connect_resources#resource) object or **Array<Resource\>** or simple [String](/bones/docs/resources/connect_resources#simple-syntax)
 
 ### ~~options~~
 
@@ -36,7 +36,8 @@ Object with additional configurations
 |   refresh          | Boolean               | true          |
 |   destroyOnUnmount | Boolean               | true          | 
 |   defaultParams    | Object                | null          | 
-|   Loader           | React Element         |               | 
+|   Loader           | React Element         |               |
+|   method           | "POST" or "GET "      |   "GET"       | 
 
 
 #### ~~refresh~~
@@ -168,8 +169,8 @@ prefetchResources({
 
 ## ~~customresource on mount~~
 
-You can use [customresource](/frontend-docs/docs/resources/resource_customresources) in pair with ~~prefetchResources~~. 
-To do that you just need to pass ~~customresource~~ as a [resources](/frontend-docs/docs/resources/resource_prefetchResources#resources)
+You can use [customresource](/bones/docs/resources/resource_customresources) in pair with ~~prefetchResources~~. 
+To do that you just need to pass ~~customresource~~ as a [resources](/bones/docs/resources/resource_prefetchResources#resources)
 
 ```javascript
 import { customResource, prefetchResources } from '@cranium/resource'

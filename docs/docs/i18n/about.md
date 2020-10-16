@@ -64,7 +64,7 @@ Than it will be `keyName` in [Storage.setItem](https://developer.mozilla.org/en-
 
 ### ~~storage(required)~~
 
-Object for caching data. For more information you can read [here](/frontend-docs/docs/cache/cache_middleware#storage). Or you can create your [own storage](/frontend-docs/docs/cache/cache_middleware#create-own-storage)
+Object for caching data. For more information you can read [here](/bones/docs/cache/cache_middleware#storage). Or you can create your [own storage](/bones/docs/cache/cache_middleware#create-own-storage)
 
 ### ~~url~~
 
@@ -83,7 +83,7 @@ This is common priciple that you should have an API Endpoint that will return tr
 
 ### ~~api~~
 
-Instance of [API](/frontend-docs/docs/api/api_about)
+Instance of [API](/bones/docs/api/api_about)
 
 ### ~~reload~~
 
