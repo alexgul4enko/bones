@@ -27,7 +27,7 @@ export default function(form = {}, resource, configs) {
   const _configs = mergeConfigs(defaultConfigs, configs)
   const idKey = parseIdKey(resource.endpoint || key)
   return compose(
-    configs.prefetch !== false ? prefetchResources(resource, { ..._configs, idKey }) : typeof resource === 'function' ? resource : connectResources(resource),
+    get(configs, 'prefetch') !== false ? prefetchResources(resource, { ..._configs, idKey }) : typeof resource === 'function' ? resource : connectResources(resource),
     finalForm(form, { key, resource, configs: _configs })
   )
 }

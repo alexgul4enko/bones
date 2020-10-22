@@ -63,7 +63,7 @@ export function prefetch(resources, configs) {
             .filter(item => typeof item !== 'string')
             .map(({ name }) => name) || []
           const apiDatafromProps = pick(this.props, [...urlConfigs, ...get(config, 'queries', [])])
-          const request = resource.customRequest || get(configs, 'method') === 'POST' ? resource.create : resource.fetch
+          const request = resource.customRequest ? resource.customRequest : get(configs, 'method') === 'POST' ? resource.create : resource.fetch
           return request({
             ...get(configs, 'defaultParams', {}),
             ...apiDatafromProps,
