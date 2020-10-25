@@ -63,6 +63,7 @@ export class TranslateProvider extends Component {
         this.setState({ translations })
         storage.setItem(translationsKey, JSON.stringify(translations))
       })
+      .catch(noop)
   }
 
   initTranslations() {
