@@ -19,6 +19,7 @@ const propTypes = {
   url: PropTypes.string.isRequired,
   api: PropTypes.object.isRequired,
   reload: PropTypes.func,
+  monoLanguageJSON: PropTypes.bool,
 }
 
 const defaultProps = {
@@ -26,6 +27,7 @@ const defaultProps = {
   langKey: 'lang',
   translationsKey: 'translations',
   reload: noop,
+  monoLanguageJSON: false,
 }
 
 export const TranslationPropTypes = {
@@ -109,18 +111,29 @@ export class TranslateProvider extends Component {
 
   pgettext(id, text) {
     const message = `${text} ${id}`
+    const { monoLanguageJSON } = this.props
     const { language, translations } = this.state
+    if(monoLanguageJSON) {
+      return get(translations, `[${message}]`) || text
+    }
     return get(translations, `[${message}].${language}`, get(translations, `[${message}].en`)) || text
   }
 
   gettext(text = '') {
     const { language, translations } = this.state
+    const { monoLanguageJSON } = this.props
+    if(monoLanguageJSON) {
+      return get(translations, `[${text}]`) || text
+    }
     return get(translations, `[${text}].${language}`, get(translations, `[${text}].en`)) || text
   }
 
   ngettext(singular, plural, count) {
     const { language, translations } = this.state
-    const translation = get(translations, `[${singular}].${language}`, get(translations, `[${singular}].en`))
+    const { monoLanguageJSON } = this.props
+    const translation = monoLanguageJSON
+      ? get(translations, `[${singular}]`)
+      : get(translations, `[${singular}].${language}`, get(translations, `[${singular}].en`))
     if(translation === undefined) {
       return count === 1 ? singular : plural
     }
@@ -129,8 +142,11 @@ export class TranslateProvider extends Component {
 
   npgettext(id, singular, plural, count) {
     const { language, translations } = this.state
+    const { monoLanguageJSON } = this.props
     const selector = `${singular} ${id}`
-    const translation = get(translations, `[${selector}].${language}`, get(translations, `[${selector}].en`))
+    const translation = monoLanguageJSON
+      ? get(translations, `[${selector}]`)
+      : get(translations, `[${selector}].${language}`, get(translations, `[${selector}].en`))
     if(translation === undefined) {
       return count === 1 ? singular : plural
     }
