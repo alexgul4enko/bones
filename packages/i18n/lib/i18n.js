@@ -50,15 +50,15 @@ export class TranslateProvider extends Component {
     this.setLanguage = this.setLanguage.bind(this)
     this.ngettext = this.ngettext.bind(this)
     this.npgettext = this.npgettext.bind(this)
+    this.refreshTranslations = this.refreshTranslations.bind(this)
     this.initTranslationsLang()
     this.initTranslations()
-    this.refreshTranslations()
   }
 
 
-  refreshTranslations() {
+  refreshTranslations(lang) {
     const { api, url, translationsKey, storage } = this.props
-    api.get(url)
+    api.get(url, { params: { lang } })
       .then(translations => {
         this.setState({ translations })
         storage.setItem(translationsKey, JSON.stringify(translations))
@@ -81,8 +81,12 @@ export class TranslateProvider extends Component {
       .then(language => {
         if(!language) { throw new Error('Language not defined') }
         this.setState({ language })
+        this.refreshTranslations(language)
       })
-      .catch(_ => storage.setItem(langKey, defaultLanguage.split('-')[0]))
+      .catch(_ => {
+        storage.setItem(langKey, defaultLanguage.split('-')[0])
+        this.refreshTranslations(defaultLanguage.split('-')[0])
+      })
   }
 
   setLanguage(lang) {
@@ -105,7 +109,8 @@ export class TranslateProvider extends Component {
 
   pgettext(id, text) {
     const message = `${text} ${id}`
-    return this.gettext(message)
+    const { language, translations } = this.state
+    return get(translations, `[${message}].${language}`, get(translations, `[${message}].en`)) || text
   }
 
   gettext(text = '') {
