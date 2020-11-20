@@ -226,7 +226,7 @@ export function npgettext(id = '', singular = '', plural = '', count) {
 
 export function interpolate(message, obj, named) {
   if(named) {
-    return message.replace(/%\(\w+\)/g, function(match) { return String(obj[match.slice(2, -2)]) })
+    return message.replace(/%\(\w+\)/g, function(match) { return String(obj[match.slice(2, -1)]) })
   } else {
     return message.replace(/%s/g, function(match) { return String(obj.shift()) })
   }
