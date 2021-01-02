@@ -121,7 +121,7 @@ export function makeRequest(httpRequest) {
         queries = [],
         forceUpdates,
       } = meta
-      if(endpoint.search(/\/:/) > -1) {
+      if(endpoint && endpoint.search(/\/:/) > -1) {
         endpoint = compile(endpoint)(payload)
       }
 
@@ -204,7 +204,7 @@ function mapDispatchToProps(resources, dispatch) {
 }
 
 
-function mergeProps(stateProps, dispatchProps, ownProps) {
+export function mergeProps(stateProps, dispatchProps, ownProps) {
   const mergeProps = Object.entries(stateProps).reduce((acc, [key, value]) => {
     return {
       ...acc,

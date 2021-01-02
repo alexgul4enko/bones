@@ -6,10 +6,9 @@ import requestStatus from './utils/requestStatus'
 export default function useSearch(request, timeout = 200) {
   const cancelRequest = useMemo(() => new requestStatus(), [])
   const debouncedRequest = useMemo(() => debounce(request, timeout), [request])
-  const handleClick = useCallback((...args) => {
+  useEffect(() => cancelRequest.cancel, [])
+  return useCallback((...args) => {
     cancelRequest.cancel()
     cancelRequest.setRequest(debouncedRequest(...args))
   }, [debouncedRequest])
-  useEffect(() => cancelRequest.cancel, [])
-  return handleClick
 }

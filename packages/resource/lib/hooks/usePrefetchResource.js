@@ -39,5 +39,5 @@ export default function usePrefetchResource(config, prefetchConfigs) {
     }
     return request.cancel
   }, [])
-  return useMemo(() => ({ ...resource, ...actions }), [resource, config])
+  return useMemo(() => ({ isLoading: true, ...resource, ...actions }), [resource, config])
 }

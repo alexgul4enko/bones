@@ -7,6 +7,7 @@ import connectResources, {
 
 export * from './hocs'
 export * from './hooks'
+export * from './qraphQL'
 
 export {
   connectResources,
