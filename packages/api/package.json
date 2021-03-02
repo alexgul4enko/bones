@@ -35,7 +35,7 @@
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
   "devDependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "path-to-regexp": "^6.2.0"
   },
   "dependencies": {
