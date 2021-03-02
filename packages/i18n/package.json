@@ -35,9 +35,9 @@
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
   "peerDependencies": {
     "prop-types": "^15.7.2",
-    "react": "^16.13.1"
+    "react": "^17.0.1"
   },
   "devDependencies": {
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.21"
   }
 }
