@@ -30,6 +30,14 @@ module.exports = {
         'resources/resource_navigationToProps',
       ],
     },
+    {
+      GraphQL: [
+        'resources/graphql/usequery',
+        'resources/graphql/usePrefetchQuery',
+        'resources/graphql/useGraphInifnyList',
+      ],
+    },
+
     'resources/resource_hooks',
   ],
   cacheSitebar: [
