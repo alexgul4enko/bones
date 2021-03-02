@@ -35,12 +35,12 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "devDependencies": {
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "path-to-regexp": "^6.2.0",
     "prop-types": "^15.7.2"
   },
   "peerDependencies": {
-    "react": "^16.14.0"
+    "react": "^17.0.1"
   },
   "dependencies": {
     "@cranium/queryparams": "^1.0.49",
