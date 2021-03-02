@@ -33,7 +33,7 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "peerDependencies": {
-    "react": "^16.14.0"
+    "react": "^17.0.1"
   },
   "devDependencies": {
     "prop-types": "^15.7.2"
