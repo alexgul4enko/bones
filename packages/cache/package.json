@@ -34,10 +34,6 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "peerDependencies": {
-    "react": "^17.0.1",
-    "react-redux": "^7.2.2"
-  },
   "devDependencies": {
     "lodash": "^4.17.21",
     "prop-types": "^15.7.2"

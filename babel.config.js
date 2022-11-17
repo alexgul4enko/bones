@@ -1,6 +1,8 @@
 module.exports = {
   compact: false,
   presets: [
+    ['@babel/preset-react', { runtime: 'automatic' }],
+    '@babel/preset-typescript',
     [
       '@babel/preset-env',
       {
@@ -11,20 +13,18 @@ module.exports = {
         },
       },
     ],
-    ['@babel/preset-react', {
-      runtime: 'automatic',
-    }],
-    '@babel/preset-flow',
+    // '@babel/preset-flow',
   ],
   plugins: [
-    // stage 2
+    'babel-plugin-replace-ts-export-assignment',
     ['@babel/plugin-proposal-decorators', { legacy: true }],
     '@babel/plugin-proposal-numeric-separator',
-    // stage 3
     '@babel/plugin-syntax-dynamic-import',
-    '@babel/plugin-syntax-import-meta',
     ['@babel/plugin-proposal-class-properties', { loose: false }],
     '@babel/plugin-proposal-json-strings',
     '@babel/plugin-proposal-export-namespace-from',
+    ['babel-plugin-jsx-remove-data-test-id', {
+      attributes: ['data-cy'],
+    }],
   ],
 }
