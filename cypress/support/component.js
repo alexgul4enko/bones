@@ -24,5 +24,16 @@ import { mount } from 'cypress/react18';
 
 Cypress.Commands.add('mount', mount);
 
+Cypress.on('uncaught:exception', (cachedError, runnable, promise) => {
+  // when the exception originated from an unhandled promise
+  // rejection, the promise is provided as a third argument
+  // you can turn off failing the test in this case
+  if (promise) {
+    // returning false here prevents Cypress from
+    // failing the test
+    return false;
+  }
+});
+
 // Example use:
 // cy.mount(<MyComponent />)

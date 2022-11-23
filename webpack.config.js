@@ -1,6 +1,6 @@
 const merge = require('webpack-merge').merge;
 
-function resolveExtensions(extensions) {
+function resolveExtensions() {
   return {
     resolve: {
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json']
@@ -8,7 +8,7 @@ function resolveExtensions(extensions) {
   };
 }
 
-function resolveModules(modules) {
+function resolveModules() {
   return {
     resolve: {
       modules: ['node_modules', 'packages']
@@ -16,7 +16,7 @@ function resolveModules(modules) {
   };
 }
 
-function setMode(isDevelopment) {
+function setMode() {
   return {
     mode: 'development',
     devtool: 'cheap-module-source-map',
@@ -83,7 +83,7 @@ function react() {
   };
 }
 
-function typescriptLoader(isDevelopment) {
+function typescriptLoader() {
   return {
     module: {
       rules: [

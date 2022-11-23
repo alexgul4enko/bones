@@ -7,6 +7,5 @@
     "isolatedModules": true,
     "skipLibCheck": true,
     "resolveJsonModule": true,
-    
   }
 }

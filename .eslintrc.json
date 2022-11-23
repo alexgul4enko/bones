@@ -48,7 +48,22 @@
     "react/jsx-uses-vars": ["error"],
     "react/display-name": ["off", { "ignoreTranspilerName": true }]
   },
-  "globals": {
-        "Cypress": "readonly"
+  "overrides": [
+    {
+      "files": ["cypress/**/*.{ts,tsx}","packages/**/*.{ts,tsx}"],
+      "parser": "@typescript-eslint/parser",
+      "plugins": [
+          "@typescript-eslint"
+        ],
+        "extends": [
+          "eslint:recommended",
+          "plugin:@typescript-eslint/eslint-recommended",
+          "plugin:@typescript-eslint/recommended"
+        ]
     }
+  ],
+  "globals": {
+        "Cypress": "readonly",
+        "cy": "readonly"
+  }
 }

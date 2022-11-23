@@ -27,6 +27,8 @@
     "@cypress/code-coverage": "^3.10.0",
     "@types/react": "^18.0.25",
     "@types/react-dom": "^18.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.44.0",
+    "@typescript-eslint/parser": "^5.44.0",
     "babel-loader": "^9.1.0",
     "babel-plugin-const-enum": "^1.2.0",
     "babel-plugin-import-graphql": "^2.8.1",
@@ -73,7 +75,8 @@
     "commit": "git-cz",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "cypress:run": "rm test-results/* || true && rm reports/* || true && npx cypress run --component"
+    "cypress:run": "rm test-results/* || true && rm reports/* || true && npx cypress run --component",
+    "cypress:open": "rm test-results/* || true && rm reports/* || true && npx cypress open"
   },
   "config": {
     "commitizen": {
