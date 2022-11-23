@@ -1,0 +1,4 @@
+{
+    "report-dir": "cypress-coverage",
+    "reporter": ["text", "json", "lcov", "cobertura", "json-summary", "clover"]
+}

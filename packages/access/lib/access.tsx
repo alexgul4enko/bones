@@ -11,7 +11,7 @@ export type AccessProviderProps = {
 }
 
 export const AccessProvider: FC<AccessProviderProps> = ({ children, acessLevels, ...props }) =>{
-  const permissions = useMemo(() => acessLevels(props), [acessLevels, props])
+  const permissions = useMemo(() => typeof acessLevels === 'function' ? acessLevels(props) : new Set(), [acessLevels, props])
   return (
     <AcessContext.Provider value={permissions}>
       {children}

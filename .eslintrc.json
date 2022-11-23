@@ -1,9 +1,10 @@
 {
   "extends": [
     "standard",
-    "plugin:react/recommended"
+    "plugin:react/recommended",
+    "prettier"
   ],
-  "parser": "babel-eslint",
+  "parser": "@babel/eslint-parser",
   "env": {
     "browser": true,
     "node": true,
@@ -20,7 +21,8 @@
     }
   },
   "plugins": [
-    "react"
+    "react",
+    "prettier"
   ],
   "settings": {
     "react": {
@@ -29,25 +31,24 @@
     }
   },
   "rules": {
-    "curly": ["error", "all"],
-    "comma-dangle": ["error", "always-multiline"],
-    "keyword-spacing": ["error", { "overrides": {
-      "if": { "after": false },
-      "for": { "after": false },
-      "while": { "after": false }
-    }}],
-    "spaced-comment": ["error", "always", {
-      "line": { "exceptions": ["/"], "markers": ["/"] },
-      "block": { "exceptions": ["*"], "markers": ["/"], "balanced": true }
+    "prettier/prettier": ["error", {
+      "semi": true,
+      "trailingComma": "none",
+      "tabWidth": 2,
+      "singleQuote": true,
+      "jsxSingleQuote": true,
+      "printWidth": 120,
+      "useTabs": false
     }],
-    "space-before-function-paren": ["error", { "anonymous": "never", "named": "never", "asyncArrow": "always" }],
     "prefer-promise-reject-errors": ["off"],
     "no-multiple-empty-lines": ["error", { "max": 2, "maxEOF": 0, "maxBOF": 0 }],
     "no-unused-vars": ["error", {"args": "none", "ignoreRestSiblings": true}],
-    "object-curly-spacing": ["error", "always"],
     "react/react-in-jsx-scope": "off",
     "react/prop-types": ["off"],
     "react/jsx-uses-vars": ["error"],
     "react/display-name": ["off", { "ignoreTranspilerName": true }]
-  }
+  },
+  "globals": {
+        "Cypress": "readonly"
+    }
 }

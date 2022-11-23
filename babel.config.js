@@ -9,10 +9,10 @@ module.exports = {
         useBuiltIns: 'entry',
         corejs: {
           version: 3,
-          proposals: true,
-        },
-      },
-    ],
+          proposals: true
+        }
+      }
+    ]
     // '@babel/preset-flow',
   ],
   plugins: [
@@ -23,8 +23,11 @@ module.exports = {
     ['@babel/plugin-proposal-class-properties', { loose: false }],
     '@babel/plugin-proposal-json-strings',
     '@babel/plugin-proposal-export-namespace-from',
-    ['babel-plugin-jsx-remove-data-test-id', {
-      attributes: ['data-cy'],
-    }],
-  ],
-}
+    [
+      'babel-plugin-jsx-remove-data-test-id',
+      {
+        attributes: ['data-cy']
+      }
+    ]
+  ]
+};
