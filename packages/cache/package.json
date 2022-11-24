@@ -1,16 +1,16 @@
 {
   "name": "@cranium/cache",
-  "version": "1.0.47",
+  "version": "2.0.0",
   "description": "redux cache middleware",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
   "license": "ISC",
   "keywords": [
-    "redux",
     "cache",
     "persist"
   ],
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "lib"
   },
@@ -26,7 +26,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "BABEL_ENV=build babel lib --out-dir dist --source-maps --extensions .js --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "compile-js": "BABEL_ENV=build babel lib --out-dir dist --source-maps --copy-files --extensions .js,.ts,.tsx --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "compile-ts": "tsc",
+    "build": "npm run compile-js && npm run compile-ts",
     "prerelease": "yarn build",
     "release": "lerna publish"
   },
@@ -34,12 +36,7 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "peerDependencies": {
-    "react": "^17.0.1",
-    "react-redux": "^7.2.2"
-  },
   "devDependencies": {
-    "lodash": "^4.17.21",
-    "prop-types": "^15.7.2"
+    "lodash": "^4.17.21"
   }
 }

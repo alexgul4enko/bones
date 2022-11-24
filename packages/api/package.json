@@ -1,16 +1,18 @@
 {
   "name": "@cranium/api",
-  "version": "1.0.49",
+  "version": "2.0.0",
   "description": "Promise based HTTP client for browsers and React-Native based on fetch API",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
   "keywords": [
     "http",
     "fetch",
-    "query params"
+    "query params",
+    "abort requests"
   ],
   "license": "ISC",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "lib"
   },
@@ -26,7 +28,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "BABEL_ENV=build babel lib --out-dir dist --source-maps --extensions .js --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "compile-js": "BABEL_ENV=build babel lib --out-dir dist --source-maps --copy-files --extensions .js,.ts,.tsx --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "compile-ts": "tsc",
+    "build": "npm run compile-js && npm run compile-ts",
     "prerelease": "yarn build",
     "release": "lerna publish"
   },
@@ -34,11 +38,10 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "devDependencies": {
-    "lodash": "^4.17.21",
-    "path-to-regexp": "^6.2.0"
-  },
   "dependencies": {
-    "@cranium/queryparams": "^1.0.49"
+    "@types/lodash": "^4.14.189",
+    "lodash": "^4.17.21",
+    "path-to-regexp": "^6.2.1",
+    "query-string": "^7.1.1"
   }
 }

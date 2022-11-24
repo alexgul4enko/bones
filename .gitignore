@@ -34,3 +34,9 @@ yarn-error.log*
 
 # ESLint
 .eslintcache
+
+.nyc_output
+test-results
+reports
+cypress-coverage
+cypress/videos/
