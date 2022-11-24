@@ -1,11 +1,12 @@
 {
   "name": "@cranium/redux-helpers",
-  "version": "1.0.50",
+  "version": "2.0.0",
   "description": "redux helpers",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
   "license": "ISC",
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "directories": {
     "lib": "lib"
   },
@@ -21,7 +22,9 @@
   },
   "scripts": {
     "test": "echo \"Error: run tests from root\" && exit 1",
-    "build": "BABEL_ENV=build babel lib --out-dir dist --source-maps --extensions .js --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "compile-js": "BABEL_ENV=build babel lib --out-dir dist --source-maps --copy-files --extensions .js,.ts,.tsx --delete-dir-on-start --config-file ../../babel.config.js --no-comments",
+    "compile-ts": "tsc",
+    "build": "npm run compile-js && npm run compile-ts",
     "prerelease": "yarn build",
     "release": "lerna publish"
   },
@@ -29,7 +32,8 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "devDependencies": {
+  "devDependencies": {},
+  "dependencies": {
     "lodash": "^4.17.21"
   }
 }

@@ -11,7 +11,8 @@ describe(specTitle('@cranium/api'), () => {
     cy.intercept('GET', '*', (req) => {
       const url = new URL(req.url);
       expect(url.pathname).to.equal('/users');
-      expect(req.body).to.be.empty();
+      // eslint-disable-next-line
+      expect(req.body).to.be.empty;
       expect(req.headers['content-type']).to.equal(Api.configs.headers['Content-Type']);
       expect(req.method).to.equal('GET');
       req.reply({ statusCode: 200 });
@@ -23,7 +24,8 @@ describe(specTitle('@cranium/api'), () => {
     cy.intercept('GET', '*', (req) => {
       const url = new URL(req.url);
       expect(url.pathname).to.equal('/users/12');
-      expect(req.body).to.be.empty();
+      // eslint-disable-next-line
+      expect(req.body).to.be.empty;
       expect(req.method).to.equal('GET');
       req.reply({ statusCode: 200 });
     });
@@ -36,7 +38,8 @@ describe(specTitle('@cranium/api'), () => {
       const url = new URL(req.url);
       expect(url.search).to.equal('?key=12');
       expect(url.pathname).to.equal('/users/test/');
-      expect(req.body).to.be.empty();
+      // eslint-disable-next-line
+      expect(req.body).to.be.empty;
       expect(req.method).to.equal('GET');
       req.reply({ statusCode: 200 });
     });
@@ -49,7 +52,8 @@ describe(specTitle('@cranium/api'), () => {
       const url = new URL(req.url);
       expect(url.pathname).to.equal('/users/');
       expect(url.search).to.equal('?uuid=test');
-      expect(req.body).to.be.empty();
+      // eslint-disable-next-line
+      expect(req.body).to.be.empty;
       expect(req.method).to.equal('GET');
       req.reply({ statusCode: 200 });
     });
@@ -62,7 +66,8 @@ describe(specTitle('@cranium/api'), () => {
       const url = new URL(req.url);
       expect(url.pathname).to.equal('/users/test');
       expect(url.search).to.equal('?age=12');
-      expect(req.body).to.be.empty();
+      // eslint-disable-next-line
+      expect(req.body).to.be.empty;
       expect(req.method).to.equal('GET');
       req.reply({ statusCode: 200 });
     });
