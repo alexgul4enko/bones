@@ -1,6 +1,6 @@
 {
   "name": "@cranium/redux-helpers",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "redux helpers",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -32,7 +32,6 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
-  "devDependencies": {},
   "dependencies": {
     "lodash": "^4.17.21"
   }

@@ -1,6 +1,6 @@
 {
   "name": "@cranium/resource",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "redux client for sending HTTP requests",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -45,6 +45,5 @@
     "lodash": "^4.17.21",
     "path-to-regexp": "^6.2.1",
     "react-final-form": "^6.5.9"
-  },
-  "devDependencies": {}
+  }
 }
