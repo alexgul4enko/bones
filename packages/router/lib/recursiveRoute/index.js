@@ -1,7 +1,5 @@
-import RouterConfig from './utils/RouterConfig'
-import RecursiveRoute from './RecursiveRoute'
+import RouterConfig from './utils/RouterConfig';
+import RecursiveRoute from './RecursiveRoute';
 
-export default RecursiveRoute
-export {
-  RouterConfig,
-}
+export default RecursiveRoute;
+export { RouterConfig };

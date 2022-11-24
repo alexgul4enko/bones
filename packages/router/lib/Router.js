@@ -1,20 +1,20 @@
-import { Router } from 'react-router'
-import PropTypes from 'prop-types'
-import RecursiveRoute, { RouterConfig as Config } from './recursiveRoute'
-import RouterConfig from './routerConfig'
-import { createBrowserHistory } from 'history'
+import { Router } from 'react-router';
+import PropTypes from 'prop-types';
+import RecursiveRoute, { RouterConfig as Config } from './recursiveRoute';
+import RouterConfig from './routerConfig';
+import { createBrowserHistory } from 'history';
 
-const history = createBrowserHistory()
+const history = createBrowserHistory();
 
 AppRouter.propTypes = {
   routes: PropTypes.array.isRequired,
   history: PropTypes.object,
-  notFountUrl: PropTypes.string.isRequired,
-}
+  notFountUrl: PropTypes.string.isRequired
+};
 
 AppRouter.defaultProps = {
-  history,
-}
+  history
+};
 
 export default function AppRouter({ routes, history, notFountUrl, configs }) {
   return (
@@ -27,5 +27,5 @@ export default function AppRouter({ routes, history, notFountUrl, configs }) {
         />
       </RouterConfig>
     </Router>
-  )
+  );
 }

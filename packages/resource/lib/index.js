@@ -1,17 +1,9 @@
-import ResourceType from './ResourceType'
+import ResourceType from './ResourceType';
 
-import connectResources, {
-  resourcesReducer,
-  customResource,
-} from './resources'
+import connectResources, { resourcesReducer, customResource } from './resources';
 
-export * from './hocs'
-export * from './hooks'
-export * from './qraphQL'
+export * from './hocs';
+export * from './hooks';
+export * from './qraphQL';
 
-export {
-  connectResources,
-  resourcesReducer,
-  ResourceType,
-  customResource,
-}
+export { connectResources, resourcesReducer, ResourceType, customResource };

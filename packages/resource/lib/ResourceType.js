@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types'
+import PropTypes from 'prop-types';
 
 const ResourceType = PropTypes.shape({
   create: PropTypes.func,
@@ -16,7 +16,7 @@ const ResourceType = PropTypes.shape({
   options: PropTypes.object,
   filters: PropTypes.object,
   errors: PropTypes.object,
-  data: PropTypes.any,
-})
+  data: PropTypes.any
+});
 
-export default ResourceType
+export default ResourceType;

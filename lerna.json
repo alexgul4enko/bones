@@ -13,7 +13,8 @@
       "npmClient": "yarn",
       "allowBranch": [
         "master",
-        "feature/*"
+        "feature/*",
+        "2.0"
       ]
     }
   }

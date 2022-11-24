@@ -1,7 +1,5 @@
-import RouterConfig, { RouterConfigContext } from './RouterConfig'
+import RouterConfig, { RouterConfigContext } from './RouterConfig';
 
-export default RouterConfig
+export default RouterConfig;
 
-export {
-  RouterConfigContext,
-}
+export { RouterConfigContext };

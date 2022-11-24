@@ -1,4 +1,1 @@
-import { useState, useCallback } from 'react'
-export default function useInifnyList(request) {
-
-}
+export default function useInifnyList(request) {}
