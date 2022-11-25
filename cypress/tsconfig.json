@@ -10,6 +10,7 @@
     ],
     "isolatedModules": false,
     "allowJs": true,
-    "noEmit": true
-  }
+    "noEmit": true,
+    "rootDirs": ["./packages/", "../packages/", "../../packages/", "packages/"]
+  },
 }

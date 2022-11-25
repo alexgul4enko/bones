@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
-  "gitHead": "55080f0261019296273b13d3cf656ac55db720a9",
+  "gitHead": "90f67aad4839ae4a475bbb32d41d35a543b21257",
   "dependencies": {
     "lodash": "^4.17.21"
   }

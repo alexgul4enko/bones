@@ -1,6 +1,8 @@
 const { defineConfig } = require('cypress');
 
 module.exports = defineConfig({
+  viewportWidth: 1200,
+  viewportHeight: 1200,
   e2e: {
     setupNodeEvents(on, config) {
       require('@cypress/code-coverage/task')(on, config);
@@ -9,6 +11,7 @@ module.exports = defineConfig({
   },
 
   component: {
+    specPattern: 'cypress/component/**/*.{js,jsx,ts,tsx}',
     devServer: {
       framework: 'react',
       bundler: 'webpack'

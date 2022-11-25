@@ -1,16 +1,15 @@
-import { createContext, useMemo, useContext, ReactNode, FC } from 'react';
+import { createContext, useMemo, useContext, PropsWithChildren, FC, ReactNode } from 'react';
 
 const AcessContext = createContext<Set<string>>(new Set() as Set<string>);
 
 export type AccessProviderProps = {
-  children: ReactNode;
   acessLevels: (props: { [key: string]: unknown }) => Set<string>;
   [key: string]: unknown;
 };
 
-export const AccessProvider: FC<AccessProviderProps> = ({ children, acessLevels, ...props }) => {
+export const AccessProvider: FC<PropsWithChildren<AccessProviderProps>> = ({ children, acessLevels, ...props }) => {
   const permissions = useMemo(
-    () => (typeof acessLevels === 'function' ? acessLevels(props) : new Set()),
+    () => (typeof acessLevels === 'function' ? acessLevels(props) : (new Set() as Set<string>)),
     [acessLevels, props]
   );
   return <AcessContext.Provider value={permissions}>{children}</AcessContext.Provider>;
@@ -63,9 +62,13 @@ export interface CheckAccessProps {
   access: string | string[];
   operator?: 'ALL' | 'SOME';
   fallback?: ReactNode;
-  children: ReactNode;
 }
 
-export const CheckAccess: FC<CheckAccessProps> = ({ access, operator, fallback = null, children }) => {
+export const CheckAccess: FC<PropsWithChildren<CheckAccessProps>> = ({
+  access,
+  operator,
+  fallback = null,
+  children
+}) => {
   return useHasAccess(access, operator) ? <>{children}</> : <>{fallback}</>;
 };

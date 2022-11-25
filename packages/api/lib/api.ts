@@ -64,6 +64,7 @@ export class API {
       body,
       ...restOptions
     } = requestParams;
+
     const url = buildUrl(baseURL, endpoint, params, paramsSerializer);
     const _headers: Headers = new Headers(Object.assign({}, this.configs.headers, headers));
     // Check if should convert body to FormData
