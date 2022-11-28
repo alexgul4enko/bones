@@ -13,15 +13,15 @@ Lightweight simple translation module for React apps based on [gettext](https://
 
 ```jsx
 import { TranslateProvider } from '@cranium/i18n'
-fucntion APP () {
+
+function APP () {
   return (
     <TranslateProvider
       defaultLanguage="en"
-      storage={localStorage}
-      url="jsi18n"
-      api={api}
+      storage={window.localStorage}
+      getTranslation={getTranslations}
     >
-        <Provider .../>
+        <MyApp />
     </TranslateProvider>
   )
 }
@@ -29,15 +29,17 @@ fucntion APP () {
 
 ## ~~API~~
 
-|  name            |      type  | default          |
-|------------------|------------|------------------|
-| defaultLanguage  |  String    | 'en'             |
-| langKey          |  String    | 'lang'           |
-| translationsKey  |  String    | 'translations'   |
-| storage          |  Object    | required         |
-| url              |  String    | required         |
-| api              |  Object    | required         |
-| reload           |  Function  |                  |
+|  name              |      type  | default          |
+|--------------------|------------|------------------|
+| defaultLanguage    |  String    | 'en'             |
+| langKey            |  String    | 'lang'           |
+| translationsKey    |  String    | 'translations'   |
+| storage            |  Object    | required         |
+| reload             |  Function  |                  |
+| useDefaultLanguage |  Boolean   |  false           |
+| monoLanguageJSON   |  Boolean   |  false           |
+| getTranslation     |  Function  |  required        |
+
 
 
 ### ~~defaultLanguage~~
@@ -64,26 +66,23 @@ Than it will be `keyName` in [Storage.setItem](https://developer.mozilla.org/en-
 
 ### ~~storage(required)~~
 
-Object for caching data. For more information you can read [here](/bones/docs/cache/cache_middleware#storage). Or you can create your [own storage](/bones/docs/cache/cache_middleware#create-own-storage)
+Object that will cache data. In general you can use [localStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage) or [AsyncStorage](https://github.com/react-native-community/async-storage).
 
-### ~~url~~
+#### ~~create own storage~~
 
-API endpoint for tranlations.
-This is common priciple that you should have an API Endpoint that will return translations in JSON formal like:
-
-```json
-{
-  "Between places": {
-    en: "Between places",
-    ru: "в подвешенном состоянии",
+```java
+class OwnStorage {
+  constructor(){
+    this.store = new Map()
+  }
+  getItem(key){
+    return this.store.get(key)
+  }
+  setItem(key, value){
+    this.store.set(key, value)
   }
 }
-
 ```
-
-### ~~api~~
-
-Instance of [API](/bones/docs/api/api_about)
 
 ### ~~reload~~
 
@@ -91,25 +90,114 @@ Function that will be used when switching from rtl-ltr to reload page.
 Mostly it will be [Location: reload()](https://developer.mozilla.org/en-US/docs/Web/API/Location/reload) for Web apps.
 It is not required function and if you don't need to reload page on switching rtl-ltr, you can skip this option
 
-## ~~gettext(message)~~
+### ~~useDefaultLanguage~~
 
-Returns the localized translation of message, based on the current language.
+Boolean flag to make Provider use default lang code instead of user selected.
+It could be use for example using Crowdin in app translations
 
-```javascript
-import { gettext } from '@cranium/i18n'
-function Title(props){
-    return <h1>{ gettext("Hello") }</h1>
+```jsx
+import { TranslateProvider } from '@cranium/i18n'
+
+function APP () {
+  return (
+    <TranslateProvider
+      defaultLanguage="ach"
+      storage={window.localStorage}
+      getTranslation={getTranslations}
+      useDefaultLanguage
+    >
+        <MyApp />
+    </TranslateProvider>
+  )
+}
+```
+### ~~monoLanguageJSON~~
+
+If `getTranslation` function return all languages at once than it should be `true`. Otherwise if `getTranslation` returns translation by each language separatelly, use `false`
+
+### ~~getTranslation~~
+
+Function to load translations.
+
+It could resolve all languages at once
+```js
+function loadLanguages() {
+    return Promise.resolve({
+        en: {
+            'key': 'value'
+        },
+        uk: {
+            'key': 'value'
+        }
+    })
 }
 ```
 
-## ~~pgettext(domain, message)~~
+Or by language 
+
+```ts
+function loadLanguages(lang: string) {
+    return Promise.resolve({
+        'key': 'value'
+    })
+}
+```
+
+Please use i18n JSON format
+```json
+{
+  "key": "value",
+  "keyDeep": {
+    "inner": "value"
+  },
+  "keyNesting": "reuse $t(keyDeep.inner)",
+  "keyInterpolate": "replace this {{value}}",
+  "keyInterpolateUnescaped": "replace this {{- value}}",
+  "keyInterpolateWithFormatting": "replace this {{value, format}}",
+  "keyContext_male": "the male variant",
+  "keyContext_female": "the female variant",
+  "keyPluralSimple_one": "the singular",
+  "keyPluralSimple_other": "the plural",
+  "keyPluralMultipleEgArabic_zero": "the plural form 0",
+  "keyPluralMultipleEgArabic_one": "the plural form 1",
+  "keyPluralMultipleEgArabic_two": "the plural form 2",
+  "keyPluralMultipleEgArabic_few": "the plural form 3",
+  "keyPluralMultipleEgArabic_many": "the plural form 4",
+  "keyPluralMultipleEgArabic_other": "the plural form 5",
+  "keyWithArrayValue": ["multipe", "things"],
+  "keyWithObjectValue": { "valueA": "return this with valueB", "valueB": "more text" }
+}
+```
+
+## ~~gettext(message, data)~~
+
+Returns the localized translation of message, based on the current language.
+
+```jsx
+import { gettext } from '@cranium/i18n'
+function Title(props){
+    return (
+        <>
+            <h1>{gettext("Hello")}</h1>
+            <h1>{gettext("Hello %(name)", { name: 'Alex' })}</h1>
+        </>
+    )
+}
+```
+
+## ~~pgettext(message, domain, data)~~
 
 Like gettext(), but looks the message up in the specified domain
 
-```javascript
+```jsx
 import { pgettext } from '@cranium/i18n'
 function Title(props){
-    return <h1>{ pgettext("pageid", "Hello") }</h1>
+    return (
+        <>
+            <h1>{pgettext("Hello", "pageid")}</h1>
+            <h1>{pgettext("Hello %(name)", "pageid", { name: 'Alex' })}</h1>
+        </>
+    )
 }
 ```
 
@@ -117,76 +205,39 @@ function Title(props){
 
 Like gettext(), but consider plural forms. If a translation is found, apply the plural formula to n, and return the resulting message. If no translation is found, return singular if n is 1; return plural otherwise.
 
-```javascript
+```jsx
 import { ngettext } from '@cranium/i18n'
 function Title(props){
-    return <h1>{ ngettext("Car", "Cars", 2) }</h1>
+    return (
+        <>
+            <h1>{ngettext("Car", "Cars")}</h1>
+            <h1>{ngettext("%(count) Car", "%(count) Cars", { count: 1 })}</h1>
+        </>
+    )
 }
 ```
 
-## ~~npgettext(domain, singular, plural, n)~~
+## ~~npgettext( singular, plural, domain, n)~~
 
 Like ngettext(), but look the message up in the specified domain.
 
-```javascript
+```jsx
 import { npgettext } from '@cranium/i18n'
 function Title(props){
-    return <h1>{ npgettext("loginPage", "Car", "Cars", 2) }</h1>
+   return (
+        <>
+            <h1>{npgettext("Car", "Cars", "pageid")}</h1>
+            <h1>{npgettext("%(count) Car", "%(count) Cars", "pageid", { count: 1 })}</h1>
+        </>
+    )
 }
 ```
-
-## ~~interpolate(message, config, named)~~
-
-The interpolate function supports dynamically populating a format string.
-
-- Positional interpolation: obj contains a JavaScript Array object whose elements values are then sequentially interpolated in their corresponding fmt placeholders in the same order they appear.
- 
-
-```javascript
-import { gettext, interpolate } from '@cranium/i18n'
-var fmts = gettext('There are %s objects. Remaining: %s')
- interpolate(fmts, [11, 20]) => 'There are 11 objects. Remaining: 20'
-```
- 
-- Named interpolation: This mode is selected by passing the optional boolean named parameter as true. 
-
-
-```javascript
-import { gettext, interpolate } from '@cranium/i18n'
-const d = {
-    count: 10,
-    total: 50
-}
-var fmts = gettext('There are %(count)s of a total of %(total)s objects')
-interpolate(fmts, d, true) => There are 10 of a total of 50 objects
-```
-
-## ~~withTranslations (HOC)~~
-
-Hight Order Component to pass transtation props to React component
-
-```javascript
-import { withTranslations } from '@cranium/i18n'
-function MyComponent({
-    gettext,
-    pgettext,
-    ngettext,
-    npgettext,
-    setLanguage,
-    language
-}){
-    retrun ...
-}
-
-export default withTranslations(MyComponent)
-```
-
 
 ## ~~useTranslations (hook)~~
 
 Hook to use transtation in React component
 
-```javascript
+```jsx
 import { useTranslations } from '@cranium/i18n'
 function MyComponent(){
     const { gettext, pgettext, ngettext, npgettext, setLanguage, language } = useTranslations()
@@ -198,7 +249,7 @@ function MyComponent(){
 
 React component to use tarnslations as Render prop
 
-```javascript
+```jsx
 import { Translator } from '@cranium/i18n'
 function MyComponent(){
     retrun (
@@ -208,5 +259,71 @@ function MyComponent(){
             }
         </Translator>
     )
+}
+```
+
+## ~~useGetLanguage~~
+
+Hook that return current language
+
+```jsx
+import { useGetLanguage } from '@cranium/i18n'
+function MyComponent(){
+    const lanf = useGetLanguage()
+}
+```
+
+## ~~useSetLanguage~~
+
+Hook that function to change language
+
+```jsx
+import { useSetLanguage } from '@cranium/i18n'
+function MyComponent(){
+    const setLanguage = useSetLanguage()
+}
+```
+
+## ~~useGettetxt~~
+
+Hook that returns gettetxt useGettetxt function
+
+```jsx
+import { useGettetxt } from '@cranium/i18n'
+function MyComponent(){
+    const gettetxt = useGettetxt()
+}
+```
+
+## ~~usePGettetxt~~
+
+Hook that returns pgettetxt usePGettetxt function
+
+```jsx
+import { usePGettetxt } from '@cranium/i18n'
+function MyComponent(){
+    const pgettetxt = usePGettetxt()
+}
+```
+
+## ~~useNGettetxt~~
+
+Hook that returns ngettetxt useNGettetxt function
+
+```jsx
+import { useNGettetxt } from '@cranium/i18n'
+function MyComponent(){
+    const ngettetxt = useNGettetxt()
+}
+```
+
+## ~~useNPGettetxt~~
+
+Hook that returns npgettetxt useNPGettetxt function
+
+```jsx
+import { useNPGettetxt } from '@cranium/i18n'
+function MyComponent(){
+    const npgettetxt = useNPGettetxt()
 }
 ```
