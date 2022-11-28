@@ -1,11 +1,21 @@
+import '@formatjs/intl-pluralrules/polyfill';
 import { createContext, useContext, Component } from 'react';
-import PropTypes from 'prop-types';
 import get from 'lodash/get';
 import noop from 'lodash/noop';
 
-export const TarnslationsContext = createContext('translations');
+type ContextType = {
+  translations: any;
+  gettext: (text: string, params?: any) => string;
+  pgettext: (id: string, text: string, params?: any) => string;
+  ngettext: (singular: string, plural: string, count: number, params?: any) => string;
+  npgettext: (id: string, singular: string, plural: string, count: number, params?: any) => string;
+  setLanguage: (lang: string) => void;
+  language: string;
+};
 
-export function isRtlLanguage(lang) {
+export const TarnslationsContext = createContext<ContextType>({} as any);
+
+export function isRtlLanguage(lang: string) {
   const rtlLanguages = ['ar', 'arc', 'dv', 'fa', 'ha', 'he', 'khw', 'ks', 'ku', 'ps', 'ur', 'yi'];
   if (!lang) {
     return false;
@@ -13,15 +23,27 @@ export function isRtlLanguage(lang) {
   return rtlLanguages.includes(lang.split('-')[0]);
 }
 
-const propTypes = {
-  defaultLanguage: PropTypes.string,
-  langKey: PropTypes.string,
-  translationsKey: PropTypes.string,
-  storage: PropTypes.object.isRequired,
-  url: PropTypes.string.isRequired,
-  api: PropTypes.object.isRequired,
-  reload: PropTypes.func,
-  monoLanguageJSON: PropTypes.bool
+export type StorageType = {
+  setItem: (key: string, value: any) => void;
+  getItem: (key: string) => any;
+  removeItem: (key: string) => void;
+};
+
+export type PropTypes = {
+  defaultLanguage: string;
+  langKey?: string;
+  translationsKey?: string;
+  storage: typeof localStorage | typeof sessionStorage | StorageType;
+  getTranslation: (lang?: string) => any;
+  reload?: () => void;
+  monoLanguageJSON?: boolean;
+  children?: any;
+  useDefaultLanguage?: boolean;
+};
+
+type State = {
+  language: string;
+  translations: any;
 };
 
 const defaultProps = {
@@ -32,23 +54,14 @@ const defaultProps = {
   monoLanguageJSON: false
 };
 
-export const TranslationPropTypes = {
-  translations: PropTypes.object.isRequired,
-  gettext: PropTypes.func.isRequired,
-  pgettext: PropTypes.func.isRequired,
-  ngettext: PropTypes.func.isRequired,
-  npgettext: PropTypes.func.isRequired,
-  setLanguage: PropTypes.func.isRequired,
-  language: PropTypes.string.isRequired
-};
-
-export class TranslateProvider extends Component {
-  constructor(props) {
+export class TranslateProvider extends Component<PropTypes, State> {
+  constructor(props: any) {
     super(props);
     this.state = {
       translations: {},
       language: props.defaultLanguage.split('-')[0]
     };
+
     this.gettext = this.gettext.bind(this);
     this.pgettext = this.pgettext.bind(this);
     this.setLanguage = this.setLanguage.bind(this);
@@ -56,23 +69,25 @@ export class TranslateProvider extends Component {
     this.npgettext = this.npgettext.bind(this);
     this.refreshTranslations = this.refreshTranslations.bind(this);
     this.initTranslationsLang();
-    this.initTranslations();
   }
 
-  refreshTranslations(lang) {
-    const { api, url, translationsKey, storage } = this.props;
-    api
-      .get(url, { params: { lang } })
+  refreshTranslations(lang: string) {
+    const { getTranslation, translationsKey, storage } = this.props;
+    Promise.resolve(getTranslation(lang))
       .then((translations) => {
         this.setState({ translations });
-        storage.setItem(translationsKey, JSON.stringify(translations));
+        storage &&
+          translationsKey &&
+          translations &&
+          storage.setItem([translationsKey, lang].filter(Boolean).join('_'), JSON.stringify(translations));
       })
       .catch(noop);
   }
 
-  initTranslations() {
+  initTranslations(lang: string) {
     const { storage, translationsKey } = this.props;
-    Promise.resolve(storage.getItem(translationsKey)).then((translations) => {
+    if (!storage || !translationsKey) return;
+    Promise.resolve(storage.getItem([translationsKey, lang].filter(Boolean).join('_'))).then((translations) => {
       if (!translations) {
         return;
       }
@@ -81,6 +96,7 @@ export class TranslateProvider extends Component {
   }
 
   initTranslationsLang() {
+    if (this.props.useDefaultLanguage) return this.refreshTranslations(this.props.defaultLanguage);
     const { storage, langKey, defaultLanguage } = this.props;
     Promise.resolve(storage.getItem(langKey))
       .then((language) => {
@@ -89,14 +105,17 @@ export class TranslateProvider extends Component {
         }
         this.setState({ language });
         this.refreshTranslations(language);
+        this.initTranslations(language);
       })
       .catch((_) => {
         storage.setItem(langKey, defaultLanguage.split('-')[0]);
         this.refreshTranslations(defaultLanguage.split('-')[0]);
+        this.initTranslations(defaultLanguage.split('-')[0]);
       });
   }
 
-  setLanguage(lang) {
+  setLanguage(lang: string) {
+    if (this.props.useDefaultLanguage) return;
     if (!lang) {
       throw new Error('language should be defined');
     }
@@ -106,6 +125,7 @@ export class TranslateProvider extends Component {
     const { language } = this.state;
     const { storage, langKey } = this.props;
     this.setState({ language: lang });
+    this.refreshTranslations(lang);
     Promise.resolve(storage.setItem(langKey, lang.split('-')[0])).then(() => {
       if (isRtlLanguage(language) !== isRtlLanguage(lang)) {
         this.props.reload && this.props.reload();
@@ -113,48 +133,45 @@ export class TranslateProvider extends Component {
     });
   }
 
-  pgettext(id, text) {
+  pgettext(text: string, id: string, params?: any) {
     const message = `${text} ${id}`;
     const { monoLanguageJSON } = this.props;
     const { language, translations } = this.state;
     if (monoLanguageJSON) {
-      return get(translations, `[${message}]`) || text;
+      return interpolate(get(translations, `[${id}]`) || text, params);
     }
-    return get(translations, `[${message}].${language}`, get(translations, `[${message}].en`)) || text;
+    return interpolate(get(translations, `${language}.[${id}]`) || text, params);
   }
 
-  gettext(text = '') {
+  gettext(text = '', params?: any) {
     const { language, translations } = this.state;
     const { monoLanguageJSON } = this.props;
+
     if (monoLanguageJSON) {
-      return get(translations, `[${text}]`) || text;
+      return interpolate(get(translations, `[${text}]`) || text || '', params);
     }
-    return get(translations, `[${text}].${language}`, get(translations, `[${text}].en`)) || text;
+    return interpolate(get(translations, `${language}[${text}]`) || text, params);
   }
 
-  ngettext(singular, plural, count) {
+  ngettext(singular: string, plural: string, count: number, params?: any) {
     const { language, translations } = this.state;
     const { monoLanguageJSON } = this.props;
-    const translation = monoLanguageJSON
-      ? get(translations, `[${singular}]`)
-      : get(translations, `[${singular}].${language}`, get(translations, `[${singular}].en`));
-    if (translation === undefined) {
-      return count === 1 ? singular : plural;
-    }
-    return count === 1 ? translation[0] : translation[1];
+
+    const _tranlations = monoLanguageJSON ? translations : get(translations, language);
+    const pluralForm = new Intl.PluralRules(language).select(count);
+    const key = [singular, pluralForm].join('_');
+
+    return interpolate(get(_tranlations, key) || (count === 1 ? singular : plural) || '', params);
   }
 
-  npgettext(id, singular, plural, count) {
+  npgettext(singular: string, plural: string, id: string, count: number, params?: any) {
     const { language, translations } = this.state;
     const { monoLanguageJSON } = this.props;
-    const selector = `${singular} ${id}`;
-    const translation = monoLanguageJSON
-      ? get(translations, `[${selector}]`)
-      : get(translations, `[${selector}].${language}`, get(translations, `[${selector}].en`));
-    if (translation === undefined) {
-      return count === 1 ? singular : plural;
-    }
-    return count === 1 ? translation[0] : translation[1];
+
+    const _tranlations = monoLanguageJSON ? translations : get(translations, language);
+    const pluralForm = new Intl.PluralRules(language).select(count);
+    const key = [id, pluralForm].join('_');
+    return interpolate(get(_tranlations, key) || (count === 1 ? singular : plural) || '', params);
   }
 
   render() {
@@ -175,57 +192,66 @@ export class TranslateProvider extends Component {
     );
   }
 }
-
+// @ts-ignore asdasd
 TranslateProvider.defaultProps = defaultProps;
-TranslateProvider.propTypes = propTypes;
-
-export function withTranslations(ChildComponent) {
-  return function (props) {
-    return (
-      <TarnslationsContext.Consumer>
-        {({ translations, ...rest }) => <ChildComponent {...props} {...rest} />}
-      </TarnslationsContext.Consumer>
-    );
-  };
-}
 
 export function useTranslations() {
   const { translations: _, ...translationData } = useContext(TarnslationsContext);
   return translationData;
 }
 
+export function useGetLanguage() {
+  return useContext(TarnslationsContext).language;
+}
+
+export function useGettetxt() {
+  return useContext(TarnslationsContext).gettext;
+}
+
+export function usePGettetxt() {
+  return useContext(TarnslationsContext).pgettext;
+}
+
+export function useNGettetxt() {
+  return useContext(TarnslationsContext).ngettext;
+}
+
+export function useNPGettetxt() {
+  return useContext(TarnslationsContext).npgettext;
+}
+
+export function useSetLanguage() {
+  return useContext(TarnslationsContext).setLanguage;
+}
+
 export const Translator = TarnslationsContext.Consumer;
 
-export function gettext(text = '') {
-  return <TarnslationsContext.Consumer>{({ gettext }) => gettext(text)}</TarnslationsContext.Consumer>;
+export function gettext(text = '', params?: any) {
+  return <TarnslationsContext.Consumer>{({ gettext }) => gettext(text, params)}</TarnslationsContext.Consumer>;
 }
 
-export function pgettext(id = '', text = '') {
-  return <TarnslationsContext.Consumer>{({ pgettext }) => pgettext(id, text)}</TarnslationsContext.Consumer>;
+export function pgettext(id = '', text = '', params?: any) {
+  return <TarnslationsContext.Consumer>{({ pgettext }) => pgettext(id, text, params)}</TarnslationsContext.Consumer>;
 }
 
-export function ngettext(singular = '', plural = '', count) {
-  return (
-    <TarnslationsContext.Consumer>{({ ngettext }) => ngettext(singular, plural, count)}</TarnslationsContext.Consumer>
-  );
-}
-
-export function npgettext(id = '', singular = '', plural = '', count) {
+export function ngettext(singular = '', plural = '', count: number, params?: any) {
   return (
     <TarnslationsContext.Consumer>
-      {({ npgettext }) => npgettext(id, singular, plural, count)}
+      {({ ngettext }) => ngettext(singular, plural, count, params)}
     </TarnslationsContext.Consumer>
   );
 }
 
-export function interpolate(message, obj, named) {
-  if (named) {
-    return message.replace(/%\(\w+\)/g, function (match) {
-      return String(obj[match.slice(2, -1)]);
-    });
-  } else {
-    return message.replace(/%s/g, function (match) {
-      return String(obj.shift());
-    });
-  }
+export function npgettext(singular = '', plural = '', id = '', count: number, params?: any) {
+  return (
+    <TarnslationsContext.Consumer>
+      {({ npgettext }) => npgettext(singular, plural, id, count, params)}
+    </TarnslationsContext.Consumer>
+  );
+}
+
+export function interpolate(message: string, obj?: any, named?: boolean) {
+  return message.replace(/%\(\w+\)/g, function (match) {
+    return String(get(obj, [match.slice(2, -1)]));
+  });
 }
