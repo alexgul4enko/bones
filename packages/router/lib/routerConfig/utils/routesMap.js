@@ -1,29 +1,28 @@
 export default function routesMap(routes, basePath = '/') {
   return routes.reduce((acc, { name, path, routes }) => {
-    if(!path) {
-      return acc
+    if (!path) {
+      return acc;
     }
 
-    path = makePath(path, basePath)
+    path = makePath(path, basePath);
 
-    if(name) {
+    if (name) {
       acc = {
         ...acc,
-        [name]: path,
-      }
+        [name]: path
+      };
     }
 
-    if(routes) {
+    if (routes) {
       acc = {
         ...acc,
-        ...(routesMap(routes, path)),
-      }
+        ...routesMap(routes, path)
+      };
     }
-    return acc
-  }, {})
+    return acc;
+  }, {});
 }
 
-
 function makePath(path, basePath) {
-  return (basePath + path).replace(/\/+/g, '/')
+  return (basePath + path).replace(/\/+/g, '/');
 }

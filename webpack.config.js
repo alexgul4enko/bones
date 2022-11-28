@@ -1,4 +1,5 @@
 const merge = require('webpack-merge').merge;
+const path = require('path');
 
 function resolveExtensions() {
   return {
@@ -11,7 +12,12 @@ function resolveExtensions() {
 function resolveModules() {
   return {
     resolve: {
-      modules: ['node_modules', 'packages']
+      modules: ['node_modules', 'packages'],
+      alias: {
+        '@cranium/redux-helpers': path.resolve(__dirname, 'packages/redux-helpers/lib/index.ts'),
+        '@cranium/api': path.resolve(__dirname, 'packages/api/lib/index.ts'),
+        '@cranium/cache': path.resolve(__dirname, 'packages/cache/lib/index.ts')
+      }
     }
   };
 }
