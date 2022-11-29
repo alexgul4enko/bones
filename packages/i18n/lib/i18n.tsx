@@ -204,19 +204,19 @@ export function useGetLanguage() {
   return useContext(TarnslationsContext).language;
 }
 
-export function useGettetxt() {
+export function useGettext() {
   return useContext(TarnslationsContext).gettext;
 }
 
-export function usePGettetxt() {
+export function usePGettext() {
   return useContext(TarnslationsContext).pgettext;
 }
 
-export function useNGettetxt() {
+export function useNGettext() {
   return useContext(TarnslationsContext).ngettext;
 }
 
-export function useNPGettetxt() {
+export function useNPGettext() {
   return useContext(TarnslationsContext).npgettext;
 }
 
@@ -251,7 +251,11 @@ export function npgettext(singular = '', plural = '', id = '', count: number, pa
 }
 
 export function interpolate(message: string, obj?: any, named?: boolean) {
-  return message.replace(/%\(\w+\)/g, function (match) {
-    return String(get(obj, [match.slice(2, -1)]));
-  });
+  let msg: string = message;
+  try {
+    msg = (message || '').replace(/%\(\w+\)/g, function (match) {
+      return String(get(obj, [match.slice(2, -1)]));
+    });
+  } catch {}
+  return msg;
 }

@@ -3,10 +3,10 @@ import {
   TranslateProvider,
   useTranslations,
   useGetLanguage,
-  useGettetxt,
-  usePGettetxt,
-  useNGettetxt,
-  useNPGettetxt,
+  useGettext,
+  usePGettext,
+  useNGettext,
+  useNPGettext,
   useSetLanguage,
   gettext,
   pgettext,
@@ -16,10 +16,10 @@ import {
 
 function MyTranslationComponent() {
   const setLanguage = useSetLanguage();
-  const gettextH = useGettetxt();
-  const pgettextH = usePGettetxt();
-  const ngettextH = useNGettetxt();
-  const npgettextH = useNPGettetxt();
+  const gettextH = useGettext();
+  const pgettextH = usePGettext();
+  const ngettextH = useNGettext();
+  const npgettextH = useNPGettext();
   const lang = useGetLanguage();
   const trans = useTranslations();
   return (

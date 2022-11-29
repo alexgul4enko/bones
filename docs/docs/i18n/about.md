@@ -284,46 +284,46 @@ function MyComponent(){
 }
 ```
 
-## ~~useGettetxt~~
+## ~~useGettext~~
 
 Hook that returns gettetxt useGettetxt function
 
 ```jsx
-import { useGettetxt } from '@cranium/i18n'
+import { useGettext } from '@cranium/i18n'
 function MyComponent(){
-    const gettetxt = useGettetxt()
+    const gettext = useGettext()
 }
 ```
 
-## ~~usePGettetxt~~
+## ~~usePGettext~~
 
 Hook that returns pgettetxt usePGettetxt function
 
 ```jsx
-import { usePGettetxt } from '@cranium/i18n'
+import { usePGettext } from '@cranium/i18n'
 function MyComponent(){
-    const pgettetxt = usePGettetxt()
+    const pgettext = usePGettext()
 }
 ```
 
-## ~~useNGettetxt~~
+## ~~useNGettext~~
 
 Hook that returns ngettetxt useNGettetxt function
 
 ```jsx
-import { useNGettetxt } from '@cranium/i18n'
+import { useNGettext } from '@cranium/i18n'
 function MyComponent(){
-    const ngettetxt = useNGettetxt()
+    const ngettext = useNGettext()
 }
 ```
 
-## ~~useNPGettetxt~~
+## ~~useNPGettext~~
 
 Hook that returns npgettetxt useNPGettetxt function
 
 ```jsx
-import { useNPGettetxt } from '@cranium/i18n'
+import { useNPGettext } from '@cranium/i18n'
 function MyComponent(){
-    const npgettetxt = useNPGettetxt()
+    const npgettext = useNPGettext()
 }
 ```
