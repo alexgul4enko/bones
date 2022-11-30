@@ -1,5 +1,5 @@
-import '@formatjs/intl-pluralrules/polyfill';
 import { createContext, useContext, Component } from 'react';
+import { getPluralFormNameForCardinalByLocale } from 'fast-plural-rules';
 import get from 'lodash/get';
 import noop from 'lodash/noop';
 
@@ -158,7 +158,7 @@ export class TranslateProvider extends Component<PropTypes, State> {
     const { monoLanguageJSON } = this.props;
 
     const _tranlations = monoLanguageJSON ? translations : get(translations, language);
-    const pluralForm = new Intl.PluralRules(language).select(count);
+    const pluralForm = getPluralFormNameForCardinalByLocale(language, count);
     const key = [singular, pluralForm].join('_');
 
     return interpolate(
@@ -173,7 +173,7 @@ export class TranslateProvider extends Component<PropTypes, State> {
     const { monoLanguageJSON } = this.props;
 
     const _tranlations = monoLanguageJSON ? translations : get(translations, language);
-    const pluralForm = new Intl.PluralRules(language).select(count);
+    const pluralForm = getPluralFormNameForCardinalByLocale(language, count);
     const key = [id, pluralForm].join('_');
     return interpolate(
       get(_tranlations, key) || (count === 1 ? singular : plural) || '',
