@@ -18,32 +18,41 @@ module.exports = {
     // 'skeleton/skeleton_routing',
   ],
   resourcesSitebar: [
+    'resources/resources',
     'resources/resource_problem',
-    'resources/resource_instalation',
+    'resources/connect_resource_type',
     'resources/connect_resources',
     'resources/resource_customresources',
+    'resources/resource_rewrite',
+    'resources/resource_ts',
     {
-      HOCS: [
-        'resources/resource_prefetchResources',
-        'resources/resource_withFinalForm',
-        'resources/resource_withInfinityList',
-        'resources/resource_navigationToProps',
-      ],
+        Hooks: [
+            'resources/hooks/use-resource',
+            'resources/hooks/use-resource-usage',
+            'resources/hooks/use-prefetch-resource',
+            'resources/hooks/use-custom-request',
+            'resources/hooks/use-prefetch-request',
+            'resources/hooks/use-request',
+            'resources/hooks/use-clear',
+            'resources/hooks/use-search',
+            'resources/hooks/resources-actions',
+            'resources/hooks/use-resource-data'
+        ]
     },
     {
-      GraphQL: [
-        'resources/graphql/usequery',
-        'resources/graphql/usePrefetchQuery',
-        'resources/graphql/useGraphInifnyList',
-      ],
+        HOCS: [
+            'resources/resource_prefetchResources',
+            'resources/resource_withFinalForm',
+            'resources/resource_withInfinityList'
+        ]
     },
-
-    'resources/resource_hooks',
+    {
+        GraphQL: ['resources/graphql/usequery', 'resources/graphql/usePrefetchQuery']
+    },
+    'resources/resources_cache'
   ],
   cacheSitebar: [
-    'cache/cache_about',
-    'cache/cache_middleware',
-    'cache/cache_reducer',
+    'cache/cache_about'
   ],
   queryParamsSitebar: [
     'queryParams/queryParams_about',
@@ -57,6 +66,7 @@ module.exports = {
   ],
   i18nSitebar: [
     'i18n/i18n_about',
+    'i18n/i18n_crowdin'
   ],
   accessSitebar: [
     'access/access_about',

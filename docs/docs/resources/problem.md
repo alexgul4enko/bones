@@ -64,19 +64,18 @@ fetchOrders
 ...
 ```
 
-## ~~Normal flow~~
+## Standard flow
 
-Normally working with HTTP requests we may need to have next flow:
+In general, working with HTTP requests we may need to have next flow:
 
 1. Set loading flag and clear previous errors if exist
-2. Sent Http request
-3. Toggle loading flag, save responce (error or data). 
+2. Sent HTTP request
+3. Toggle loading flag, save response (error or data). 
 4. Save some meta data for example query string
 
 
-## ~~REST GRUD~~
+## REST GRUD
 
-Resources is redux [middleware](https://redux.js.org/advanced/middleware) that helps you to keep working with [redux](https://redux.js.org/) with standard flow for async actions.
 This module was build using [REST API](https://en.wikipedia.org/wiki/Representational_state_transfer) principles.
 
 Common REST GRUD:
@@ -90,17 +89,11 @@ GET      /api/v1/users/1  - get user details
 PATCH    /api/v1/users/1  - update user
 PUT      /api/v1/users/1  - recreate user
 DELETE   /api/v1/users/1  - delete user
-OPTIONS  /api/v1/users/   - get metadata
+OPTIONS  /api/v1/users/   - get meta data
 ```
 
 So in total we have 1 Model `User` and 7 possible options to work with this model.
 Based on REST principles we can make universal url `/api/v1/users/:id?` to describe all possible flows. 
 This url syntax will be compiled using [path-to-regex](https://www.npmjs.com/package/path-to-regex) that helps us to have 1 universal url for all possible actions.
 
-So that now we have univarsal url and we can now use HTTP methods to describe what action do we need.
-
-
-
-
-
-
+So that now we have universal url and we can now use HTTP methods to describe what action do we need.

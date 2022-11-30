@@ -3,18 +3,15 @@ id: usePrefetchQuery
 title: usePrefetchQuery
 sidebar_label: usePrefetchQuery
 ---
-## ~~usePrefetchQuery~~
-```javascript
-usePrefetchQuery(query, options)
+```js
+usePrefetchQuery(query, options)(filters)
 ```
-~~usePrefetchQuery~~ is Hook to connect GraphQL data to React component and automatically fetch the data on Component mount. This Hook will also automatically abort request on Component unmount in case request is still pending.
+**usePrefetchQuery**  Hook to connect GraphQL data to React component and automatically fetch the data on Component mount. This Hook will also automatically abort request on Component unmount in case request is still pending
 
-It hase same API as [useQuery](/bones/docs/resources/graphql/usequery) 
+It has same API as [useQuery](/docs/resources/graphql/usequery)
 
-## ~~Ussage~~
 
-dogs.graphql
-```graphql
+```graphql title="dogs.graphql"
 query Dogs {
     dogs {
       id
@@ -23,7 +20,7 @@ query Dogs {
   }
 ```
 
-```javascript
+```js
 import DOGS from './dogs.graphql'
 import { usePrefetchQuery } from '@cranium/resource'
 
@@ -33,7 +30,6 @@ function Dogs(){
 }
 ```
 
-Or with parameters
 ```graphql
 query Dogs ($first: Int, $cursor: String ) {
     dogs {
@@ -47,7 +43,7 @@ query Dogs ($first: Int, $cursor: String ) {
   }
 ```
 
-```javascript
+```js
 import DOGS from './dogs.graphql'
 import { usePrefetchQuery } from '@cranium/resource'
 

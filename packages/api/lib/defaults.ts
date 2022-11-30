@@ -5,7 +5,7 @@ import { prepareBody } from './utils/prepareBody';
 import { Interceptor } from './Interceptor';
 
 export default {
-  baseURL: '',
+  baseURL: '/',
   headers: { 'Content-Type': 'application/json' },
   paramsSerializer,
   isMultipartFormData: hasFile,

@@ -4,6 +4,10 @@ title: Router
 sidebar_label: About
 ---
 
+:::caution
+This package is deprecated. Since react-router V6 already has JSON API to declare routes you don't need this package.
+:::
+
 [React-router](https://reacttraining.com/react-router/web/guides/quick-start) 
  based navigation system that brings some new features: 
 - Declare site navigatoin using JSON syntax

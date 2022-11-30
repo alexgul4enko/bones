@@ -4,41 +4,18 @@ title: useQuery
 sidebar_label: useQuery
 ---
 
-## ~~useQuery~~
+**useQuery** hook to send GraphQL request
 
-```javascript
+```js
 useQuery(query, options)
 ```
 
-### ~~query~~
+## query
 GraphQL query 
 
-Queries could be defined in several ways: 
+To define GraphQL query create `graphql` file.
 
-1. Using `@apollo/client`
-```
-import { gql } from '@apollo/client';
-
-const GET_DOGS = gql`
-  query Dogs {
-    dogs {
-      id
-      breed
-    }
-  }
-`;
-```
-
-2. using babel plugin `import-graphql`
-
-babel.config.js
-```javascript
-{
-    plugins: ['import-graphql']
-}
-```
-dogs.graphql
-```graphql
+```graphql title="dogs.graphql"
 query Dogs {
     dogs {
       id
@@ -47,32 +24,42 @@ query Dogs {
   }
 ```
 
-```javascript
+```js
 import DOGS from './dogs.graphql'
 import { useQuery } from '@cranium/resource'
 
 function Dogs(){
    const { request, data, isLoading, errors, filters } = useQuery(DOGS)
-   ...
 }
 ```
 
-### ~~options~~
+## options
 
 Object with additional configurations
 
 |  Property          |      type             |
 | -------------------| --------------------- |
-|   reducer          | string|fucntion       |
+|   reducer          | string|function       |
 |   namespace        | string                |
 |   forceUpdates     | boolean               |
-|  destroyOnUnmount  | boolean               |
+|   destroyOnUnmount | boolean               |
 |   queries          | Array[String]         |
 |   parseErrors      | string or function    |
 |   parseValue       | string or function    |
 
-So in general it has same configs as [ConnectResources](/bones/docs/resources/connect_resources#resource) 
-#### ~~namespace~~ 
+### reducer 
+Function that will be called in redux reducer. Default 'replace'. By default connect resources has already defined 4 types of most reusable reducers. And you may use it as a String. [More info](/docs/resources/connect_resource_type#reducer)
+
+```js
+import DOGS from './dogs.graphql'
+import { useQuery } from '@cranium/resource'
+
+function Dogs(){
+   const { request, data, isLoading, errors, filters } = useQuery(DOGS, { reducer: 'none' })
+}
+````
+
+### namespace
 By default namespace will be used as query name (camellCased) 
 ```graphql
 query Dogs {
@@ -83,8 +70,10 @@ query Dogs {
   }
 ```
 
-In this case `namespace` is ~~dogs~~
-#### ~~queries~~
+In this case `namespace` is `dogs`
+
+
+### queries
 By default queries will be automatically generated from graphql
 ```graphql
 query Dogs ($first: Int, $cursor: String ) {
@@ -101,7 +90,7 @@ query Dogs ($first: Int, $cursor: String ) {
 
 In this case it will automatically generate `queries` as `["first","cursor"]`. And then you can use this values from `filters`
 
-#### ~~parseValue~~
+### parseValue
 In case 
 ```graphql
 query Dogs ($first: Int, $cursor: String ) {
@@ -115,9 +104,9 @@ query Dogs ($first: Int, $cursor: String ) {
     }
   }
 ```
-GraphQl responce in most cases has lot of nestings. To make data more simple, you can use parseValue option.
-In case ~~parseValue~~ is ~~String~~ it will just use `lodash.get``` function to remove root nesting from graphQL responce
-```javascript
+GraphQl response in most cases has lot of nesting. To make data more simple, you can use parseValue option.
+In case `parseValue` is `String` it will just use `lodash.get` function to remove root nesting from graphQL response
+```js
 import DOGS from './dogs.graphql'
 import { useQuery } from '@cranium/resource'
 
@@ -125,13 +114,28 @@ function Dogs(){
    const { request, data } = useQuery(DOGS, {parseValue: 'data.dogs'})
    ...
 }
+
+function Dogs(){
+   const { request, data } = useQuery(DOGS, {parseValue: (resp=> get(resp, 'data.dogs.edges'))})
+   ...
+}
 ```
-Or you can provide whatever your custom function to transform responce
 
-#### ~~parseErrors~~
-~~parseErrors~~ has same API as ~~parseValue~~. And this function executes before ~~parseValue~~. It could be string or functoin and in general it is needed to convert GraphQL responce (that is always success) to error. This function could be usefull while working with forms.
+### parseErrors
+`parseErrors` has same API as `parseValue`. And this function executes before `parseValue`. It could be string or function and in general it is needed to convert GraphQL response (that is always success) to error. This function could be useful while working with forms.
 
+```js
+import DOGS from './dogs.graphql'
+import { useQuery } from '@cranium/resource'
 
+function parseErrors (data) {
+  if(has(data, 'data.errors')) {
+    return get(data, 'data.errors.edges')
+  }
+} 
 
-
-
+function Dogs(){
+   const { request, data } = useQuery(DOGS, { parseErrors })
+   ...
+}
+```

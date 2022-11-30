@@ -4,21 +4,19 @@ title: withFinalForm
 sidebar_label: withFinalForm
 ---
 
-This is function returns HOC to connect your React Component with [connectResources](/bones/docs/resources/connect_resources) and [react-final-form](https://final-form.org/react).
+Function that returns HOC to connect your React Component with [connectResources](/docs/resources/connect_resources) and [react-final-form](https://final-form.org/react).
 
-This HOC will pass to your React Component [form props](https://final-form.org/docs/react-final-form/types/FormRenderProps) from  react-final-form and props from ~~connectResources~~.
-Also this HOC will predefine `onSubmit` function by next criteria:
+This HOC will pass to your React Component [form props](https://final-form.org/docs/react-final-form/types/FormRenderProps) from  react-final-form and props from`connectResources`
 
-If your are using [customresource](/bones/docs/resources/resource_customresources), then it will use ~~this.props[namespace].customRequest~~. Otherwise it will send `POST` or `PATCH` HTTP request based on endpoint and props.
+Also this HOC will predefine `onSubmit` function. In case your are using [customresource](/docs/resources/resource_customresources), then it will use `this.props[namespace].request`. Otherwise it will send `POST` or `PATCH` HTTP request based on endpoint and props.
 
 
-## ~~API~~
 ```javascript
 import { withFinalForm } from '@cranium/resource'
 
 withFinalForm(formConfigs, resources, options)
 ```
-### ~~formConfigs~~
+## formConfigs
 
 |  Property             |      type                                      |
 | ----------------------| ---------------------------------------------- |
@@ -29,109 +27,256 @@ withFinalForm(formConfigs, resources, options)
 |   valuesInterceptor   | ```function(values, props, form):Object```     |
 |   initialValues       | ```Object\|function(props):Object```           |
 
-#### ~~validate~~
-function to handle form level validation. For more information you may read [here](/bones/docs/skeleton/skeleton_forms#form-level-validation)
+### validate
+Function to handle form level validation.
+```js
+import { withFinalForm } from '@cranium/resource'
 
-#### ~~onSubmit~~
-```javascript
+function validate (values, props) {
+  const errors = {}
+  if(!values.password){
+    errors.password = 'This field is required'
+  }
+  if(values.city === 'NY' && props.country === 'UK'){
+    errors.city = 'There is no such city in UK'
+  }
+  return errors
+}
+
+export default withFinalForm(
+  {
+    validate: validate
+  },
+  'users'
+)
+```
+
+### onSubmit
+Custom Submit function. You can use it to override default logic.
+
+:::tip
+By default `onSubmit` will send POST or PATCH request based on props. And use `request` in case you. are using [customresource](/docs/resources/resource_customresources)
+:::
+
+:::note
+Please note that it is important to return `Promise` from `onSubmit` function.
+```js
 function(values, form, props):Promise
 ```
-If default algorithm of onSubmit function does not math your task. You can pass your own implementation of Submit action having `values, form, props`
+:::
 
-#### ~~onSubmitSuccess~~
-```javascript
+```js
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm(
+  {
+    onSubmit: (values, form, props)=>{
+      return props.users.create(values)
+    }
+  },
+  'users'
+)
+```
+
+
+### onSubmitSuccess
+Callback function for success submitting. It is the best place for navigation and alerts
+```ts
 function(apiResults, props):void
 ```
-A callback function for success submiting. Here is the best place for navigation and alerts
 
-```javascript
-function onSubmitSuccess(values, props){
-  props.history.push('some_route')
-}
+
+```js
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm(
+  {
+    onSubmitSuccess: (values, props)=>{
+      props.history.push('some_route')
+    }
+  },
+  'users'
+)
 ```
 
-#### ~~onSubmitFailed~~
-```javascript
+
+### onSubmitFailed
+Callback function to handle non field errors. Here is the best place to show alerts
+```ts
 function(apiError, props):void
 ```
-A callback function to hanldle non field errors. Here is the best place to show alerts
 
-```javascript
-function onSubmitFailed(apiError, props){
-  props.alert('ooops, something went wrong')
-}
+
+```js
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm(
+  {
+    onSubmitFailed: (apiError, props)=>{
+      props.alert(apiError.error)
+    }
+  },
+  'users'
+)
 ```
 
-#### ~~valuesInterceptor~~
-```javascript
-function(values, props, form):Object
-```
+### valuesInterceptor
 Interceptor function that can help you to modify react-final-form values before sending submit action.
 
 Here you also has props from your Component so that to can merge form values and props if needed.
 
-```javascript
-function valuesInterceptor(values, props, form){
-  return ... // do something with values and props
-}
+```ts
+function(values, props, form):Object
+```
+
+```js
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm(
+  {
+    valuesInterceptor: (values, props, form)=>{
+      return {
+        ...values,
+        city: props.city,
+        name: values.name.toUpperCase()
+      }
+    }
+  },
+  'users'
+)
 ```
 
 :::caution
 
-Please pay attantion that you can not call any function that will change store or form state in `valuesInterceptor` function. This should be pure function without any side effects!
+Please pay attention that you can not call any function that will change store or form state in `valuesInterceptor` function. This should be pure function without any side effects!
 
 :::
 
-#### ~~initialValues~~
+### initialValues
 
-It cound be an object to define initial state of your react-final-form form state.
-Or it could be a function if your need some custom logic
+Configuration to setup form initial values.
+:::tip
+By default `initialValues` are resource data.
+```js
+import { withFinalForm } from '@cranium/resource'
 
-```javascript
-function initialValues(props){
-  return ... // do something with props and return an Object with initial form values
-}
+export default withFinalForm({}, 'users/me')(FormViewComponent)
+//In this case `withFinalForm` will send GET /api/users/me request and setup initial values as a response from API call.
+```
+:::
+
+```js
+// initial values as const
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({
+  initialValues: {
+    account: 'Conductor'
+  }
+}, 'users/me')(FormViewComponent)
+```
+```js
+// initial values as a function
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({
+  initialValues: (props)=> {
+    return {
+      account: props.account
+    }
+  }    
+}, 'users/me')(FormViewComponent)
 ```
 :::caution
 
-Please pay attantion that you can not call any function that will change store or react state in `initialValues` function. This should be pure function without any side effects!
+Please pay attention that you can not call any function that will change store or react state in `initialValues` function. This should be pure function without any side effects!
 
 :::
 
 
-### ~~resources~~
+## resources
 
-`resources` is param that will be passed to [connectResources](/bones/docs/resources/connect_resources) function.
-Same as with connectResources, `resources` could be [Resource](/bones/docs/resources/connect_resources#resource) object or **Array<Resource\>** or simple [String](/bones/docs/resources/connect_resources#simple-syntax).
+[Resource config](/docs/resources/connect_resource_type) or [Custom Resource](/docs/resources/resource_customresources)
 
-### ~~options~~
+### Resource config
 
-Object with additional configurations
+
+```js
+//POST /api/users onSubmit
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({}, 'users')(FormViewComponent)
+```
+
+```js
+//POST /api/users/me onSubmit
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({}, { namespace: 'profile', endpoint: 'users/me' })(FormViewComponent)
+```
+
+```js
+// custom resource
+import { customResource, withFinalForm } from '@cranium/resource'
+
+function customResource(API, payload, meta, store ) {
+  API.patch('users/:uuid', payload, { params: { uuid: payload: uuid } } )
+    .then(()=> API.get('users/:uuid', { params: { uuid: payload: uuid } }))
+} 
+
+const connectResource = customResource(customResource)
+
+export default withFinalForm({}, connectResource('profile'))(FormViewComponent)
+
+```
+
+## options
+
+Object with additional configurations. To read more visit this [link](/docs/resources/resource_prefetchResources#options) 
 
 |  Property          |      type             |      Default  |
 | -------------------| --------------------- | --------------|
-|   [refresh](/bones/docs/resources/resource_prefetchResources#refresh)          | Boolean               | true          |
-|   [destroyOnUnmount](/bones/docs/resources/resource_prefetchResources#destroyonunmount) | Boolean               | true          | 
-|   [defaultParams](/bones/docs/resources/resource_prefetchResources#defaultparams)    | Object                | null          | 
-|   [Loader](/bones/docs/resources/resource_prefetchResources#loader)           | React Element         |               | 
+|   [refresh](/docs/resources/resource_prefetchResources#refresh)          | Boolean               | true          |
+|   [destroyOnUnmount](/docs/resources/resource_prefetchResources#destroyonunmount) | Boolean               | true          | 
+|   [defaultParams](/docs/resources/resource_prefetchResources#defaultparams)    | Object                | null          | 
+|   [Loader](/docs/resources/resource_prefetchResources#loader)           | React Element         |               | 
+|   method          | 'GET' | POST        |        'GET'       | 
 |   prefetch          | Boolean        |        true       | 
 
-Most configurations are same with ~~prefetchResources~~. But here is one new param `prefetch`
+Most configurations are same with `prefetchResources`. But here is one new param `prefetch`
 
-#### ~~prefetch~~
-Boolean flag that means if you need to have initial request for remote data or not.
-In general this will use ~~prefetchResources~~ or ~~connectResources~~ based on [digram](/bones/docs/resources/resource_prefetchResources#prefetchresources-us-connectresources)
+### prefetch
+Boolean flag to configure if `withFinalForm` HOC needs to send initial API request to setup initial values.
+
+```js
+//POST /api/users/me on mount and setup initial values
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({}, 'users/me', {
+  prefetch: true
+})(FormViewComponent)
+```
+
+```js
+//DO not send any GET requests on mount initial values are empty or defined with `initialValues` option
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({}, 'users/me', {
+  prefetch: false
+})(FormViewComponent)
+```
 
 
-## ~~REST API FLOW~~
 
-By default ~~resources~~ were build to work REST API. This means that in general for all forms you will have 2 possible scenarios:
+## REST API FLOW
+
+By default `resources` were build to work REST API. This means that in general for all forms you will have 2 possible scenarios:
 
 - Create user => POST /users
 - Update existing user => PATCH /users/:uuid
 
-To handle this scenario will use dynamic rote config
-```javascript
+
+```js
 import { withFinalForm } from '@cranium/resource'
 
 withFinalForm({
@@ -146,41 +291,128 @@ withFinalForm({
 ```
 
 :::tip
-
-The most important thing here is to define endpoint with dynamic param and this param should be optional
-
+The most important thing here is to define endpoint with dynamic param `users/:uuid?` and this param should be optional `?` at the end of arg name.  
 :::
 
-Having this configurations you will get the most suitable implementation for TEST API.
+Having this configurations you will get the most suitable implementation for REST API.
 Here we will have 2 scenarios:
-1. component has ~~props.uiud~~
+### Update existing
+Component has `props.uuid`
+
+```js title="myform.js"
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({
+    validate,
+    onSubmitSuccess,
+  },{
+    namespace: 'users',
+    endpoint: 'users/:uuid?'
+  }, {
+    prefetch: true //this is default value. and it is here just for example
+  })(MyReactElement)
+```
+```js
+import MyForm from 'myform'
+
+function App () {
+  return <MyForm uuid="234"/>
+}
+```
+
 
 That means that it is form for updating existing user.
 In this case u will have:
 1. Send GET /users/:uuid on mount
-2. Pass responce data as initial values
+2. Pass response data as initial values
 3. Send PATCH /users/:uuid on submit
 
+### Create new
+Component does not has `props.uuid`
 
-2. component has not ~~props.uiud~~
-That means that it is form for creating new user.
+```js title="myform.js"
+import { withFinalForm } from '@cranium/resource'
+
+export default withFinalForm({
+    validate,
+    onSubmitSuccess,
+  },{
+    namespace: 'users',
+    endpoint: 'users/:uuid?'
+  }, {
+    prefetch: true //this is default value. and it is here just for example
+  })(MyReactElement)
+```
+```js
+import MyForm from 'myform'
+
+function App () {
+  return <MyForm />
+}
+```
+
+That means that it is form to create new user.
 
 In this case it will have different scenario:
-1. `prefetch: true` option will skip.
-2. initial values will be undefined
+1. `prefetch: true` option will skip. There will not be GET request on mount
+2. initial values will be empty.
 3. Send POST /users on submit
 
+### Navigation params with Forms
 
-## ~~form with customResource~~
+You can use same Component for both Edit and Create forms. That are rendered on 2 different screens.
+
+```js title="form.js"
+import { withFinalForm } from '@cranium/resource'
+import { compose } from 'redux'
+
+export default compose(
+  withFinalForm({
+    validate,
+    onSubmitSuccess,
+  },{
+    namespace: 'users',
+    endpoint: 'users/:uuid?'
+  }, {
+    prefetch: true //this is default value. and it is here just for example
+  })
+)(MyReactElement)
+```
+
+```js {5,6,9,10} title="routes.js"
+import Form from 'form'
+
+export const routes = [
+  {
+    path: 'users/:uuid/edit',
+    component: Form
+  },
+  {
+    path: 'users/create',
+    component: Form
+  },
+]
+```
+
+
+
+
+## customResource
 You can use customResource in pair with withFinalForm.
 
-```javascript
+```js
 import { customResource, withFinalForm } from '@cranium/resource'
 
 function myCustomFetch(API, payload, meta) {
-  return new Promise(function(resolve,reject){
-    setTimeout(()=>resolve({ succes: true }),1000)
-  })
+  if(meta.type === 'PREFETCH') { //initial GET request to setup form initial values
+    return API.get('users/me')
+  }
+  if(meta.method === 'POST') { // create new user
+    return API.post('users' payload)
+  }
+  if(meta.method === 'PUT') { // update user
+    return API.put('users/:uuid' payload, { params: { uuid: users.uuid }})
+  }
 }
 
 const customConnectResource = customResource(myCustomFetch)
@@ -190,24 +422,25 @@ export default withFinalForm(
     validate,
   },
   customConnectResource({
-    namespace: 'test'
+    namespace: 'users',
+    endpoint: 'users/:uuid?'
   }),
   {
     Loader: MyCustomLoader,
   }
-)
+)(ReactFormComponent)
 
-//same with short sintax
+//same with short syntax
 export default withFinalForm(
   {
     validate,
   },
-  customConnectResource('test'),
+  customConnectResource('users/:uuid?'),
   {
     Loader: MyCustomLoader,
   }
-)
+)(ReactFormComponent)
 ```
 
 Using this configuration it will call `myCustomFetch` function on mount component and on Submit.
-Please, pay attantion that prefetch option and REST API flow has same flow as with using simple resource the only one difference is that you can define your own async action.
+Please, pay attention that prefetch option and REST API flow has same flow as with using simple resource the only one difference is that you can define your own async action.

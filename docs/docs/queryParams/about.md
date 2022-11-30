@@ -4,6 +4,10 @@ title: queryParams
 sidebar_label: About
 ---
 
+:::caution
+This package is deprecated. You can use [query-string](https://www.npmjs.com/package/query-string) instead.
+:::
+
 This is module that will create query string from Object and Object from query string.
 
 ## ~~Create new instance~~

@@ -1,460 +1,463 @@
 ---
 id: connect_resources
-title: ConnectResources
-sidebar_label: ConnectResources
+title: connectResources
+sidebar_label: connectResources
 ---
 
-~~ConnectResources~~ is a function that will return [HOC](https://reactjs.org/docs/higher-order-components.html) to pass all necessary props to your React component for async HTTP request.
+**connectResources** is a function that will return [HOC](https://reactjs.org/docs/higher-order-components.html) to pass all necessary props to your React component for async HTTP request.
 
-## ~~Basic usage~~
+`connectResources` accept 1 argument  [ResourceConfig](/docs/resources/connect_resource_type) or an Array of [ResourceConfig](/docs/resources/connect_resource_type)
 
-```javascript
+```ts
+import connectResources from '@cranium/resource' 
+
+connectResources(ResourceConfig | []ResourceConfig)
+```
+
+## Basic usage
+
+```js
 import { connectResources } from '@cranium/resource'
 
 function MyReactComponent({ users }){
-  //using 1 line of code you will have aditions prop users inside your React Component
+  const {
+      // meta data
+      data,            // body from success HTTP request
+      isLoading,       // boolean flag to determinate async action status
+      options,         // body from success OPTIONS HTTP request
+      errors,          // error from HTTP request
+      filters,         // JSON representation of query string
+      // async actions
+      fetch,           // action to send GET HTTP request
+      fetchOptions,    // action to send OPTIONS HTTP request
+      create,          // action to send POST HTTP request
+      replace,         // action to send PUT HTTP request
+      update,          // action to send PATCH HTTP request
+      remove,          // action to send DELETE HTTP request 
+      // sync actions
+      setData,         // action to change data
+      setLoading,      // action to toggle loading flag
+      setErrors,       // action to change errors
+      setFilters,      // action to change filters
+      clear,           // action to clear current part of redux store
+  } = users
   return ...
 }
-
+/*
+ * Using 1 line of code you will have prop users inside your React Component to:
+ * - work with HTTP requests 
+ * - change redux store data
+*/
 export default connectResources('users')(MyReactComponent)
 ```
 
-```
-// users property
+:::tip
+You will have same property name as argument in  `connectResources`.
+Like `<MyReactComponent>` has property `users` because of `connectResources('users')`
+:::
 
-// async actions
-users.fetch           => function to send GET HTTP request
-users.fetchOptions    => function to send OPTIONS HTTP request
-users.create          => function to send POST HTTP request
-users.replace         => function to send PUT HTTP request
-users.update          => function to send PATCH HTTP request
-users.remove          => function to send DELETE HTTP request
-
-// sync actions
-
-users.setData         => function to store data in redux
-users.setLoading      => function to toggle loading flag and store in redux
-users.setErrors       => function to store errors in redux
-users.setFilters      => function to JSON representation of query string
-users.clear           => function to clear current part of redux store
-
-// meta data
-users.data            => body from success HTTP request
-users.isLoading       => boolean flag to determinate async action status
-users.options         => body from success OPTIONS HTTP request
-users.errors          => error from HTTP request
-users.filters         => JSON representation of query string
-
-
-```
-
-
-## ~~How does it work~~
-
-On initial state you will not have any meta data in your React component. 
-
-Then you may want to retrive a list of users `GET /users`
-
-To do that you already have all necessary propperties
-
-```javascript
-this.props.users.fetch()
-```
-
-Calling whatever async actions you will have next working flow:
-
-1.1. ~~Toogle loading~~. Toogle loading indicator to `true` 
-```json
-// component
-
-this.props.users.isLoading => true
-
-// store
+## Redux 
+1 of biggest redux problem is that it is required to create reducers to handle changes for each part of store data.
+That's why Redux applications on start have store with lot of empty objects, like:
+```js
 {
   users: {
-    isLoading: true
-  }
-}
-```
-1.2. ~~Clear errors~~. This is common principle that all next API requests should clear errors (*if exist) from previous one. 
-```json
-// component
-
-this.props.users.errors => undefined
-
-// store
-{
-  users: {
-    errors: undefined
-  }
-}
-```
-
-1.3 ~~Save filters~~. If you need to pass query string with your HHTP request, resources will store filters in redux, that could be usefull for example to increment page in infility lists. JSON representation of query string will be next transformed to string with [queryParams module](/bones/docs/queryParams/queryParams_about)
-
-```json
-//how to pass filters
-this.props.users.fetch({ page: 1 }, { queries: ['page'] })
-
-// component
-this.props.users.filters => { page: 1 }
-
-// store
-{
-  users: {
-    filters: {
-      page: 1
-    }
-  }
-}
-```
-
-2. ~~Send HHTP request~~. Http request will be handled by [API module](/bones/docs/api/api_about)
-
-3.1. ~~Toogle loading~~. Toogle loading indicator to `false` 
-```json
-// component
-
-this.props.users.isLoading => false
-
-// store
-{
-  users: {
+    data: null,
+    errors: null,
+    isLoading: false
+  },
+  user: {
+    data: null,
+    errors: null,
+    isLoading: false
+  },
+  cars: {
+    data: null,
+    errors: null,
+    isLoading: false
+  },
+  pets: {
+    data: null,
+    errors: null,
     isLoading: false
   }
 }
 ```
-3.2 ~~Save responce~~. 
-- success request
+`resources` module has empty store on start. And data in store will appear while sending HTTP requests. Also by default `resources` module clears redux store on component unmount, so that you will see only that data in redux store that is currently using to render current components.
 
-```json
-// component
-
-this.props.users.data => HTTP request body
-
-// store
-{
+1. Initial app store
+```js title="redux store"
+{}
+```
+2. Render component wrapped with `connectResources`
+```js title="redux store"
+{}
+```
+3. Send first HTTP request
+```js title="redux store"
+{ 
   users: {
-    data: {...} //HTTP request body
+    data: { count: 12, results: [] },
+    errors: null,
+    isLoading: false
   }
 }
 ```
-- errror 
-```json
-// component
+4. Unmount component
+```js title="redux store"
+{}
+```
 
-this.props.users.errors => HTTP request error
+In this way Redux store will be readable and understandable. There will not be any unused data, so ot will be more optimized
 
-// store
-{
-  users: {
-    errors: {...} //HTTP request error
+## Sending HTTP requests
+
+### GET request
+
+```js {7}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { data, isLoading, errors, fetch } = users
+  useEffect(()=>{
+    //GET /api/users
+    fetch()
+  },[])
+  if(isLoading){
+    return 'Loading...'
   }
-}
-```
-- options. in case `fetchOptions` 
-```json
-// component
-
-this.props.users.options => HTTP request body
-
-// store
-{
-  users: {
-    options: {...} //HTTP request body
+  if(errors){
+    return 'Oooops... Server is temporary unavailable'
   }
+  return data.map(user=><User {...data} key={user.uuid}/>)
 }
+export default connectResources('users')(UserList)
 ```
+### GET request with dynamic URL
 
-## ~~API~~
+```js {7}
+import { connectResources } from '@cranium/resource'
 
-```
-connectResource(resources [Resource | Array<Resource>])
-```
-
-~~connectResource~~ is a function as acceps `Resource` or an array of `Resource`'s as argument and returns HOC, that will pass all props for HTTP request to your React Component.
-
-### ~~Resource~~
-
-~~Resource~~ is a new type of data to describe API endpoint.
-In general ~~Resource~~ is an Object with next options:
-
-
-| Option          |      Date type        |      isRequired       |
-| --------------- | --------------------- | --------------------- |
-| namespace       |    String             |      true             |
-| endpoint        |    String             |      false            |
-| forceUpdates    |    Boolean            |      false            |
-| queries         |    Array<String\>     |      false            |
-| reducer         |    String\|Function   |      false            |
-
-
-#### ~~namespace~~
-This is the main option and only 1 required.
-By defining this option u will set up a key in redux where all information will be stored and name for property in your React Component. For example:
-
-```javascript
-
-connectResources({ namespace: 'cars' })
-
-// component
-
-function ReactComponent({ cars })
-
-// store
-
-{
-  cars: {
-    ...//resource data
+function UserList({ user }) {
+  const { data, isLoading, errors, fetch } = user
+  useEffect(()=>{
+    //GET /api/users/taras
+    fetch({ uuid: 'taras' })
+  },[])
+  if(isLoading){
+    return 'Loading...'
   }
-}
-
-connectResources({ namespace: 'cats' })
-
-// component
-
-function ReactComponent({ cats })
-
-// store
-
-{
-  cats: {
-    ...//resource data
+  if(errors){
+    return 'Oooops... Server is temporary unavailable'
   }
+  return <h1> Welcome {data.fullName}<h1>
 }
-
+export default connectResources({
+  namespace: 'user',
+  endpoint: 'users/:uuid'
+})(UserList)
 ```
 
-#### ~~endpoint~~
+### GET request with query params
 
-endpoint is url String to describe your HTTPS request. This field is not required and by default equals to [namespace](/bones/docs/resources/connect_resources#namespace).
+```js {7,20}
+import { connectResources } from '@cranium/resource'
 
-To have dynamic url config you can use [path-to-regex](https://www.npmjs.com/package/path-to-regex) syntax.
-
-Examples:
-
-- basic ussage
-```javascript
-connectResources({ namespace: 'cars', endpoint: 'carslist' })
+function UserList({ users }) {
+  const { data, isLoading, errors, fetch } = users
+  useEffect(()=>{
+    //GET /api/users?offset=0&limit=10
+    fetch({ offset: 0, limit: 10 })
+  },[])
+  if(isLoading){
+    return 'Loading...'
+  }
+  if(errors){
+    return 'Oooops... Server is temporary unavailable'
+  }
+  return data.map(user=><User {...data} key={user.uuid}/>)
+}
+export default connectResources({
+  namespace: 'users',
+  endpoint: 'users',
+  queries: ['offset', 'limit']
+})(UserList)
 ```
 
-- missed endpoint
-```javascript
-connectResources({ namespace: 'cars' })
+:::info
 
-// will be transpiled to 
+Please note that it is important to describe all possible `queries`.
+This is made to build query string only with values that current API support. Like swagger schema.
+This optimization will add more safety to your code
 
-connectResources({ namespace: 'cars', endpoint: 'cars' })
+```js {7,13}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { data, isLoading, errors, fetch } = users
+  useEffect(()=>{
+    //GET /api/users?offset=0&limit=10
+    //fakeData data will not appear in HTPP request URL
+    fetch({ offset: 0, limit: 10, fakeData: 'fake' })
+  },[])
+}
+export default connectResources({
+  namespace: 'users',
+  endpoint: 'users',
+  queries: ['offset', 'limit']
+})(UserList)
 ```
-
-- dynamic endpoint
-```javascript
-connectResources({ namespace: 'car', endpoint: 'cars/:uuid' })
-
-this.props.car.fetch({ uuid: 'tesla' })
-this.props.car.post({ uuid: 'tesla', color: 'blue' })
-```
-
-:::caution
-
-`endpoint` should not contain trailing slashes
-
 :::
 
-#### ~~forceUpdates~~
-A boolean indicator that means that u do not need to store in redux filters, loading, and errors. This is common ussage for form submit actions, because [react-final-form](https://final-form.org/react) already handle all of this states and to avoid dublication of same data it is better to user `true`
+### OPTIONS request
 
-#### ~~queries~~
+```js {7}
+import { connectResources } from '@cranium/resource'
 
-Is an array of possible queary params. It is recommended to pass here all possible query params that are defined in your Swagger schema. 
+function UserList({ users }) {
+  const { options, isLoading, errors, fetchOptions } = users
+  useEffect(()=>{
+    //OPTIONS /api/users
+    fetchOptions()
+  },[])
+  if(isLoading){
+    return 'Loading...'
+  }
+  if(errors){
+    return 'Oooops... Server is temporary unavailable'
+  }
+  return <p>{options.count}</p>
+}
+export default connectResources('users')(UserList)
+```
 
-Example:
-```javascript
-connectResources({ 
-  namespace: 'cars',
-  queries: ['offset', 'limit', 'search']
-})
+### POST request
+
+```js {7}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { data, isLoading, errors, create } = users
+  useEffect(()=>{
+    //POST /api/users
+    create({ name: 'wonder woman', world: 'DC' })
+  },[])
+  if(isLoading){
+    return 'creating Wonder Woman'
+  }
+  if(errors){
+    return 'Oooops... Can not create super hero'
+  }
+  return <p>{data.name} is created</p>
+}
+export default connectResources('users')(UserList)
+```
+
+### DELETE request
+
+```js {7}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { isLoading, errors, remove } = users
+  useEffect(()=>{
+    //DELETE /api/super-man
+    remove({ hero: 'super-man' })
+  },[])
+  if(isLoading){
+    return 'deleting Super Man'
+  }
+  if(errors){
+    return 'Oooops... Super Man is stronger than our API, please try again'
+  }
+  return <p>Super Man has gone</p>
+}
+export default connectResources('users/:hero')(UserList)
+```
+### PUT request
+
+```js {7}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { isLoading, errors, replace } = users
+  useEffect(()=>{
+    //PUT /api/super-man
+    replace({ hero: 'wonder-woman', isSingle: true })
+  },[])
+  if(isLoading){
+    return 'updating Wonder Woman'
+  }
+  if(errors){
+    return 'Oooops... Yaron Varsano is stronger than our API, please try again'
+  }
+  return <p>Wonder Woman is now single</p>
+}
+export default connectResources('users/:hero')(UserList)
+```
+
+### PATCH request
+
+```js {7}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { isLoading, errors, update } = users
+  useEffect(()=>{
+    //PATCH /api/super-man
+    update({ hero: 'wonder-woman', isSingle: true })
+  },[])
+  if(isLoading){
+    return 'updating Wonder Woman'
+  }
+  if(errors){
+    return 'Oooops... Yaron Varsano is stronger than our API, please try again'
+  }
+  return <p>Wonder Woman is now single</p>
+}
+export default connectResources('users/:hero')(UserList)
+```
+
+:::note
+To send PUT, PATCH, POST request with dynamic url, add URL params to body request
+```js
+// For URL /users/:uuid
+
+//PUT /users/123-1233-123 { name: test }
+replace({ uuid: '123-1233-123', name: 'test' })
+
+//PATCH /users/123-1233-123 { name: test }
+update({ uuid: '123-1233-123', name: 'test' })
+
+//POST /users/123-1233-123 { name: test }
+create({ uuid: '123-1233-123', name: 'test' })
+
+```
+:::
+
+### Terminating requests
+
+Every async action returns Promise with 1 extra method `cancel` that calls AbortController `abort` function. [Read more](/docs/api/api_terminate)
+
+```js {7,8}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { data, isLoading, errors, fetch } = users
+  useEffect(()=>{
+    //GET /api/users
+    const request = fetch()
+    return request.cancel
+  },[])
+}
+export default connectResources('users')(UserList)
+```
+
+### Handling HTTP requests
+
+```js {7-10}
+import { connectResources } from '@cranium/resource'
+
+function UserList({ users }) {
+  const { data, isLoading, errors, fetch } = users
+  useEffect(()=>{
+    //GET /api/users
+    fetch()
+      .then((data)=>console.log(data))
+      .catch(console.warn)
+      .finally(()=>alert('done'))
+  },[])
+  
+}
+export default connectResources('users')(UserList)
+```
+
+## Changing store data
+
+### setData
+
+```js {5,7}
+import { connectResources } from '@cranium/resource'
+
+function MyComponent({ users }) {
+  const { data, setData } = users
+  setData({ wife: 'Wonder Woman' })  
+
+  return <p>Your wife is: {data.wife}</p>
+}
+export default connectResources('users')(MyComponent)
+```
+
+### setLoading
+
+```js {5,7}
+import { connectResources } from '@cranium/resource'
+
+function MyComponent({ users }) {
+  const { isLoading, setLoading } = users
+  setLoading(true)  
+
+  return <p>{isLoading ? 'Loading...': 'Loaded'}</p>
+}
+export default connectResources('users')(MyComponent)
+```
+
+### setErrors
+
+```js {5,7}
+import { connectResources } from '@cranium/resource'
+
+function MyComponent({ users }) {
+  const { errors, setErrors } = users
+  setErrors('Ooops...')  
+
+  return <p>{errors}</p>
+}
+export default connectResources('users')(MyComponent)
+```
+
+### setFilters
+
+```js {5,7}
+import { connectResources } from '@cranium/resource'
+
+function MyComponent({ users }) {
+  const { filters, setFilters } = users
+  setFilters({ offset: 0, limit: 12})  
+
+  return <p>offset: {filters.offset}, limit {filters.limit}</p>
+}
+export default connectResources('users')(MyComponent)
+```
+
+
+## Several resources
+To have several resources in 1 Component, you can define an Array of Resources to `connectResources`
+
+```js
+function MyComponent({ cars, pets }){
+  //than u will have 2 resources in 1 component
+}
+connectResources([
+  { namespace: 'cars' },
+  'pets'
+])(MyComponent)
 ```
 
 :::caution
 
-It is important to define `queries` if you need to send HTTP request with query string.
-Otherwise your get requests will be without filters even if you pass it to `fetch` function
-
-```javascript
-// Bad
-connectResources({ namespace: 'cars' })
-
-this.props.cars.fetch({ offset: 0, limit: 20 }) => will sent GET /users. offset and limit will be skipped
-
-//Good
-connectResources({ namespace: 'cars', queries: ['offset', 'limit'] })
-
-this.props.cars.fetch({ offset: 0, limit: 20 }) => will sent GET /users?offset=0&limit=20
-
-```
+Pay attention that all resources should have unique namespace, otherwise it will just override each other
 
 :::
 
 :::tip
 
-queryString will only work for GET requests. If you need to send HHTP a query string with what ever else HTTP request type, you need to pass queries once more as overrided meta.
-
-For example `POST /cars?country=uk`
-
-```javascript
-connectResources({ namespace: 'cars', queries: ['country'] })
-
-this.props.cars.create({ model: 1, color: 'red', year: 2020, country: 'uk' })
-
-// will send POST to /cars with payload and country will be skipped from query string and passed to body
-
-
-connectResources({ namespace: 'cars' })
-this.props.cars.create({ model: 1, color: 'red', year: 2020, country: 'uk' }, { queries: ['country'] })
-
-// will send POST to /cars?country=uk and in body you will have only model, color and year. country will be omitted
-```
-
-:::
-
-#### ~~reducer~~
-
-This is function that will be called in [redux reducer](https://redux.js.org/basics/reducers). Default `'object'`.
-By default connect resources has already defined 4 types of most reusable reducers.
-And you may use it as a String
-
-```javascript
-connectResources({ namespace: 'cars', reducer: 'object' })
-connectResources({ namespace: 'cars', reducer: 'none' })
-connectResources({ namespace: 'cars', reducer: 'replace' })
-connectResources({ namespace: 'cars', reducer: 'paginationList' })
-```
-
-- ~~object~~
-```javascript
-function objectReducer(state, action){
-  return { ...state, ...action.payload }
-}
-```
-
-- ~~none~~
-```javascript
-function noneReducer(state, action){
-  return state
-}
-```
-
-- ~~replace~~
-```javascript
-function replaceReducer(state, action){
-  return action.payload
-}
-```
-
-- ~~replace~~
-```javascript
-function replaceReducer(state, action){
-  return action.payload
-}
-```
-
-- ~~paginationList~~
-This is the most complex type of reducers that works for endpoint with list data types
-
-```json
-{
-  count: 10,
-  results: []
-}
-```
-~~paginationList~~ is helpfull when you work with inifinity List like [FlatList](https://reactnative.dev/docs/flatlist) from React-Native. The basic idea of inifinity lists is that when u first enter the page you need to send GET request for first n rows and on scroll end send one more request to get next batch of data and join 2 array. Next propblem is inline editing. Working with infinity lists it important that you need some how to refresh particular item in infinity list and u can not refetch all list and refresh all data when user made changes in 1 item.
-
-```javascript
-// case action.payload is {count, results} => on scroll end
-function replaceReducer(state, action){
-  return {
-    ...state,
-    ...action.payload,
-    results: [...state.results, action.payload.results ]
-  }
-}
-
-// case action.payload is Object with item => on item update
-
-function replaceReducer(state, action){
-  return {
-    ...state,
-    ...action.payload,
-    results: state.results.map(stateItem=>{
-      if(stateItem.uuid === action.payload.uuid){
-        return action.payload
-      }
-      return stateItem
-    })
-  }
-}
-
-```
-
-
-:::caution
-
-paginationList will only work with type of API responce
-```json
-{
-  count: 10,
-  results: []
-}
-```
-Also to have replace item functionality you should have `uuid` as unique identificator of your item in list. This is hardcoded conditions.
-To have your custom implementation please create your own reducer as a function
-
-:::
-
-- ~~custom reducer function~~
-You may create your own logic for reducer. For example:
-
-```javascript
-function myReducer(stateData, payload){
-  return { ...stateData, ... payload, count: stateData.count + 1 }
-}
-```
-
-:::caution
-
-Creating your own reducer, please pay attantion to [Redux Style Guide](https://redux.js.org/style-guide/style-guide)
-
-:::
-
-
-### ~~Several resources~~
-
-To connect more than 1 resource into your React Component you may pass array of resource configs.
-
-```javascript
-connectResources([
-  { namespace: 'cars' },
-  { namespace: 'pets' }
-])
-
-function MyComponent({ cars, pets }){
-  //than u will have 2 resources in 1 component
-}
-```
-
-:::caution
-
-Pay attantion that all resources should have unique namespace, otherwise it will just ovverride each other(
-
-:::
-
-:::caution
-
 Pay that is it much better to split your code. That's why mostly it is not a good choice to use several resources in 1 React Component.
 
-```javascript
-// BAD
+<span style={{color: 'red', fontWeight: 'bold'}}>BAD</span>
+
+```jsx title="my-component.js"
+
 connectResources([
   { namespace: 'cars' },
   { namespace: 'pets' }
@@ -466,72 +469,109 @@ function MyComponent({ cars, pets }){
     <Cars {...cars}/>
   )
 }
+````
 
-//Good
+<span style={{color: 'green', fontWeight: 'bold'}}>GOOD</span>
 
-//withPets.js
+```js title="with-pets.js"
 export default connectResources({ namespace: 'pets' })
-
-//withCars.js
+```
+```js title="with-cars.js"
 export default connectResources({ namespace: 'cars' })
-
-//Pets.js
-import PetsView from './PetsView'
-import withPets from './withPets'
+```
+```js title="pets.js"
+import PetsView from './pets-view'
+import withPets from './with-pets'
 
 export default withPets(PetsView)
+```
 
-//Cars.js
-import CarsView from './CarsView'
-import withCars from './withCars'
+```js title="cars.js"
+import CarsView from './cars-view'
+import withCars from './with-cars'
 
 export default withCars(CarsView)
+```
 
+```jsx title="my-component.js"
 
-//CarsAndPetsPage.js
-import Pets from './Pets'
-import Cars from './Cars'
+import Pets from './pets'
+import Cars from './cars'
 
-export default function CarsAndPetsPage(){
+export default function MyComponent(){
   return (
-    <Fragment>
+    <>
       <Pets/>
       <Cars/>
-    </Fragment>
+    </>
   )
 }
-
-
 ```
-
 :::
 
-### ~~Simple syntax~~
+## filters
+Filters is json object that contains Query string and Url params from latest HTTP request.
 
-As you may remember that [Resource](/bones/docs/resources/connect_resources#resource) object has only 1 required option (namespace), you can use more light syntax to define Resource as a String
+```jsx {7,18-20,26,27}
+import { connectResources } from '@cranium/resource'
 
-```javascript
-// several
+function UserList({ users }) {
+  const { filters, isLoading, errors, fetch } = users
+  useEffect(()=>{
+    //GET /api/users/dc?offset=0&limit=10
+    fetch({ offset: 0, limit: 10, world: 'dc' })
+  },[])
+  if(isLoading){
+    return 'Loading...'
+  }
+  if(errors){
+    return 'Oooops... Server is temporary unavailable'
+  }
 
-connectResources(['cars', 'pets'])
-
-// single
-
-connectResources('cars')
-
-// dynamic
-
-connectResources('cars/:uuid') // you will have cars as namespace and cars/:uuid as endpoint
-
-//camelcase
-
-connectResources('cars/search') //carsSearch as a namespace
-
+  return (
+    <>
+      <p>world: {filters.world}</p>   // world: dc
+      <p>offset: {filters.offset}</p> // offset: 0
+      <p>limit: {limit.limit}</p>     // limit: 10
+    </>
+  )
+}
+export default connectResources({
+  namespace: 'users',
+  endpoint: 'users/:world',
+  queries: ['offset', 'limit']
+})(UserList)
 ```
 
+## Clear resource data (`clear`)
 
-:::caution
+To delete resource data from redux use `clear` action
 
-Pay attantion that if you need just to add data from redux store to your React Component and you do not need any actions. It is better to use [connect](https://react-redux.js.org/api/connect) instead of resources.
+```js {12}
+import { connectResources } from '@cranium/resource'
 
-:::
+function MyComponent({ users }) {
+  const { data, setData, clear } = users
+  setData({ wife: 'Wonder Woman' })
+  /*
+  * after setData action redux store is
+  * {
+  *     cars: { data: ['BMW'] }
+  *     users: { data: { wife: 'Wonder Woman'} }
+  * }
+  */ 
+  clear()
+  /*
+  * after clear action redux store is
+  * {
+  *     cars: { data: ['BMW'] }
+  * }
+  */ 
+
+}
+export default connectResources('users')(MyComponent)
+```
+
+`clear` action will fully remove data from Redux store by `namespace` key
+
+
