@@ -138,9 +138,9 @@ export class TranslateProvider extends Component<PropTypes, State> {
     const { monoLanguageJSON } = this.props;
     const { language, translations } = this.state;
     if (monoLanguageJSON) {
-      return interpolate(get(translations, `[${id}]`) || text, params);
+      return interpolate(get(translations, `[${id}]`) || text, text, params);
     }
-    return interpolate(get(translations, `${language}.[${id}]`) || text, params);
+    return interpolate(get(translations, `${language}.[${id}]`) || text, text, params);
   }
 
   gettext(text = '', params?: any) {
@@ -148,9 +148,9 @@ export class TranslateProvider extends Component<PropTypes, State> {
     const { monoLanguageJSON } = this.props;
 
     if (monoLanguageJSON) {
-      return interpolate(get(translations, `[${text}]`) || text || '', params);
+      return interpolate(get(translations, `[${text}]`) || text || '', text, params);
     }
-    return interpolate(get(translations, `${language}[${text}]`) || text, params);
+    return interpolate(get(translations, `${language}[${text}]`) || text, text, params);
   }
 
   ngettext(singular: string, plural: string, count: number, params?: any) {
@@ -161,7 +161,11 @@ export class TranslateProvider extends Component<PropTypes, State> {
     const pluralForm = new Intl.PluralRules(language).select(count);
     const key = [singular, pluralForm].join('_');
 
-    return interpolate(get(_tranlations, key) || (count === 1 ? singular : plural) || '', params);
+    return interpolate(
+      get(_tranlations, key) || (count === 1 ? singular : plural) || '',
+      count === 1 ? singular : plural,
+      params
+    );
   }
 
   npgettext(singular: string, plural: string, id: string, count: number, params?: any) {
@@ -171,7 +175,11 @@ export class TranslateProvider extends Component<PropTypes, State> {
     const _tranlations = monoLanguageJSON ? translations : get(translations, language);
     const pluralForm = new Intl.PluralRules(language).select(count);
     const key = [id, pluralForm].join('_');
-    return interpolate(get(_tranlations, key) || (count === 1 ? singular : plural) || '', params);
+    return interpolate(
+      get(_tranlations, key) || (count === 1 ? singular : plural) || '',
+      count === 1 ? singular : plural,
+      params
+    );
   }
 
   render() {
@@ -250,8 +258,11 @@ export function npgettext(singular = '', plural = '', id = '', count: number, pa
   );
 }
 
-export function interpolate(message: string, obj?: any, named?: boolean) {
+export function interpolate(message: string, defaultLang: string, obj?: any, named?: boolean) {
   let msg: string = message;
+  if (typeof message !== 'string') {
+    return defaultLang;
+  }
   try {
     msg = (message || '').replace(/%\(\w+\)/g, function (match) {
       return String(get(obj, [match.slice(2, -1)]));
