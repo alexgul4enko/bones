@@ -39,6 +39,7 @@ export type PropTypes = {
   monoLanguageJSON?: boolean;
   children?: any;
   useDefaultLanguage?: boolean;
+  defaultTranslations?: {[key: string]: unknown};
 };
 
 type State = {
@@ -51,14 +52,14 @@ const defaultProps = {
   langKey: 'lang',
   translationsKey: 'translations',
   reload: noop,
-  monoLanguageJSON: false
+  monoLanguageJSON: false,
 };
 
 export class TranslateProvider extends Component<PropTypes, State> {
   constructor(props: any) {
     super(props);
     this.state = {
-      translations: {},
+      translations: props.defaultTranslations || {},
       language: props.defaultLanguage.split('-')[0]
     };
 

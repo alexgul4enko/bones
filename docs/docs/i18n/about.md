@@ -39,6 +39,7 @@ function APP () {
 | useDefaultLanguage |  Boolean   |  false           |
 | monoLanguageJSON   |  Boolean   |  false           |
 | getTranslation     |  Function  |  required        |
+| defaultTranslations |  Object   |  {}              |
 
 
 
@@ -114,6 +115,10 @@ function APP () {
 ### ~~monoLanguageJSON~~
 
 If `getTranslation` function return all languages at once than it should be `true`. Otherwise if `getTranslation` returns translation by each language separatelly, use `false`
+
+### ~~defaultTranslations~~
+
+Object with default translations pairs that will be used only on first load.
 
 ### ~~getTranslation~~
 
