@@ -185,6 +185,15 @@ const Resource: FC<UserProps & OwnPros> = ({ users, uuid }) => {
         </button>
 
         <button
+          data-testid='post-request-array'
+          onClick={() => {
+            users.create([{ name: 12, age: 12 }], {filters: {test: 12}});
+          }}
+        >
+          create user
+        </button>
+
+        <button
           data-testid='post-request-queries'
           onClick={() => {
             users.create({ name: 12, age: 12 }, { filters: { offset: 12 } });
@@ -394,6 +403,12 @@ describe(specTitle('connectResources'), () => {
     cy.get('[data-testid=post-request]').click();
     cy.wait('@createUser');
     cy.get('[data-testid=data]').should('contain', 'testUser:101');
+
+
+    cy.get('[data-testid=post-request-array]').click();
+    cy.wait('@createUser').its('request.url').should('include', '/users?test=12');
+    cy.get('[data-testid=post-request-array]').click();
+    cy.wait('@createUser').its('request.body').should('deep.equal', [{ name: 12, age: 12 }])
 
     cy.get('[data-testid=clear-resource]').click();
 

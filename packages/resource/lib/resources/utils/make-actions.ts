@@ -11,6 +11,7 @@ interface Meta {
   reducer: Reducers;
   queries?: string[];
   forceUpdates?: boolean;
+  filters?: Record<string, unknown>;
 }
 
 interface Resource {

@@ -15,7 +15,7 @@ export function defaultHTTPRequest(api: API, payload: any, meta: Meta): Cancelab
   return api.request({
     method: meta.type,
     endpoint: meta.endpoint,
-    body: typeof payload === 'object' ? omit(payload, meta.queries || []) : payload,
+    body: typeof payload === 'object' && !Array.isArray(payload) ? omit(payload, meta.queries || []) : payload,
     params: meta.filters || (typeof payload === 'object' ? pick(payload, meta.queries || []) : {}),
     signal: meta.signal,
     baseURL: meta.baseURL
