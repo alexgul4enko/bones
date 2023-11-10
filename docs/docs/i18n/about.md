@@ -296,7 +296,7 @@ Hook that returns gettetxt useGettetxt function
 ```jsx
 import { useGettext } from '@cranium/i18n'
 function MyComponent(){
-    const gettext = useGettext()
+    const { gettext } = useGettext()
 }
 ```
 
@@ -307,7 +307,7 @@ Hook that returns pgettetxt usePGettetxt function
 ```jsx
 import { usePGettext } from '@cranium/i18n'
 function MyComponent(){
-    const pgettext = usePGettext()
+    const { pgettext } = usePGettext()
 }
 ```
 
@@ -318,7 +318,7 @@ Hook that returns ngettetxt useNGettetxt function
 ```jsx
 import { useNGettext } from '@cranium/i18n'
 function MyComponent(){
-    const ngettext = useNGettext()
+    const { ngettext } = useNGettext()
 }
 ```
 
@@ -329,6 +329,6 @@ Hook that returns npgettetxt useNPGettetxt function
 ```jsx
 import { useNPGettext } from '@cranium/i18n'
 function MyComponent(){
-    const npgettext = useNPGettext()
+    const { npgettext } = useNPGettext()
 }
 ```
