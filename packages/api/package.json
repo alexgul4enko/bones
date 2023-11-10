@@ -1,6 +1,6 @@
 {
   "name": "@cranium/api",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "Promise based HTTP client for browsers and React-Native based on fetch API",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",

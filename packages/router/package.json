@@ -1,6 +1,6 @@
 {
   "name": "@cranium/router",
-  "version": "3.0.1",
+  "version": "3.0.3",
   "description": "react router wrapper",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -40,7 +40,7 @@
     "prop-types": "^15.7.2"
   },
   "dependencies": {
-    "@cranium/queryparams": "^3.0.1",
+    "@cranium/queryparams": "^3.0.3",
     "react-router": "^5.2.0",
     "react-router-dom": "^5.2.0"
   },
