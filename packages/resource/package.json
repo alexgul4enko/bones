@@ -1,6 +1,6 @@
 {
   "name": "@cranium/resource",
-  "version": "2.0.4",
+  "version": "3.0.1",
   "description": "redux client for sending HTTP requests",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -40,9 +40,9 @@
   },
   "gitHead": "90f67aad4839ae4a475bbb32d41d35a543b21257",
   "dependencies": {
-    "@cranium/api": "^2.0.3",
+    "@cranium/api": "^3.0.1",
     "@cranium/cache": "^1.0.47",
-    "@cranium/redux-helpers": "^2.0.2",
+    "@cranium/redux-helpers": "^3.0.1",
     "@redux-devtools/extension": "^3.2.3",
     "final-form": "^4.20.7",
     "lodash": "^4.17.21",

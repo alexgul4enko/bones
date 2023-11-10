@@ -1,6 +1,6 @@
 {
   "name": "@cranium/i18n",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "React lightweight simple translation module",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -36,7 +36,6 @@
     "url": "https://github.com/alexgul4enko/bones/issues"
   },
   "gitHead": "90f67aad4839ae4a475bbb32d41d35a543b21257",
-  "devDependencies": {},
   "dependencies": {
     "fast-plural-rules": "^2.0.2",
     "lodash": "^4.17.21"

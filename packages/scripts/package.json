@@ -1,6 +1,6 @@
 {
   "name": "@cranium/scripts",
-  "version": "1.0.0",
+  "version": "3.0.1",
   "description": "Scripts runner for react apps",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",

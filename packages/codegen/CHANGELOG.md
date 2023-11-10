@@ -5,10 +5,4 @@ See [Conventional Commits](https://conventionalcommits.org) for commit guideline
 
 ## [3.0.1](https://github.com/alexgul4enko/bones/compare/v2.0.3...v3.0.1) (2023-11-10)
 
-**Note:** Version bump only for package @cranium/scripts
-
-
-
-
-
-# Change Log
+**Note:** Version bump only for package @cranium/codegen
