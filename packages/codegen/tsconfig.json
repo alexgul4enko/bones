@@ -1,0 +1,30 @@
+{
+    "extends": "../../tsconfig.json",
+    "include": ["lib"],
+    "compilerOptions": {
+        "outDir": "./dist",
+        "incremental": true,
+        "baseUrl": ".",
+        "rootDir": "packages",
+        "esModuleInterop": true,
+        "allowSyntheticDefaultImports": true,
+        "importHelpers": true,
+        "experimentalDecorators": true,
+        "module": "esnext",
+        "target": "es6",
+        "lib": ["es6", "esnext", "es2015", "dom"],
+        "suppressImplicitAnyIndexErrors": true,
+        "moduleResolution": "node",
+        "emitDecoratorMetadata": true,
+        "sourceMap": true,
+        "declaration": true,
+        "noImplicitThis": true,
+        "alwaysStrict": true,
+        "noImplicitReturns": true,
+        "noUnusedLocals": true,
+        "resolveJsonModule": true,
+        "skipLibCheck": true,
+        "isolatedModules": true,
+    }
+}
+

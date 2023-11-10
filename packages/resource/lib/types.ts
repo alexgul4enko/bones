@@ -4,7 +4,7 @@ import { CacheConfig } from '@cranium/cache';
 type ParseFn = (value: any) => any;
 
 export type Method = 'GET' | 'DELETE' | 'HEAD' | 'OPTIONS' | 'POST' | 'PUT' | 'PATCH' | 'PURGE' | 'LINK' | 'UNLINK';
-export type CancelablePromise = Promise<any> & { cancel: () => void };
+export type CancelablePromise<Data=any> = Promise<Data> & { cancel: () => void };
 
 export declare class API {
   request(requestParams: any): CancelablePromise;

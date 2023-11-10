@@ -36,8 +36,8 @@ export function useCustomRequest<DataType = {}, ErrorType = {}, FilterType = {},
   const resource = useSelector(makeResourceSelector(config));
   const dispatch = useDispatch();
   const request = useCallback(
-    function (payload, actionmeta: any) {
-      return dispatch(makeRequest(asyncFunc)(payload, { ...meta, ...actionmeta }));
+    function (payload:FilterType, actionmeta: any) {
+      return dispatch(makeRequest(asyncFunc)(payload, { ...meta, ...actionmeta }))  ;
     },
     [dispatch, meta]
   );

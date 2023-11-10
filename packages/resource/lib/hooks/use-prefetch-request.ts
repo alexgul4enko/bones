@@ -21,7 +21,7 @@ interface Configs {
 export function usePrefetchRequest<DataType = {}, ErrorType = {}, FilterType = {}, OptionsType = {}>(
   asyncFunc: AsyncFuncType,
   config: ResourcesConfigType,
-  prefetchConfigs?: Configs
+  prefetchConfigs?: Configs 
 ) {
   const [initialLoading, setLoading] = useState(true);
   const resource = useCustomRequest<DataType, ErrorType, FilterType, OptionsType>(asyncFunc, config);

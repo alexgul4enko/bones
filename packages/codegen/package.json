@@ -1,6 +1,6 @@
 {
-  "name": "@cranium/i18n",
-  "version": "3.0.0",
+  "name": "@cranium/codegen",
+  "version": "1.0.0",
   "description": "React lightweight simple translation module",
   "author": "Sasha <aleksandr.gulchenko@gmail.com>",
   "homepage": "https://github.com/alexgul4enko/bones#readme",
@@ -38,7 +38,11 @@
   "gitHead": "90f67aad4839ae4a475bbb32d41d35a543b21257",
   "devDependencies": {},
   "dependencies": {
-    "fast-plural-rules": "^2.0.2",
-    "lodash": "^4.17.21"
+    "@graphql-codegen/plugin-helpers": "^3.1.1",
+    "@graphql-codegen/visitor-plugin-common": "^2.13.5",
+    "@graphql-tools/apollo-engine-loader": "^7.3.21",
+    "auto-bind": "^5.0.1",
+    "change-case-all": "^1.0.15",
+    "graphql": "^16.6.0"
   }
 }

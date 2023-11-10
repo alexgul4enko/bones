@@ -5,5 +5,5 @@ export interface StoreType {
   dispatch: Dispatch;
   getState: Store['getState'];
 }
-export type CustomRequestType = (data: any, meta?: ResourcesType) => CancelablePromise | Promise<any>;
+export type CustomRequestType<DataType = any, Filters= any, MetaType=ResourcesType> = (data?: Filters, meta?: MetaType) => CancelablePromise<DataType>;
 export type AsyncFuncType = (api: API, payload: any, meta: ResourcesType, store: StoreType) => CancelablePromise;

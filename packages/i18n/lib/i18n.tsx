@@ -23,6 +23,15 @@ export function isRtlLanguage(lang: string) {
   return rtlLanguages.includes(lang.split('-')[0]);
 }
 
+export type Language = {
+  id: string;
+  locale?: string;
+  pluralCategoryNames?: string[];
+  pluralExamples?: string[];
+  pluralRules?: string;
+  [key: string]: any;
+};
+
 export type StorageType = {
   setItem: (key: string, value: any) => void;
   getItem: (key: string) => any;
@@ -39,7 +48,9 @@ export type PropTypes = {
   monoLanguageJSON?: boolean;
   children?: any;
   useDefaultLanguage?: boolean;
-  defaultTranslations?: {[key: string]: unknown};
+  defaultTranslations?: { [key: string]: unknown };
+  localeLanguage?: string;
+  getLanguages: () => Promise<(Language | string)[]> | string[] | Language[];
 };
 
 type State = {
@@ -52,12 +63,15 @@ const defaultProps = {
   langKey: 'lang',
   translationsKey: 'translations',
   reload: noop,
-  monoLanguageJSON: false,
+  monoLanguageJSON: false
 };
 
 export class TranslateProvider extends Component<PropTypes, State> {
+  langs: (Language | string)[];
+  lang: Language | string;
   constructor(props: any) {
     super(props);
+    this.langs = [];
     this.state = {
       translations: props.defaultTranslations || {},
       language: props.defaultLanguage.split('-')[0]
@@ -96,22 +110,44 @@ export class TranslateProvider extends Component<PropTypes, State> {
     });
   }
 
+  saveLang(lang: string) {
+    this.lang = this.langs.find((item) => (typeof item === 'string' ? item === lang : (item.id = lang)));
+  }
+
+  getLanguage(lang: string, defaultLang: string, langs?: (Language | string)[] | null) {
+    if (!Array.isArray(langs)) {
+      return lang;
+    }
+    if (langs.find((item) => (typeof item === 'string' ? item === lang : (item.id = lang)))) {
+      return lang;
+    }
+    return defaultLang;
+  }
+
   initTranslationsLang() {
     if (this.props.useDefaultLanguage) return this.refreshTranslations(this.props.defaultLanguage);
     const { storage, langKey, defaultLanguage } = this.props;
-    Promise.resolve(storage.getItem(langKey))
-      .then((language) => {
+    Promise.all([
+      Promise.resolve(storage.getItem(langKey)),
+      this.props.getLanguages ? Promise.resolve(this.props.getLanguages()) : null
+    ])
+      .then(([language, langs]) => {
+        this.langs = langs;
         if (!language) {
-          throw new Error('Language not defined');
+          return Promise.reject(langs);
         }
-        this.setState({ language });
-        this.refreshTranslations(language);
-        this.initTranslations(language);
+        const _lang = this.getLanguage(language, this.props.defaultLanguage, langs);
+        this.saveLang(_lang);
+        this.setState({ language: _lang });
+        this.refreshTranslations(_lang);
+        this.initTranslations(_lang);
       })
-      .catch((_) => {
-        storage.setItem(langKey, defaultLanguage.split('-')[0]);
-        this.refreshTranslations(defaultLanguage.split('-')[0]);
-        this.initTranslations(defaultLanguage.split('-')[0]);
+      .catch((langs) => {
+        const _lang = this.getLanguage(this.props.localeLanguage, this.props.defaultLanguage, langs);
+        this.saveLang(_lang);
+        storage.setItem(langKey, _lang.split('-')[0]);
+        this.refreshTranslations(_lang.split('-')[0]);
+        this.initTranslations(_lang.split('-')[0]);
       });
   }
 
@@ -123,6 +159,7 @@ export class TranslateProvider extends Component<PropTypes, State> {
     if (typeof lang !== 'string') {
       throw new Error('language should be String');
     }
+    this.saveLang(lang);
     const { language } = this.state;
     const { storage, langKey } = this.props;
     this.setState({ language: lang });
@@ -214,19 +251,19 @@ export function useGetLanguage() {
 }
 
 export function useGettext() {
-  return useContext(TarnslationsContext).gettext;
+  return { gettext: useContext(TarnslationsContext).gettext };
 }
 
 export function usePGettext() {
-  return useContext(TarnslationsContext).pgettext;
+  return { pgettext: useContext(TarnslationsContext).pgettext };
 }
 
 export function useNGettext() {
-  return useContext(TarnslationsContext).ngettext;
+  return { ngettext: useContext(TarnslationsContext).ngettext };
 }
 
 export function useNPGettext() {
-  return useContext(TarnslationsContext).npgettext;
+  return { npgettext: useContext(TarnslationsContext).npgettext };
 }
 
 export function useSetLanguage() {
